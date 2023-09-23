@@ -252,17 +252,3 @@ $ npm start
 Again, you will see the _"Server is running on port 5001"_, and _“MongoDB database connection established successfully”_ messages. This indicates that your backend is running.
 
 To test that your frontend is running, you would need to visit _"http://localhost:5001"_. You should see the the sample React page which has a link to "Learn React".
-
-## Conclusion
-
-Wow! You have now created your own MERN Web app from scratch! To recap, you have created a MongoDB database. You have also created a new Node.js app using Express.js as your middleware. Also, you have added React to your application.
-
-Next, you would need to make some changes to multiple files to create a functioning web app. You would be able to use this codebase as a template for creating your own custom web apps.
-
-Stay tuned for that tutorial! As well as instructions for deploying your custom application to IBM Cloud using a Delivery Pipeline
-
-## Author
-
-- Jihad Hammoudi
-
-This tutorial was created using help from this [MERN tutorial](https://medium.com/@beaucarnes/learn-the-mern-stack-by-building-an-exercise-tracker-mern-tutorial-59c13c1237a1)
