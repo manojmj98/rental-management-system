@@ -157,7 +157,6 @@ const uri = process.env.ATLAS_URI;
 
 mongoose.connect(uri, {
   useNewUrlParser: true,
-  useCreateIndex: true
 });
 
 const connection = mongoose.connection;
