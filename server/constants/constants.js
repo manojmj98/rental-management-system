@@ -5,7 +5,7 @@ exports.EMAIL_PROVIDER = {
 };
 
 exports.ROLE = {
-    Admin: 'ROLE ADMIN',
-    Member: 'ROLE MEMBER',
-    Merchant: 'ROLE MERCHANT'
+    Admin: 'ADMIN',
+    Member: 'MEMBER',
+    Merchant: 'MERCHANT'
 };
