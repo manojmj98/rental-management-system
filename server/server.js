@@ -1,17 +1,28 @@
 const express = require("express");
 const cors = require('cors');
-const mongoose = require('mongoose');
 require('dotenv').config();
+const mongoose = require('mongoose');
 const app = express();
+const cookieParser = require('cookie-parser')
+
 const port = process.env.PORT || 5001;
+const uri = process.env.MONGO_URI;
+const userRouter = require('./routes/userRoutes.js');
+
+
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-const uri = process.env.MONGO_URI;
+app.use('/api/user',userRouter);
+
+
 mongoose.connect(uri, {
     useNewUrlParser: true,
 });
 const connection = mongoose.connection;
+
 connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 })
