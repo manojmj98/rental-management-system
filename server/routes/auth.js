@@ -138,27 +138,38 @@ router.post('/logout', async (req, res) => {
 
 router.put('/reset', auth, async (req, res) => {
     try {
-        const user = await User.findById(req.user._id)
 
-        if (user) {
-            if (!req.body.password) {
-                return res.status(400).json({ error: 'You must enter a password.' });
-            }
+        const { password, newPassword } = req.body;
 
-            const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(req.body.password, salt);
-
-            user.password = hash;
-
-            const updatedUser = await user.save();
-
-            res.status(200).json({
-                _id: updatedUser._id,
-                email: updatedUser.email
-            })
-        } else {
-            res.status(404).json({ message: 'User not found' });
+        
+        if (!password) {
+            return res.status(400).json({ error: 'You must enter a password.' });
         }
+
+        const user = await User.findById(req.user._id);
+
+        if (!user) {
+            return res.status(400).json({ error: 'User not found' });
+        }
+
+        const match = await bcrypt.compare(password, User.password);
+
+        if (!match) {
+            return res.status(400).json({ error: 'Previous password is incorrect' });
+
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(newPassword, salt);
+
+        user.password = hash;
+
+        const updatedUser = await user.save();
+
+        res.status(200).json({
+            _id: updatedUser._id,
+            email: updatedUser.email
+        })
 
     } catch (error) {
         res.status(400).json({
@@ -167,7 +178,7 @@ router.put('/reset', auth, async (req, res) => {
     }
 });
 
-router.post("/forget-password", (req, res) => {
+router.post("/forgot", async (req, res) => {
     try {
         const { email } = req.body;
 
@@ -175,17 +186,18 @@ router.post("/forget-password", (req, res) => {
             return res.status(400).json({ error: 'You must enter an email address.' });
         }
 
-        const user = User.findOne({ email });
+        const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(404).json({ message: 'Invalid Email' });
+            return res.status(400).json({ error: 'Invalid Email' });
         }
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
             expiresIn: "5m",
         });
 
-        const resetLink = `http://localhost:5000/reset/${user._id}/${token}`;
+        // Might need changed
+        const resetLink = process.env.NODE_ENV == 'development' ? `http:/localhost:3000/reset/${token}` : `http:/bot-bazaar.com/reset/${token}`;
 
         var transport = nodemailer.createTransport({
             host: "live.smtp.mailtrap.io",
@@ -205,12 +217,50 @@ router.post("/forget-password", (req, res) => {
 
         transport.sendMail(mailOptions, (err, info) => {
             if (err) {
-                return res.status(400).json({ message: "Email failed to send" });
+                return res.status(400).json({ error: 'Email failed to send' });
             }
         });
 
 
         res.status(200).json({ message: "Email sent" });
+
+    } catch (error) {
+        res.status(400).json({
+            error: 'Your request could not be processed. Please try again.'
+        });
+    }
+});
+
+router.put('/reset/:token', async (req, res) => {
+    try {
+        
+        
+        const { password } = req.body;
+        const token = req.params.token;
+        
+        if (!password) {
+            return res.status(400).json({ error: 'You must enter a password' });
+        }
+        
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        
+        const user = await User.findById(decoded.userId);
+        
+        if (!user) {
+            return res.status(400).json({ error: 'User not found' });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(password, salt);
+
+        user.password = hash;
+
+        user.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Password changed successfully'
+        });
 
     } catch (error) {
         res.status(400).json({
