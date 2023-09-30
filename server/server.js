@@ -7,8 +7,9 @@ const cookieParser = require('cookie-parser')
 
 const port = process.env.PORT || 5001;
 const uri = process.env.MONGO_URI;
-const userRouter = require('./routes/userRoutes.js');
 
+const userRouter = require('./routes/userRoutes.js');
+const authRouter = require('./routes/auth.js');
 
 app.use(cors());
 app.use(express.json());
@@ -16,6 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/api/user',userRouter);
+app.use('/api/auth',authRouter);
+
 
 
 mongoose.connect(uri, {
