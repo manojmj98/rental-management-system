@@ -78,6 +78,9 @@ function LoginPage() {
                     <p className="text-gray-300 text-sm">
                         Don't have an account? <Link to="/register" className="text-blue-500 hover:underline">Sign up here</Link>.
                     </p>
+                    <p className="text-gray-300 text-sm">
+                        <Link to="/forgot" className="text-blue-500 hover:underline">Forgot Password</Link>
+                    </p>
                 </div>
             </main>
         </div>
