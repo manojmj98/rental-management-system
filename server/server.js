@@ -4,6 +4,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const app = express();
 const cookieParser = require('cookie-parser')
+const path = require('path');
 
 const port = process.env.PORT || 5001;
 const uri = process.env.MONGO_URI;
@@ -20,8 +21,6 @@ app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
 app.use('/api/oauth',authRouter);
 
-
-
 mongoose.connect(uri, {
     useNewUrlParser: true,
 });
@@ -33,9 +32,10 @@ connection.once('open', () => {
 
 app.use(express.static(`${__dirname}/../client/build`));
 
-app.get("/*", function (req, res) {
-    res.sendFile(`${__dirname}/../client/build/index.html`, function (err) {
+app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../client/build","index.html"), function (err) {
         if (err) {
+            console.log(err)
             res.status(500).send(err);
         }
     });
