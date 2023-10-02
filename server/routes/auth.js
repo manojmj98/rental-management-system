@@ -204,7 +204,7 @@ router.post("/forgot", async (req, res) => {
         });
 
         // Might need changed
-        const resetLink = process.env.NODE_ENV == 'development' ? `http:/localhost:3000/reset/${token}` : `http:/bot-bazaar.com/reset/${token}`;
+        const resetLink = process.env.NODE_ENV == 'development' ? `http://localhost:3000/reset/${token}` : `http://bot-bazaar.com/reset/${token}`;
 
         var transport = nodemailer.createTransport({
             host: "live.smtp.mailtrap.io",
