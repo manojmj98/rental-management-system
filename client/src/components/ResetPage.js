@@ -1,22 +1,40 @@
 import '../App.css';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import NavBar from './common/NavBar';
-import { useResetMutation } from '../slices/userApiSlice';
+import { useForgotResetMutation, useResetMutation, useLogoutMutation } from '../slices/userApiSlice';
+import { logout } from '../slices/authSlice'
 
 function ResetPage() {
+    const dispatch = useDispatch();
+
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+
+    const param = useParams();
     const navigate = useNavigate();
 
     const [reset] = useResetMutation();
+    const [forgotReset] = useForgotResetMutation();
+    const [logOutApi] = useLogoutMutation();
 
     async function resetPass(e) {
         e.preventDefault();
         try {
-            const res = await reset({password, confirmPassword}).unwrap();
-            navigate('/login');
+            if (!param.token) {
+                const res = await reset({password, confirmPassword}).unwrap();
+                await logOutApi().unwrap();
+                dispatch(logout());
+                navigate('/login')
+            }
+            else {
+                const res = await forgotReset({token: param.token, password, confirmPassword}).unwrap();
+                await logOutApi().unwrap();
+                dispatch(logout());
+                navigate('/login')
+            }
         } catch (error) {
             console.log(error);
         }
