@@ -18,6 +18,7 @@ app.use(cookieParser());
 
 app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
+app.use('/api/oauth',authRouter);
 
 
 

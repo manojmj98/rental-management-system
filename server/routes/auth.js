@@ -6,6 +6,9 @@ const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth.js');
 const nodemailer = require('nodemailer');
 const { EMAIL_PROVIDER } = require('../constants/constants.js');
+const {googleOauthHandler} = require('../controller/sessionsController')
+
+//import googleOauthHandler from '../controller/sessionsController'
 
 // Register new user
 router.post('/register', async (req, res) => {
@@ -269,6 +272,18 @@ router.put('/reset/:token', async (req, res) => {
     }
 });
 
+router.get('/google',async (req,res)=> {
+    try {
+        console.log('In the router')
+        googleOauthHandler(req,res)
+        
+    } catch (error) {
+        console.log(e)
+        return res.redirect(`${process.env.CLIENT_ORIGIN}/oauth/error`)
+    }
+    
+    
+})
 const generateToken = (res, userId) => {
     const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
         expiresIn: '30d',
