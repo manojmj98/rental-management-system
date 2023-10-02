@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth.js');
 const nodemailer = require('nodemailer');
 const { EMAIL_PROVIDER } = require('../constants/constants.js');
-const {googleOauthHandler} = require('../controller/sessionsController')
+const {googleOauthHandler} = require('../controller/authController.js')
 
 //import googleOauthHandler from '../controller/sessionsController'
 

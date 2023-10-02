@@ -1,21 +1,19 @@
 const jwt = require("jsonwebtoken");
-//const {getGoogleOauthTokens,getGoogleUser} = require("../services/userService");
+
 const userService = require("../services/userService");
+domain = "localhost"
+if (process.env.ENVIRONEMENT != "local")
+   domain = "bot-bazaar"
 const accessTokenCookieOptions = {
   maxAge: 900000, // 15 mins
   httpOnly: true,
-  domain: "localhost", //TODO: What should this domain name be? Locally yes local host but on server?
+  domain: domain,
   path: "/",
   sameSite: "lax",
   secure: false,
 };
 
-const refreshTokenCookieOptions = {
-  ...accessTokenCookieOptions,
-  maxAge: 3.154e10, // 1 year
-};
-
-async function googleOauthHandler(req, response) {
+async function googleOauthHandler(req, res) {
   //Get the code from qs
   const code = req.query.code;
   //get the id and access token with code
@@ -49,28 +47,18 @@ async function googleOauthHandler(req, response) {
       new: true,
     }
   );
-  //TODO: Have to do this
-  const session = await createSession(user._id, req.get("user-agent") || "");
 
-  // create an access token
-
-  const accessToken = signJwt(
-    { ...user.toJSON(), session: session._id },
-    { expiresIn: config.get("accessTokenTtl") } // 15 minutes
-  );
-
-  // create a refresh token
-  const refreshToken = signJwt(
-    { ...user.toJSON(), session: session._id },
-    { expiresIn: config.get("refreshTokenTtl") } // 1 year
-  );
+  const token = jwt.sign({
+    email: user.email,
+    id: user._id
+  },process.env.JWT_SECRET,{expiresIn:"4h"})
 
   //set cookies and redirect back to client
-  res.cookie("accessToken", accessToken, accessTokenCookieOptions);
-
-  res.cookie("refreshToken", refreshToken, refreshTokenCookieOptions);
+  res.cookie("accessToken", token, accessTokenCookieOptions);
+  console.log("USER AUTHENTICATED WITH GOOGLE")
 
   // redirect back to client
+  //TODO: If this should be sent back?
   res.redirect(process.env.CLIENT_ORIGIN);
 }
 

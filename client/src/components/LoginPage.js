@@ -2,7 +2,7 @@ import '../App.css';
 import { Link } from 'react-router-dom';
 import getGoogleOAuthURL from '../utils/getGoogleUrl';
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import  { useLoginMutation } from '../slices/userApiSlice';
 import { setCredentials } from '../slices/authSlice';
