@@ -138,29 +138,29 @@ router.post('/logout', async (req, res) => {
 
 router.put('/reset', auth, async (req, res) => {
     try {
-
-        const { password, newPassword } = req.body;
-
+        const { password, confirmPassword } = req.body;
+        
         
         if (!password) {
             return res.status(400).json({ error: 'You must enter a password.' });
         }
 
         const user = await User.findById(req.user._id);
-
+        
         if (!user) {
             return res.status(400).json({ error: 'User not found' });
         }
-
-        const match = await bcrypt.compare(password, User.password);
-
+        
+        const match = password === confirmPassword;
+        
+        console.log(match)
         if (!match) {
-            return res.status(400).json({ error: 'Previous password is incorrect' });
-
+            return res.status(400).json({ error: 'Passwords do not match' });
+            
         }
-
+        
         const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(newPassword, salt);
+        const hash = await bcrypt.hash(confirmPassword, salt);
 
         user.password = hash;
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from 'react-icons/bs';
 
-const Carousal = ({ data }) => {
+function Carousal({ data }) {
     const [slide, setSlide] = useState(0);
 
     const nextSlide = () => {
