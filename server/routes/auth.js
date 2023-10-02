@@ -29,12 +29,20 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ error: 'You must enter a password.' });
         }
 
-        const existingUser = await User.findOne({ email });
+        const existingEmail = await User.findOne({ email });
 
-        if (existingUser) {
+        if (existingEmail) {
             return res
                 .status(400)
                 .json({ error: 'That email address is already in use.' });
+        }
+
+        const existingUsername = await User.findOne({ username });
+
+        if (existingUsername) {
+            return res
+                .status(400)
+                .json({ error: 'That username is already in use.' });
         }
 
         const user = new User({
@@ -141,10 +149,9 @@ router.post('/logout', async (req, res) => {
 
 router.put('/reset', auth, async (req, res) => {
     try {
+        const { password, confirmPassword } = req.body;
 
-        const { password, newPassword } = req.body;
 
-        
         if (!password) {
             return res.status(400).json({ error: 'You must enter a password.' });
         }
@@ -155,15 +162,15 @@ router.put('/reset', auth, async (req, res) => {
             return res.status(400).json({ error: 'User not found' });
         }
 
-        const match = await bcrypt.compare(password, User.password);
+        const match = password === confirmPassword;
 
         if (!match) {
-            return res.status(400).json({ error: 'Previous password is incorrect' });
+            return res.status(400).json({ error: 'Passwords do not match' });
 
         }
 
         const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(newPassword, salt);
+        const hash = await bcrypt.hash(confirmPassword, salt);
 
         user.password = hash;
 
@@ -218,11 +225,16 @@ router.post("/forgot", async (req, res) => {
             text: resetLink
         };
 
-        transport.sendMail(mailOptions, (err, info) => {
-            if (err) {
-                return res.status(400).json({ error: 'Email failed to send' });
-            }
-        });
+        if (process.env.NODE_ENV == 'development') {
+            console.log(resetLink);
+        }
+        else {
+            transport.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                    return res.status(400).json({ error: 'Email failed to send' });
+                }
+            });
+        }
 
 
         res.status(200).json({ message: "Email sent" });
@@ -236,19 +248,19 @@ router.post("/forgot", async (req, res) => {
 
 router.put('/reset/:token', async (req, res) => {
     try {
-        
-        
+
+
         const { password } = req.body;
         const token = req.params.token;
-        
+
         if (!password) {
             return res.status(400).json({ error: 'You must enter a password' });
         }
-        
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        
+
         const user = await User.findById(decoded.userId);
-        
+
         if (!user) {
             return res.status(400).json({ error: 'User not found' });
         }
