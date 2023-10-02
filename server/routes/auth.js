@@ -26,12 +26,20 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ error: 'You must enter a password.' });
         }
 
-        const existingUser = await User.findOne({ email });
+        const existingEmail = await User.findOne({ email });
 
-        if (existingUser) {
+        if (existingEmail) {
             return res
                 .status(400)
                 .json({ error: 'That email address is already in use.' });
+        }
+
+        const existingUsername = await User.findOne({ username });
+
+        if (existingUsername) {
+            return res
+                .status(400)
+                .json({ error: 'That username is already in use.' });
         }
 
         const user = new User({
