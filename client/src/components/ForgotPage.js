@@ -1,19 +1,15 @@
 import '../App.css';
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import  { useLoginMutation } from '../slices/userApiSlice';
-import { setCredentials } from '../slices/authSlice';
-import NavBar from './common/NavBar';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import  { useForgotMutation } from '../slices/userApiSlice';
 
-function LoginPage() {
+function ForgotPage() {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
-    const [login] = useLoginMutation();
+    const [forgot] = useForgotMutation();
 
     const { userInfo } = useSelector((state) => state.auth);
 
@@ -27,9 +23,7 @@ function LoginPage() {
     const submitHandler = async (e) => {
         e.preventDefault()
         try {
-            const res = await login({ email, password }).unwrap();
-            dispatch(setCredentials(res.user));
-            navigate('/');
+            const res = await forgot({ email }).unwrap();
         } catch (error) {
             console.log(error);
         }
@@ -38,11 +32,10 @@ function LoginPage() {
     return (
         <div className="bg-black h-screen flex flex-col">
 
-            <NavBar/>
             {/* Login Section */}
             <main className="container mx-auto flex justify-center items-center flex-grow">
                 <div className="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-semibold text-white mb-6">Log In to BotBazaar</h2>
+                    <h2 className="text-2xl font-semibold text-white mb-6">Forgot Password</h2>
                     <form onSubmit={submitHandler}>
                         <div className="mb-4">
                             <label htmlFor="email" className="block text-gray-300 text-sm font-medium">Email Address</label>
@@ -56,27 +49,15 @@ function LoginPage() {
                                 onChange={ev => setEmail(ev.target.value)}
                             />
                         </div>
-                        <div className="mb-4">
-                            <label htmlFor="password" className="block text-gray-300 text-sm font-medium">Password</label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                className="mt-1 px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white"
-                                placeholder="********"
-                                value={password}
-                                onChange={ev => setPassword(ev.target.value)}
-                            />
-                        </div>
                         <div className="mb-6">
                             <button
                                 type="submit"
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full"
-                                >Log In</button>
+                                >Submit</button>
                         </div>
                     </form>
                     <p className="text-gray-300 text-sm">
-                        Don't have an account? <Link to="/register" className="text-blue-500 hover:underline">Sign up here</Link>.
+                        If there is an account associated with this email you will be sent a password reset link.
                     </p>
                 </div>
             </main>
@@ -84,4 +65,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default ForgotPage;

@@ -38,7 +38,32 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body: data
             }),
         }),
+        forgot: builder.mutation({
+            query: (data) => ({
+                url: `${AUTH_URL}/forgot`,
+                method: 'POST',
+                body: data
+            }),
+        }),
+        forgotReset: builder.mutation({
+            query(data) {
+                const { token, ...body } = data;
+                return {
+                    url: `${AUTH_URL}/reset/${token}`,
+                    method: 'PUT',
+                    body: body
+                }
+            }
+        }),
     }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useUpdateMutation, useResetMutation } = userApiSlice;
+
+export const { useLoginMutation,
+    useLogoutMutation,
+    useRegisterMutation,
+    useUpdateMutation,
+    useResetMutation,
+    useForgotMutation,
+    useForgotResetMutation,
+} = userApiSlice;
