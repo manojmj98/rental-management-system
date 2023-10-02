@@ -1,7 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
+import { useLogoutMutation } from '../../slices/userApiSlice';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../slices/authSlice'
+
 
 function NavBar() {
+    const { userInfo } = useSelector((state) => state.auth);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [logOutApi] = useLogoutMutation();
+
+
+    const logoutHandler = async () => {
+        try {
+            await logOutApi().unwrap();
+            dispatch(logout());
+            navigate('/')
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <nav className="bg-gray-900 p-4 mb-4">
@@ -29,13 +51,28 @@ function NavBar() {
                     <Link to="/contact" className="text-gray-300 hover:text-white font-medium">
                         Contact
                     </Link>
-                    {/* Sign Up Button */}
-                    <Link to="/register" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
-                        Sign Up
-                    </Link>
+                    {userInfo ? (
+                        <>
+                            <Link to="/profile" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                                Profile
+                            </Link> 
+                            <Link onClick={logoutHandler} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                                Sign Out
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/login" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                                Sign In
+                            </Link>
+                            <Link to="/register" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                                Sign Up
+                            </Link>
+                        </>
+                    )}
                 </div>
-            </div>
-        </nav>
+            </div >
+        </nav >
     )
 }
 

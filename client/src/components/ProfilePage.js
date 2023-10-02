@@ -1,39 +1,34 @@
 import '../App.css';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NavBar from './common/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
-import  { useRegisterMutation } from '../slices/userApiSlice';
+import  { useUpdateMutation } from '../slices/userApiSlice';
 import { setCredentials } from '../slices/authSlice';
 
-
 function RegisterPage() {
-    const [username, setUsername] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [register] = useRegisterMutation();
+    const [update] = useUpdateMutation();
 
     const { userInfo } = useSelector((state) => state.auth);
 
-    useEffect(() => {
-        if (userInfo) {
-            navigate('/');
-        }
 
-    }, [navigate, userInfo])
+    useEffect(() => {
+        setFirstName(userInfo.firstName);
+        setLastName(userInfo.lastName);
+        setEmail(userInfo.email);
+    }, [userInfo.firstName, userInfo.lastName, userInfo.email]);
 
     async function registerUser(e) {
         e.preventDefault();
         try {
-            const res = await register({ username, firstName, lastName, email, password }).unwrap();
-            dispatch(setCredentials(res.user));
-            navigate('/');
+            const res = await update({ _id: userInfo._id ,firstName, lastName, email }).unwrap();
+            dispatch(setCredentials(res));
         } catch (error) {
             console.log(error);
         }
@@ -42,25 +37,14 @@ function RegisterPage() {
     return (
         <div className="bg-black h-screen flex flex-col">
             {/* Navbar */}
-            <NavBar></NavBar>
+            <NavBar />
 
             {/* Registration Section */}
             <main className="container mx-auto flex justify-center items-center flex-grow">
                 <div className="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-semibold text-white mb-6">Sign Up for BotBazaar</h2>
+                    <h2 className="text-2xl font-semibold text-white mb-6">Profile</h2>
+
                     <form onSubmit={ registerUser }>
-                        <div className="mb-4">
-                            <label htmlFor="username" className="block text-gray-300 text-sm font-medium">Username</label>
-                            <input
-                                type="text"
-                                id="username"
-                                name="username"
-                                className="mt-1 px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white"
-                                placeholder="username"
-                                value={username}
-                                onChange={ev => setUsername(ev.target.value)}
-                            />
-                        </div>
                         <div className="mb-4">
                             <label htmlFor="firstName" className="block text-gray-300 text-sm font-medium">First Name</label>
                             <input
@@ -98,15 +82,14 @@ function RegisterPage() {
                             />
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="password" className="block text-gray-300 text-sm font-medium">Password</label>
+                            <label htmlFor="Role" className="block text-gray-300 text-sm font-medium">Role</label>
                             <input
-                                type="password"
-                                id="password"
-                                name="password"
+                                type="role"
+                                id="role"
+                                name="role"
                                 className="mt-1 px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white"
-                                placeholder="********"
-                                value={password}
-                                onChange={ev => setPassword(ev.target.value)}
+                                value={userInfo.role}
+                                disabled={true}
                             />
                         </div>
                         {/* Add fields for any other registration data */}
@@ -115,11 +98,11 @@ function RegisterPage() {
                             <button
                                 type="submit"
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full"
-                            >Sign Up</button>
+                            >Submit</button>
                         </div>
                     </form>
                     <p className="text-gray-300 text-sm">
-                        Already have an account? <Link to="/login" className="text-blue-500 hover:underline">Log in here</Link>.
+                        <Link to="/reset" className="text-blue-500 hover:underline">Reset Password</Link>
                     </p>
                 </div>
             </main>

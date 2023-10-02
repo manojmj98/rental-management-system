@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth.js');
-const { EMAIL_PROVIDER } = require('../constants/constants.js');
+const { EMAIL_PROVIDER, ROLE } = require('../constants/constants.js');
 
 // Get user profile from database 
 router.get('/profile',auth, async (req, res) => {
@@ -43,7 +43,8 @@ router.put('/profile',auth, async (req, res) => {
                 email: updatedUser.email,
                 firstName: updatedUser.firstName,
                 lastName: updatedUser.lastName,
-                phoneNumber: updatedUser.phoneNumber
+                phoneNumber: updatedUser.phoneNumber,
+                role: updatedUser.role
             })
         } else {
             res.status(404).json({message: 'User not found'});    
