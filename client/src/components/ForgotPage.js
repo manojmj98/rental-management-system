@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import  { useForgotMutation } from '../slices/userApiSlice';
+import { toast } from 'react-toastify';
+import NavBar from './common/NavBar';
 
 function ForgotPage() {
     const [email, setEmail] = useState('');
@@ -22,16 +24,20 @@ function ForgotPage() {
 
     const submitHandler = async (e) => {
         e.preventDefault()
+        setEmail('');
         try {
             const res = await forgot({ email }).unwrap();
+            toast.info("Email Sent");
+            navigate("/")
         } catch (error) {
-            console.log(error);
+            toast.error(error?.data?.error || error)
         }
     }
 
     return (
         <div className="bg-black h-screen flex flex-col">
 
+            <NavBar />
             {/* Login Section */}
             <main className="container mx-auto flex justify-center items-center flex-grow">
                 <div className="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-md">

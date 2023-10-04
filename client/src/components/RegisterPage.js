@@ -5,6 +5,7 @@ import NavBar from './common/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import  { useRegisterMutation } from '../slices/userApiSlice';
 import { setCredentials } from '../slices/authSlice';
+import { toast } from 'react-toastify';
 
 
 function RegisterPage() {
@@ -35,6 +36,7 @@ function RegisterPage() {
             dispatch(setCredentials(res.user));
             navigate('/');
         } catch (error) {
+            toast.error(error?.data?.error || error)
             console.log(error);
         }
     }

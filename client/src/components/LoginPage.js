@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import  { useLoginMutation } from '../slices/userApiSlice';
 import { setCredentials } from '../slices/authSlice';
+import { toast } from 'react-toastify';
 import NavBar from './common/NavBar';
 
 function LoginPage() {
@@ -25,13 +26,15 @@ function LoginPage() {
 
 
     const submitHandler = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setEmail('');
+        setPassword('');
         try {
             const res = await login({ email, password }).unwrap();
             dispatch(setCredentials(res.user));
             navigate('/');
         } catch (error) {
-            console.log(error);
+            toast.error(error?.data?.error || error)
         }
     }
 
