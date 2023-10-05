@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import IndexPage from './components/IndexPage'
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
@@ -14,6 +16,7 @@ import AdminPage from './components/AdminPage'
 function App() {
   return (
     <Router>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<IndexPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -28,6 +31,7 @@ function App() {
           <Route path="/reset" element={<ResetPage />}/>
         </Route>
 
+        {/* Admin Routes */}
         <Route path='' element={<AdminRoute />}> 
           <Route path="/admin" element={<AdminPage />} />
         </Route>

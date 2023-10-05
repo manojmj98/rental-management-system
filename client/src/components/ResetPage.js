@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import NavBar from './common/NavBar';
 import { useForgotResetMutation, useResetMutation, useLogoutMutation } from '../slices/userApiSlice';
 import { logout } from '../slices/authSlice'
+import { toast } from 'react-toastify';
 
 function ResetPage() {
     const dispatch = useDispatch();
@@ -27,15 +28,18 @@ function ResetPage() {
                 const res = await reset({password, confirmPassword}).unwrap();
                 await logOutApi().unwrap();
                 dispatch(logout());
+                toast.info("Password Changed Successfully")
                 navigate('/login')
             }
             else {
                 const res = await forgotReset({token: param.token, password, confirmPassword}).unwrap();
                 await logOutApi().unwrap();
+                toast.info("Password Changed Successfully")
                 dispatch(logout());
                 navigate('/login')
             }
         } catch (error) {
+            toast.error(error?.data?.error || error)
             console.log(error);
         }
     }

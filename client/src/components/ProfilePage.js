@@ -5,6 +5,7 @@ import NavBar from './common/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import  { useUpdateMutation } from '../slices/userApiSlice';
 import { setCredentials } from '../slices/authSlice';
+import { toast } from 'react-toastify';
 
 function RegisterPage() {
     const [firstName, setFirstName] = useState('');
@@ -30,6 +31,7 @@ function RegisterPage() {
             const res = await update({ _id: userInfo._id ,firstName, lastName, email }).unwrap();
             dispatch(setCredentials(res));
         } catch (error) {
+            toast.error(error?.data?.error || error)
             console.log(error);
         }
     }
