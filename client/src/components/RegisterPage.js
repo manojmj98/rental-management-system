@@ -14,6 +14,7 @@ function RegisterPage() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('MEMBER');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -32,7 +33,7 @@ function RegisterPage() {
     async function registerUser(e) {
         e.preventDefault();
         try {
-            const res = await register({ username, firstName, lastName, email, password }).unwrap();
+            const res = await register({ username, firstName, lastName, email, password, role }).unwrap();
             dispatch(setCredentials(res.user));
             navigate('/');
         } catch (error) {
@@ -110,6 +111,14 @@ function RegisterPage() {
                                 value={password}
                                 onChange={ev => setPassword(ev.target.value)}
                             />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-300 text-sm font-medium" >Select the Role</label>
+                                <select className="block text-gray-900 text-sm font-medium" value={role} onChange={e => setRole(e.target.value)}>
+                                <option>MEMBER</option>
+                                <option>MERCHANT</option>
+
+                                </select>
                         </div>
                         {/* Add fields for any other registration data */}
                         {/* ... (Similar to the login form) */}

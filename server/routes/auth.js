@@ -10,7 +10,7 @@ const { EMAIL_PROVIDER } = require('../constants/constants.js');
 // Register new user
 router.post('/register', async (req, res) => {
     try {
-        const { username, email, password, firstName, lastName } = req.body;
+        const { username, email, password, firstName, lastName, role } = req.body;
 
         if (!email) {
             return res
@@ -42,12 +42,19 @@ router.post('/register', async (req, res) => {
                 .json({ error: 'That username is already in use.' });
         }
 
+        if (role=='ADMIN') {
+            return res
+                .status(400)
+                .json({ error: 'Creation of admin account is restricted' });
+        }
+
         const user = new User({
             username,
             email,
             password,
             firstName,
-            lastName
+            lastName,
+            role
         });
 
         const salt = await bcrypt.genSalt(10);
