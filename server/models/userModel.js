@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { ROLE, EMAIL_PROVIDER } = require('../constants/constants.js');
+const { ROLE, EMAIL_PROVIDER, SECURITY_QUESTIONS} = require('../constants/constants.js');
 
 const userSchema = mongoose.Schema({
     username: {
@@ -36,6 +36,12 @@ const userSchema = mongoose.Schema({
         type: String,
         default: ROLE.Member,
         enum: [ROLE.Admin, ROLE.Member, ROLE.Merchant]
+    },
+    securityAnswer: {
+        type: String,
+        default: SECURITY_QUESTIONS.Question_1, 
+        enum: [SECURITY_QUESTIONS.Question_2, SECURITY_QUESTIONS.Question_3,
+            SECURITY_QUESTIONS.Question_4]
     }
 }, {
     timestamps: true
