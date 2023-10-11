@@ -10,10 +10,18 @@ function ForgotPage() {
 
     const navigate = useNavigate();
 
-    const [show, setShow] = useState('');
+    const [step, setStep] = useState(1);
     const [email, setEmail] = useState('');
 
     const { userInfo } = useSelector((state) => state.auth);
+
+    const nextStep = () => {
+        setStep(step + 1);
+    };
+
+    const prevStep = () => {
+        setStep(step - 1);
+    };
 
     useEffect(() => {
         if (userInfo) {
@@ -22,42 +30,76 @@ function ForgotPage() {
     }, [navigate, userInfo]);
 
 
-    return (
-        <div className="bg-black h-screen flex flex-col">
+    switch (step) {
+        case 1:
+            return (
+                <div className="bg-black h-screen flex flex-col">
+                    <NavBar />
+                    <main className="container mx-auto flex justify-center items-center flex-grow">
 
-            <NavBar />
+                        <EmailForm nextStep={nextStep} email={email} setEmail={setEmail} />
 
-
-            <main className="container mx-auto flex justify-center items-center flex-grow">
-                <div style={{display: !show ? "block" : "none"}}className="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-md">
-                    <button
-                        onClick={() => setShow('Email')}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full"
-                    >Email Reset</button>\
-                    <button
-                        onClick={() => setShow('Question')}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full"
-                    >Security Question Reset</button>
+                    </main>
                 </div>
+            );
+        case 2:
+            return (
+                <div className="bg-black h-screen flex flex-col">
 
-                <EmailReset status={show} navigate={navigate} email={email} setEmail={setEmail}/>
-                <QuestionReset status={show} navigate={navigate} email={email} setEmail={setEmail}/>
+                    <NavBar />
 
-            </main>
+                    <main className="container mx-auto flex justify-center items-center flex-grow">
+                        <div className="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-md">
+                            <h2 className="text-2xl font-semibold text-white mb-6">Select a Password Reset Option</h2>
+                            <button
+                                onClick={() => setStep(3)}
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full"
+                            >Email Reset</button>\
+                            <button
+                                onClick={() => setStep(4)}
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full"
+                            >Security Question Reset</button>\
+                            <button
+                                onClick={prevStep}
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full"
+                            >Back</button>
+                        </div>
+                    </main>
+                </div>
+            );
+        case 3:
+            return (
+                <div className="bg-black h-screen flex flex-col">
+                    <NavBar />
+                    <main className="container mx-auto flex justify-center items-center flex-grow">
 
-        </div>
-    );
+                        <EmailReset email={email} navigate={navigate} />
+
+                    </main>
+                </div>
+            );
+        case 4:
+        default:
+    }
+
+
 }
 
-function QuestionReset(props) {
+function EmailForm({ nextStep, email, setEmail }) {
 
-    const submitHandler = async (e) => {
-        e.preventDefault()
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        if (!email) {
+            toast.error("No email provided")
+        }
+        else {
+            nextStep();
+        }
     }
 
     return (
-        <div className="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-md"
-        style={{display: props.status === 'Question' ? 'block' : 'none' }}>
+        <div className="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold text-white mb-6">Forgot Password</h2>
             <form onSubmit={submitHandler}>
                 <div className="mb-4">
@@ -68,59 +110,40 @@ function QuestionReset(props) {
                         name="email"
                         className="mt-1 px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white"
                         placeholder="you@example.com"
-                        value={props.email}
-                        onChange={ev => props.setEmail(ev.target.value)}
+                        value={email}
+                        onChange={ev => setEmail(ev.target.value)}
                     />
                 </div>
                 <div className="mb-6">
                     <button
                         type="submit"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full"
-                    >Submit</button>
+                    >Continue</button>
                 </div>
             </form>
-            <p className="text-gray-300 text-sm">
-                If there is an account associated with this email we will show the security questions.
-            </p>
         </div>
     )
 }
 
-function EmailReset(props) {
+function EmailReset({ email, navigate }) {
 
     const [forgot] = useForgotMutation();
 
-    const navigate = props.navigate;
-
     const submitHandler = async (e) => {
         e.preventDefault()
-        props.setEmail('');
         try {
-            const res = await forgot({ email: props.email }).unwrap();
+            await forgot({ email }).unwrap();
             toast.info("Email Sent");
             navigate("/")
         } catch (error) {
-            toast.error(error?.data?.error || error)
+            navigate("/")
         }
     }
 
     return (
-        <div className="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-md"
-        style={{display: props.status === 'Email' ? 'block' : 'none' }}>
+        <div className="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold text-white mb-6">Forgot Password</h2>
             <form onSubmit={submitHandler}>
-                <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-300 text-sm font-medium">Email Address</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        className="mt-1 px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white"
-                        placeholder="you@example.com"
-                        value={props.email}
-                        onChange={ev => props.setEmail(ev.target.value)}
-                    />
-                </div>
                 <div className="mb-6">
                     <button
                         type="submit"
