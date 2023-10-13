@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
-app.use('/product',productRouter);
+app.use('api/product',productRouter);
 
 mongoose.connect(uri, {
     useNewUrlParser: true,
