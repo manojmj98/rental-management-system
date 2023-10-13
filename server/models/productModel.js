@@ -6,11 +6,6 @@ const productSchema = mongoose.Schema(
         type: String,
         required: true
     },
-    SKU: {
-        type: String,
-        unique: true,
-        required: true
-    },
     description: {
         type:String,
         required: true,
