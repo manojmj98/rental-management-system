@@ -12,6 +12,8 @@ import ProfilePage from './components/ProfilePage';
 import ResetPage from './components/ResetPage';
 import ForgotPage from './components/ForgotPage';
 import AdminPage from './components/AdminPage'
+import RobotListingPage from './components/store/ProductListPage';
+import RobotDetailsPage from './components/store/ProductItemPage';
 
 function App() {
   return (
@@ -24,15 +26,17 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/reset/:token" element={<ResetPage />} />
         <Route path="/forgot" element={<ForgotPage />} />
+        <Route path="/renter" element={<RobotListingPage />} />
+        <Route exact path="/renter/:id" element={<RobotDetailsPage />} />
 
         {/* Logged in Routes */}
-        <Route path='' element={<PrivateRoute />}> 
+        <Route path='' element={<PrivateRoute />}>
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/reset" element={<ResetPage />}/>
+          <Route path="/reset" element={<ResetPage />} />
         </Route>
 
         {/* Admin Routes */}
-        <Route path='' element={<AdminRoute />}> 
+        <Route path='' element={<AdminRoute />}>
           <Route path="/admin" element={<AdminPage />} />
         </Route>
 
