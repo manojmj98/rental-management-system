@@ -69,6 +69,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 params: data
             })
         }),
+        createQuestions: builder.mutation({
+            query: (data) => ({
+                url: `${AUTH_URL}/question`,
+                method: 'PUT',
+                body: data
+            })
+        }),
     }),
 });
 
@@ -82,4 +89,5 @@ export const { useLoginMutation,
     useForgotResetMutation,
     useQuestionVerifyMutation,
     useGetQuestionsQuery,
+    useCreateQuestionsMutation,
 } = userApiSlice;
