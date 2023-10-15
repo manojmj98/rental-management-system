@@ -23,16 +23,15 @@ React.useEffect(() => {
   }
 }, [data]);
 var filterdrobots = null;
-if(robots){
-    
-    filterdrobots = robots.filter((robot) => robot.owner === userInfo);
-}
 const userInfo = useSelector(state => state.auth.userInfo?.id)
 const authenticated = useSelector(state => state.auth.userInfo)
 const navigate = useNavigate();
 if (!authenticated) {
   navigate("/");
   return null;
+}
+if(robots){
+  filterdrobots = robots.filter((robot) => robot.owner === userInfo);
 }
   return (
     <>
