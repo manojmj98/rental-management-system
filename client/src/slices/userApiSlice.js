@@ -1,12 +1,20 @@
 import { apiSlice } from './apiSlice';
 const AUTH_URL = '/api/auth';
-const USER_URL = '/api/user'
+const USER_URL = '/api/user';
+const OAUTH_URL = '/api/oauth';
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (data) => ({
                 url: `${AUTH_URL}/login`,
+                method: 'POST',
+                body: data
+            }),
+        }),
+        googleLogin: builder.mutation({
+            query: (data) => ({
+                url: `${OAUTH_URL}/google`,
                 method: 'POST',
                 body: data
             }),
@@ -60,10 +68,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
 
 export const { useLoginMutation,
+    useGoogleLoginMutation,
     useLogoutMutation,
     useRegisterMutation,
     useUpdateMutation,
     useResetMutation,
     useForgotMutation,
-    useForgotResetMutation,
+    useForgotResetMutation
 } = userApiSlice;
