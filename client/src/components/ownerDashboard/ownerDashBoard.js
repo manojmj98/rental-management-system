@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useGetproductsMutation } from "../../slices/userApiSlice";
 import Productpage from "./Productpage";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useNavigate } from "react-router-dom";
 function OwnerDashBoard(props) {
 const [robots, setrobots] = useState(null)
 
@@ -22,10 +23,16 @@ React.useEffect(() => {
   }
 }, [data]);
 var filterdrobots = null;
-const userInfo = useSelector(state => state.auth.userInfo.id);
 if(robots){
     
     filterdrobots = robots.filter((robot) => robot.owner === userInfo);
+}
+const userInfo = useSelector(state => state.auth.userInfo?.id)
+const authenticated = useSelector(state => state.auth.userInfo)
+const navigate = useNavigate();
+if (!authenticated) {
+  navigate("/");
+  return null;
 }
   return (
     <>
