@@ -383,12 +383,9 @@ const verifyQuestions = async (req, res) => {
             expiresIn: "5m",
         });
 
-        // Might need changed
-        const resetLink = process.env.NODE_ENV == 'development' ? `http://localhost:3000/reset/${token}` : `http://bot-bazaar.com/reset/${token}`;
-
         res.status(200).json({
             success: true,
-            resetLink: resetLink
+            token: token
         });
 
     } catch (error) {
@@ -401,7 +398,7 @@ const verifyQuestions = async (req, res) => {
 
 const getQuestions = async (req, res) => {
     try {
-        const { email } = req.body;
+        const { email } = req.query;
 
         if (!email) {
             return res.status(400).json({ error: 'You must enter an email address.' });
