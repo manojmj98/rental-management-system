@@ -1,6 +1,7 @@
-import { apiSlice } from './apiSlice';
-const AUTH_URL = '/api/auth';
-const USER_URL = '/api/user'
+import { apiSlice } from "./apiSlice";
+const AUTH_URL = "/api/auth";
+const USER_URL = "/api/user";
+const PRODUCT_URL = "api/product"
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -76,11 +77,29 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body: data
             })
         }),
+        addproduct: builder.mutation({
+            query(data) {
+                return {
+                    url: `${PRODUCT_URL}/create`,
+                    method: "POST",
+                    body: data,
+                };
+            },
+        }),
+        getproducts: builder.mutation({
+            query(data) {
+                return {
+                    url: `${PRODUCT_URL}/get-products`,
+                    method: "POST",
+                    body: data,
+                };
+            },
+        })
     }),
 });
 
-
-export const { useLoginMutation,
+export const {
+    useLoginMutation,
     useLogoutMutation,
     useRegisterMutation,
     useUpdateMutation,
@@ -90,4 +109,6 @@ export const { useLoginMutation,
     useQuestionVerifyMutation,
     useGetQuestionsQuery,
     useCreateQuestionsMutation,
+    useAddproductMutation,
+    useGetproductsMutation,
 } = userApiSlice;
