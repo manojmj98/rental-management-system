@@ -14,6 +14,9 @@ import ForgotPage from './components/ForgotPage';
 import AdminPage from './components/AdminPage'
 import RobotListingPage from './components/store/ProductListPage';
 import RobotDetailsPage from './components/store/ProductItemPage';
+import OwnerDashBoard from './components/ownerDashboard/ownerDashBoard';
+import ProductInput from './components/ownerDashboard/ProductInput';
+import Productpage from './components/ownerDashboard/Productpage';
 
 function App() {
   return (
@@ -34,6 +37,10 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/reset" element={<ResetPage />} />
         </Route>
+
+        <Route path="/owner" element={<OwnerDashBoard />} />
+        <Route path="/robotInput" element={<ProductInput />} />
+        <Route path="/productpage/:id" element={<Productpage />} />
 
         {/* Admin Routes */}
         <Route path='' element={<AdminRoute />}>
