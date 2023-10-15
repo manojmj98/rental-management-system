@@ -32,7 +32,7 @@ function AboutPage() {
 
             {/* Footer Section */}
             <footer className="py-4 text-center text-gray-300">
-                & copy; {new Date().getFullYear()} BotBazaar.All rights reserved.
+                &copy; {new Date().getFullYear()} BotBazaar. All rights reserved.
             </footer>
         </div>
     );
