@@ -332,7 +332,6 @@ const createQuestions = async (req, res) => {
         const updatedUser = await user.save();
 
         res.status(200).json({
-            success: true,
             q1: updatedUser.securityQuestions[0].question,
             q2: updatedUser.securityQuestions[1].question,
             q3: updatedUser.securityQuestions[2].question
@@ -400,6 +399,37 @@ const verifyQuestions = async (req, res) => {
     }
 }
 
+const getQuestions = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ error: 'You must enter an email address.' });
+        }
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({ error: 'User not found' });
+        }
+
+        if (!user.securityQuestions[0]) {
+            return res.status(400).json({ error: 'No security questions found' });
+        }
+
+        res.status(200).json({
+            q1: user.securityQuestions[0].question,
+            q2: user.securityQuestions[1].question,
+            q3: user.securityQuestions[2].question        
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            error: 'Your request could not be processed. Please try again.'
+        });
+    }
+}
+
 const validQuestion = (question) => {
     for (const property in SECURITY_QUESTIONS) {
         if (SECURITY_QUESTIONS[property] === question)
@@ -430,4 +460,5 @@ module.exports = {
     tokenReset,
     createQuestions,
     verifyQuestions,
+    getQuestions,
 }
