@@ -12,6 +12,10 @@ function LoginPage() {
                     <h2 className="text-2xl font-semibold text-white mb-6">Admin Test Page</h2>
                 </div>
             </main>
+            {/* Footer Section */}
+            <footer className="py-4 text-center text-gray-300">
+                &copy; {new Date().getFullYear()} BotBazaar. All rights reserved.
+            </footer>
         </div>
     );
 }
