@@ -23,7 +23,7 @@ const SecurityQuestionPage = props => {
         e.preventDefault();
 
         try {
-            const res = await questions({ q1, q1a, q2, q2a, q3, q3a }).unwrap();
+            await questions({ q1, q1a, q2, q2a, q3, q3a }).unwrap();
             navigate('/')
         } catch (error) {
             toast.error(error?.data?.error || error)
