@@ -56,6 +56,27 @@ export const userApiSlice = apiSlice.injectEndpoints({
         }
       }
     }),
+    questionVerify: builder.mutation({
+      query: (data) => ({
+          url: `${AUTH_URL}/question`,
+          method: 'POST',
+          body: data
+      })
+  }),
+  getQuestions: builder.query({
+      query: (data) => ({
+          url: `${AUTH_URL}/question`,
+          method: 'GET',
+          params: data
+      })
+  }),
+  createQuestions: builder.mutation({
+      query: (data) => ({
+          url: `${AUTH_URL}/question`,
+          method: 'PUT',
+          body: data
+      })
+  }),
     addproduct: builder.mutation({
       query(data) {
         return {
@@ -74,6 +95,22 @@ export const userApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+    getproductbyid: builder.mutation({
+      query(data) {
+        return {
+          url: `../${PRODUCT_URL}/get-productbyid`,
+          method: "POST",
+          body: data,
+        };
+      }}),
+      deleteproductbyid: builder.mutation({
+        query(data) {
+          return {
+            url: `../${PRODUCT_URL}/remove`,
+            method: "DELETE",
+            body: data,
+          };
+        }}),
     getUsers: builder.query({
       query: () => ({
         url: USER_URL,
@@ -91,15 +128,20 @@ export const userApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useLoginMutation,
-  useLogoutMutation,
-  useRegisterMutation,
-  useUpdateMutation,
-  useResetMutation,
-  useForgotMutation,
-  useForgotResetMutation,
-  useAddproductMutation,
-  useGetproductsMutation,
-  useGetUsersQuery,
-  useDeleteUserMutation,
-} = userApiSlice;
+    useLoginMutation,
+    useLogoutMutation,
+    useRegisterMutation,
+    useUpdateMutation,
+    useResetMutation,
+    useForgotMutation,
+    useForgotResetMutation,
+    useQuestionVerifyMutation,
+    useGetQuestionsQuery,
+    useCreateQuestionsMutation,
+    useAddproductMutation,
+    useGetproductsMutation,
+    useGetUsersQuery,
+    useDeleteUserMutation,
+    useGetproductbyidMutation,
+    useDeleteproductbyidMutation,} = userApiSlice;
+    

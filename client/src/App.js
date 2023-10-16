@@ -14,6 +14,7 @@ import ForgotPage from "./components/ForgotPage";
 import AdminPage from "./components/AdminPage";
 import RobotListingPage from "./components/store/ProductListPage";
 import RobotDetailsPage from "./components/store/ProductItemPage";
+import SecurityQuestionPage from './components/SecurityQuestionPage';
 import OwnerDashBoard from "./components/ownerDashboard/ownerDashBoard";
 import ProductInput from "./components/ownerDashboard/ProductInput";
 import Productpage from "./components/ownerDashboard/Productpage";
@@ -39,6 +40,7 @@ function App() {
         <Route path="" element={<PrivateRoute />}>
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/reset" element={<ResetPage />} />
+          <Route path="/SecurityQuestions" element={<SecurityQuestionPage/>}/>
         </Route>
 
         <Route path="/owner" element={<OwnerDashBoard />} />

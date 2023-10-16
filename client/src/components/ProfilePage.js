@@ -106,6 +106,9 @@ function RegisterPage() {
                     <p className="text-gray-300 text-sm">
                         <Link to="/reset" className="text-blue-500 hover:underline">Reset Password</Link>
                     </p>
+                    <p className="text-gray-300 text-sm">
+                        <Link to="/SecurityQuestions" className="text-blue-500 hover:underline">Update/Add Security Questions</Link>
+                    </p>
                 </div>
             </main>
         </div>
