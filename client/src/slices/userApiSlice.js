@@ -77,7 +77,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body: data
             })
         }),
-        addproduct: builder.mutation({
+        addProduct: builder.mutation({
             query(data) {
                 return {
                     url: `${PRODUCT_URL}/create`,
@@ -86,7 +86,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 };
             },
         }),
-        getproducts: builder.mutation({
+        getProducts: builder.mutation({
             query(data) {
                 return {
                     url: `${PRODUCT_URL}/get-products`,
@@ -95,7 +95,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 };
             },
         }),
-        getproductbyid: builder.mutation({
+        getProductById: builder.mutation({
           query(data) {
             return {
               url: `../${PRODUCT_URL}/get-productbyid`,
@@ -103,7 +103,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
               body: data,
             };
           }}),
-          deleteproductbyid: builder.mutation({
+          deleteProductById: builder.mutation({
             query(data) {
               return {
                 url: `../${PRODUCT_URL}/remove`,
@@ -126,8 +126,8 @@ export const {
     useQuestionVerifyMutation,
     useGetQuestionsQuery,
     useCreateQuestionsMutation,
-    useAddproductMutation,
-    useGetproductsMutation,
-    useGetproductbyidMutation,
-    useDeleteproductbyidMutation,} = userApiSlice;
+    useAddProductMutation,
+    useGetProductsMutation,
+    useGetProductByIdMutation,
+    useDeleteProductByIdMutation,} = userApiSlice;
     
