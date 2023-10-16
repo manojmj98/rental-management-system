@@ -5,7 +5,7 @@ import { useLogoutMutation } from '../../slices/userApiSlice';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../slices/authSlice';
 import { ROLE } from '../../constants/constants';
-import { FiStore, FiHome } from 'react-icons/fi';
+import { FiHome } from 'react-icons/fi';
 import { FaStore } from 'react-icons/fa';
 
 function NavBar() {
