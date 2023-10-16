@@ -5,29 +5,14 @@ import Message from "../../components/common/Message";
 import Loader from "../../components/common/Loader";
 import { useGetOrdersQuery } from "../../slices/ordersApiSlice";
 import {Link} from 'react-router-dom';
+import NavBar from "../common/NavBar";
 
 const OrderListScreen = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
 
   return (
     <>
-    <nav className="bg-gray-900 p-4 mb-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="flex items-center gap-2 text-white">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="white"
-            className="w-10 h-10"
-          >
-            {/* Your SVG path here */}
-          </svg>
-          <span className="font-bold text-2xl">BotBazaar</span>
-        </Link>
-        </div>
-      </nav>
+      <NavBar></NavBar>
       <h1>Orders</h1>
       {isLoading ? (
         <Loader />
