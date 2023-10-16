@@ -30,7 +30,6 @@ const UserListScreen = () => {
 
   return (
     <>
-      <h1>Users</h1>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -52,19 +51,19 @@ const UserListScreen = () => {
             {users.map((user) => (
               <tr key={user._id}>
                 <td>{user._id}</td>
-                <td>{user.name}</td>
+                <td>{user.username}</td>
                 <td>
                   <a href={`mailto:${user.email}`}>{user.email}</a>
                 </td>
                 <td>
-                  {user.isAdmin ? (
+                  {user.role == 'ADMIN' ? (
                     <FaCheck style={{ color: "green" }} />
                   ) : (
                     <FaTimes style={{ color: "red" }} />
                   )}
                 </td>
                 <td>
-                  {!user.isAdmin && (
+                  {!user.role == 'ADMIN' && (
                     <>
                       <LinkContainer
                         to={`/admin/user/${user._id}/edit`}

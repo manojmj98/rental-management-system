@@ -8,11 +8,10 @@ import {Link} from 'react-router-dom';
 import NavBar from "../common/NavBar";
 
 const OrderListScreen = () => {
-  const { data: orders,refetch, isLoading, error } = useGetOrdersQuery();
+  const { data:orders,refetch, isLoading, error } = useGetOrdersQuery();
 
   return (
     <>
-      <h1>Orders</h1>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -33,11 +32,11 @@ const OrderListScreen = () => {
             </tr>
           </thead>
           <tbody>
-          {Array.isArray(orders) ? (
-            orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
-                <td>{order.user && order.user.name}</td>
+          {Array.isArray(orders.orders) ? (
+            orders.orders.map((order) => (
+              <tr key={order?._id}>
+                <td>{order?.orderItems._id}</td>
+                <td>{order.user}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
                 <td>${order.totalPrice}</td>
                 <td>
@@ -48,19 +47,19 @@ const OrderListScreen = () => {
                   )}
                 </td>
                 <td>
-                  {order.isDelivered ? (
-                    order.deliveredAt.substring(0, 10)
+                  {order.status ? (
+                    order.status
                   ) : (
                     <FaTimes style={{ color: "red" }} />
                   )}
                 </td>
-                <td>
+                {/* <td>
                   <LinkContainer to={`/order/${order._id}`}>
                     <Button variant="light" className="btn-sm">
                       Details
                     </Button>
                   </LinkContainer>
-                </td>
+                </td> */}
               </tr>
             ))): null}
           </tbody>
