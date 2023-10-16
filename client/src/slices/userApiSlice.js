@@ -87,4 +87,8 @@ export const {
   useForgotResetMutation,
   useAddproductMutation,
   useGetproductsMutation,
+  useGetUsersQuery,
+  useDeleteUserMutation,
+  useUpdateUserMutation,
+  useGetUserDetailsQuery,
 } = userApiSlice;

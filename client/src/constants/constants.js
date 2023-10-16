@@ -9,3 +9,4 @@ exports.ROLE = {
     Member: 'MEMBER',
     Merchant: 'MERCHANT'
 };
+

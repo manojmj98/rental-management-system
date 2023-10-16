@@ -1,0 +1,91 @@
+import { LinkContainer } from "react-router-bootstrap";
+import { Table, Button } from "react-bootstrap";
+import { FaTimes } from "react-icons/fa";
+import Message from "../../components/common/Message";
+import Loader from "../../components/common/Loader";
+import { useGetOrdersQuery } from "../../slices/ordersApiSlice";
+import {Link} from 'react-router-dom';
+
+const OrderListScreen = () => {
+  const { data: orders, isLoading, error } = useGetOrdersQuery();
+
+  return (
+    <>
+    <nav className="bg-gray-900 p-4 mb-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <Link to="/" className="flex items-center gap-2 text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="white"
+            className="w-10 h-10"
+          >
+            {/* Your SVG path here */}
+          </svg>
+          <span className="font-bold text-2xl">BotBazaar</span>
+        </Link>
+        </div>
+      </nav>
+      <h1>Orders</h1>
+      {isLoading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
+      ) : (
+        <Table striped bordered hover responsive className="table-sm">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>USER</th>
+              <th>DATE</th>
+              <th>TOTAL</th>
+              <th>PAID</th>
+              <th>DELIVERED</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order._id}>
+                <td>{order._id}</td>
+                <td>{order.user && order.user.name}</td>
+                <td>{order.createdAt.substring(0, 10)}</td>
+                <td>${order.totalPrice}</td>
+                <td>
+                  {order.isPaid ? (
+                    order.paidAt.substring(0, 10)
+                  ) : (
+                    <FaTimes style={{ color: "red" }} />
+                  )}
+                </td>
+                <td>
+                  {order.isDelivered ? (
+                    order.deliveredAt.substring(0, 10)
+                  ) : (
+                    <FaTimes style={{ color: "red" }} />
+                  )}
+                </td>
+                <td>
+                  <LinkContainer to={`/order/${order._id}`}>
+                    <Button variant="light" className="btn-sm">
+                      Details
+                    </Button>
+                  </LinkContainer>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
+      <footer className="py-4 text-center fixed bottom-0 text-gray-300">
+        &copy; {new Date().getFullYear()} BotBazaar. All rights reserved.
+      </footer>
+    </>
+  );
+};
+
+export default OrderListScreen;
