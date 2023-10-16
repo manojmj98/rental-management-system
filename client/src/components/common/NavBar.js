@@ -5,7 +5,8 @@ import { useLogoutMutation } from '../../slices/userApiSlice';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../slices/authSlice';
 import { ROLE } from '../../constants/constants';
-import { FiHome } from 'react-icons/fi';
+import { FiStore, FiHome } from 'react-icons/fi';
+import { FaStore } from 'react-icons/fa';
 
 function NavBar() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -57,42 +58,45 @@ function NavBar() {
           >
             Contact
           </Link>
-          {userInfo ? (   
-              userInfo.role === ROLE.Merchant ? (
-            <>
-            <Link
-                to='/profile'
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-              >
-                Profile
-              </Link>
-                  <Link to='/owner' className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'>
+          {userInfo ? (
+            userInfo.role === ROLE.Merchant ? (
+              <>
+                <Link
+                  to='/profile'
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  Profile
+                </Link>
+                <Link to='/renter' className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'>
+                  <FaStore className='mr-2' /> Product Catalog
+                </Link>
+                <Link to='/owner' className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'>
                   <FiHome className='mr-2' /> My Dashboard
-              </Link>
-              <Link
-                onClick={logoutHandler}
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-              >
-                Sign Out
-              </Link>
-            </>
+                </Link>
+                <Link
+                  onClick={logoutHandler}
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  Sign Out
+                </Link>
+              </>
 
-              ) : (
-                <>
-              <Link
-                to='/profile'
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-              >
-                Profile
-              </Link>
-              <Link
-                onClick={logoutHandler}
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-              >
-                Sign Out
-              </Link>
-            </> 
-              ) 
+            ) : (
+              <>
+                <Link
+                  to='/profile'
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  Profile
+                </Link>
+                <Link
+                  onClick={logoutHandler}
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  Sign Out
+                </Link>
+              </>
+            )
           ) : (
             <>
               <Link
