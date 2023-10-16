@@ -1,6 +1,7 @@
-import { apiSlice } from './apiSlice';
-const AUTH_URL = '/api/auth';
-const USER_URL = '/api/user';
+import { apiSlice } from "./apiSlice";
+const AUTH_URL = "/api/auth";
+const USER_URL = "/api/user";
+const PRODUCT_URL = "api/product";
 const OAUTH_URL = '/api/oauth';
 
 export const userApiSlice = apiSlice.injectEndpoints({
@@ -63,16 +64,79 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 }
             }
         }),
+        questionVerify: builder.mutation({
+            query: (data) => ({
+                url: `${AUTH_URL}/question`,
+                method: 'POST',
+                body: data
+            })
+        }),
+        getQuestions: builder.query({
+            query: (data) => ({
+                url: `${AUTH_URL}/question`,
+                method: 'GET',
+                params: data
+            })
+        }),
+        createQuestions: builder.mutation({
+            query: (data) => ({
+                url: `${AUTH_URL}/question`,
+                method: 'PUT',
+                body: data
+            })
+        }),
+        addProduct: builder.mutation({
+            query(data) {
+                return {
+                    url: `${PRODUCT_URL}/create`,
+                    method: "POST",
+                    body: data,
+                };
+            },
+        }),
+        getProducts: builder.mutation({
+            query(data) {
+                return {
+                    url: `${PRODUCT_URL}/get-products`,
+                    method: "POST",
+                    body: data,
+                };
+            },
+        }),
+        getProductById: builder.mutation({
+          query(data) {
+            return {
+              url: `../${PRODUCT_URL}/get-productbyid`,
+              method: "POST",
+              body: data,
+            };
+          }}),
+          deleteProductById: builder.mutation({
+            query(data) {
+              return {
+                url: `../${PRODUCT_URL}/remove`,
+                method: "DELETE",
+                body: data,
+              };
+            }}),
+
     }),
 });
 
-
-export const { useLoginMutation,
+export const {
+    useLoginMutation,
     useGoogleLoginMutation,
     useLogoutMutation,
     useRegisterMutation,
     useUpdateMutation,
     useResetMutation,
     useForgotMutation,
-    useForgotResetMutation
-} = userApiSlice;
+    useForgotResetMutation,
+    useQuestionVerifyMutation,
+    useGetQuestionsQuery,
+    useCreateQuestionsMutation,
+    useAddProductMutation,
+    useGetProductsMutation,
+    useGetProductByIdMutation,
+    useDeleteProductByIdMutation,} = userApiSlice;
+    

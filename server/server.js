@@ -4,12 +4,14 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const app = express();
 const cookieParser = require('cookie-parser')
+const path = require('path');
 
 const port = process.env.PORT || 5001;
 const uri = process.env.MONGO_URI;
 
 const userRouter = require('./routes/userRoutes.js');
 const authRouter = require('./routes/auth.js');
+const productRouter = require('./routes/productRoutes.js')
 
 app.use(cors());
 app.use(express.json());
@@ -19,8 +21,7 @@ app.use(cookieParser());
 app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
 app.use('/api/oauth',authRouter);
-
-
+app.use('/api/product',productRouter);
 
 mongoose.connect(uri, {
     useNewUrlParser: true,
@@ -33,9 +34,10 @@ connection.once('open', () => {
 
 app.use(express.static(`${__dirname}/../client/build`));
 
-app.get("/*", function (req, res) {
-    res.sendFile(`${__dirname}/../client/build/index.html`, function (err) {
+app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../client/build","index.html"), function (err) {
         if (err) {
+            console.log(err)
             res.status(500).send(err);
         }
     });

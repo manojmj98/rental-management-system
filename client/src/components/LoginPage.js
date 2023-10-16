@@ -1,17 +1,17 @@
+import '../App.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import NavBar from './common/NavBar';
 import "../App.css";
-import { Link } from "react-router-dom";
-import getGoogleOAuthURL from "../utils/getGoogleUrl";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation,useGoogleLoginMutation } from "../slices/userApiSlice";
 import { setCredentials } from "../slices/authSlice";
-import NavBar from "./common/NavBar";
 import { GoogleLogin } from "react-oauth-google";
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,19 +23,20 @@ function LoginPage() {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      navigate('/');
     }
   }, [navigate, userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setEmail('');
+    setPassword('');
     try {
-      // Check which button was clicked
-        const res = await login({ email, password }).unwrap();
-        dispatch(setCredentials(res.user));
-        navigate("/");
+      const res = await login({ email, password }).unwrap();
+      dispatch(setCredentials(res.user));
+      navigate('/');
     } catch (error) {
-      console.log(error);
+      toast.error(error?.data?.error || error);
     }
   };
   const onSuccess = async (response) => {
