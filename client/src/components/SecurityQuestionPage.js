@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import NavBar from './common/NavBar';
-import { SECURITY_QUESTIONS } from '../constants/constants';
+import { SECURITY_QUESTIONS1, SECURITY_QUESTIONS2, SECURITY_QUESTIONS3 } from '../constants/constants';
 import { useCreateQuestionsMutation } from '../slices/userApiSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 function SecurityQuestionPage(props) {
-  const [q1, setQ1] = useState(SECURITY_QUESTIONS.Question_1);
-  const [q2, setQ2] = useState(SECURITY_QUESTIONS.Question_2);
-  const [q3, setQ3] = useState(SECURITY_QUESTIONS.Question_3);
+  const [q1, setQ1] = useState(SECURITY_QUESTIONS1.Question_1);
+  const [q2, setQ2] = useState(SECURITY_QUESTIONS2.Question_1);
+  const [q3, setQ3] = useState(SECURITY_QUESTIONS3.Question_1);
   const [q1a, setQ1a] = useState('');
   const [q2a, setQ2a] = useState('');
   const [q3a, setQ3a] = useState('');
@@ -52,7 +52,7 @@ function SecurityQuestionPage(props) {
                 value={q1}
                 onChange={(e) => setQ1(e.target.value)}
               >
-                {Object.values(SECURITY_QUESTIONS).map((question) => (
+                {Object.values(SECURITY_QUESTIONS1).map((question) => (
                   <option>{question}</option>
                 ))}
               </select>
@@ -76,7 +76,7 @@ function SecurityQuestionPage(props) {
                 value={q2}
                 onChange={(e) => setQ2(e.target.value)}
               >
-                {Object.values(SECURITY_QUESTIONS).map((question) => (
+                {Object.values(SECURITY_QUESTIONS2).map((question) => (
                   <option>{question}</option>
                 ))}
               </select>
@@ -100,7 +100,7 @@ function SecurityQuestionPage(props) {
                 value={q3}
                 onChange={(e) => setQ3(e.target.value)}
               >
-                {Object.values(SECURITY_QUESTIONS).map((question) => (
+                {Object.values(SECURITY_QUESTIONS3).map((question) => (
                   <option>{question}</option>
                 ))}
               </select>
@@ -118,7 +118,7 @@ function SecurityQuestionPage(props) {
                 type='submit'
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full'
               >
-                Sign Up
+                Submit
               </button>
             </div>
           </form>
