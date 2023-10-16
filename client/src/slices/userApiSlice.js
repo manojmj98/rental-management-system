@@ -94,7 +94,15 @@ export const userApiSlice = apiSlice.injectEndpoints({
                     body: data,
                 };
             },
-        })
+        }),
+        getproductbyid: builder.mutation({
+          query(data) {
+            return {
+              url: `../${PRODUCT_URL}/get-productbyid`,
+              method: "POST",
+              body: data,
+            };
+          }}),  
     }),
 });
 
@@ -111,4 +119,5 @@ export const {
     useCreateQuestionsMutation,
     useAddproductMutation,
     useGetproductsMutation,
-} = userApiSlice;
+    useGetproductbyidMutation,} = userApiSlice;
+    

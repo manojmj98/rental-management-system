@@ -1,27 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from 'react-router-dom';
+import { useGetproductbyidMutation } from "../../slices/userApiSlice";
 
 const Productpage = () => {
-  const product = {
-    name: "Example Product",
-    description: "This is an example product description.",
-    price: 29.99,
-    imageUrl: "https://via.placeholder.com/300", 
-  };
+const [getproductbyId , {data}] = useGetproductbyidMutation() 
+let { id } = useParams();
+const [robot,setrobot] = useState(null)
+  React.useEffect(() => {
+    let body = {"id":id}
+    getproductbyId(body);
+  }, [id, getproductbyId]);
+  React.useEffect(() => {
+    if (data) {
+      setrobot(data)
+    }
+  }, [data]);
 
   return (
-    <div className="container mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-4">{product.name}</h2>
+    robot &&
+    (<div className="container mx-auto mt-8">
+      <h2 className="text-2xl font-bold mb-4">{robot.name}</h2>
       <img
-        src={product.imageUrl}
-        alt={product.name}
+        src="https://picsum.photos/200/300"
+        alt={robot.name}
         className="mb-4 rounded-lg"
       />
-      <p className="text-gray-700 mb-4">{product.description}</p>
-      <p className="text-2xl font-bold text-green-600">${product.price}</p>
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+      <p className="text-gray-700 mb-4">{robot.description}</p>
+      <p className="text-2xl font-bold text-green-600">${robot.price}</p>
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4">
         update
       </button>
-    </div>
+      <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-4">
+        delete
+      </button>
+    </div>)
   );
 };
 
