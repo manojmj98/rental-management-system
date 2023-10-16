@@ -14,21 +14,10 @@ const accessTokenCookieOptions = {
 };
 
 async function googleOauthHandler(req, res) {
-  //Get the code from qs
-  const code = req.query.code;
-  //get the id and access token with code
-  const { id_token, access_token } = await userService.getGoogleOauthTokens({
-    code,
-  });
-  console.log({ id_token, access_token });
-  //get user with tokens
-  const googleUser = await userService.getGoogleUser({
-    id_token,
-    access_token,
-  });
-  console.log({ googleUser });
 
-  if (!googleUser.verified_email) {
+  const googleUser = jwt.decode(req.body.credential)
+
+  if (!googleUser.email_verified) {
     return res.status(403).send("Google account is not verified");
   }
 
@@ -41,6 +30,7 @@ async function googleOauthHandler(req, res) {
       email: googleUser.email,
       name: googleUser.name,
       picture: googleUser.picture, // TODO: Add picture if it is not already part of the user doc model
+      username: googleUser.given_name
     },
     {
       upsert: true,
@@ -53,13 +43,23 @@ async function googleOauthHandler(req, res) {
     id: user._id
   },process.env.JWT_SECRET,{expiresIn:"4h"})
 
-  //set cookies and redirect back to client
-  res.cookie("accessToken", token, accessTokenCookieOptions);
-  console.log("USER AUTHENTICATED WITH GOOGLE")
+res.cookie('jwt', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV !== 'development',
+    sameSite: 'strict',
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+});
 
-  // redirect back to client
-  //TODO: If this should be sent back?
-  res.redirect(process.env.CLIENT_ORIGIN);
+res.status(200).json({
+  success: true,
+  user: {
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role
+  }
+})
 }
 
 module.exports = {

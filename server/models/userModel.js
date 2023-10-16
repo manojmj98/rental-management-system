@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-const { ROLE, EMAIL_PROVIDER } = require('../constants/constants.js');
+const { ROLE, EMAIL_PROVIDER, SECURITY_QUESTIONS } = require('../constants/constants.js');
+
+const questionSchema =  mongoose.Schema({ question: String, answer: String })
 
 const userSchema = mongoose.Schema({
     username: {
@@ -36,7 +38,8 @@ const userSchema = mongoose.Schema({
         type: String,
         default: ROLE.Member,
         enum: [ROLE.Admin, ROLE.Member, ROLE.Merchant]
-    }
+    },
+    securityQuestions: [questionSchema]
 }, {
     timestamps: true
 });
