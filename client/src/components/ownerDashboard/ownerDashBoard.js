@@ -12,7 +12,7 @@ function OwnerDashBoard(props) {
 const [robots, setrobots] = useState(null)
 
 const [getProducts, { data }] = useGetproductsMutation(); 
-const [selectedTab, setSelectedTab] = useState("kids");
+const [selectedTab, setSelectedTab] = useState("myAds");
 
 React.useEffect(() => {
   getProducts();

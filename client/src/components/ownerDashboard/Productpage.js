@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useParams } from 'react-router-dom';
-import { useGetproductbyidMutation } from "../../slices/userApiSlice";
-
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetproductbyidMutation, useDeleteproductbyidMutation } from "../../slices/userApiSlice";
+import { toast } from 'react-toastify';
 const Productpage = () => {
 const [getproductbyId , {data}] = useGetproductbyidMutation() 
 let { id } = useParams();
@@ -16,6 +16,18 @@ const [robot,setrobot] = useState(null)
     }
   }, [data]);
 
+  const [deleteProduct] = useDeleteproductbyidMutation()
+const navigate = useNavigate()
+  const handleDeleteProduct = async () => {
+    try {
+      const response = await deleteProduct({'id':id}).unwrap();
+      if (response) {
+        navigate('/owner');
+      }
+    } catch (error) {
+        toast.error("Please try again later")
+    }
+  };
   return (
     robot &&
     (<div className="container mx-auto mt-8">
@@ -30,7 +42,7 @@ const [robot,setrobot] = useState(null)
       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4">
         update
       </button>
-      <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-4">
+      <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-4" onClick={handleDeleteProduct}>
         delete
       </button>
     </div>)
