@@ -51,8 +51,20 @@ const userProfile = async (req, res) => {
     }
 }
 
+const getUsers = async(req,res) =>{
+    try{
+        const users = await User.find({});
+        res.json(users);
+    }
+    catch(error){
+        res.status(500).json({
+            error: 'Unable fetch users now.Please try again'
+        }); 
+    }
+}
 
 module.exports = {
     updatedUser,
-    userProfile
+    userProfile,
+    getUsers
 }
