@@ -112,6 +112,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
     getUsers: builder.query({
       query: () => ({
         url: `${USER_URL}/get-users`,
+        method: 'POST'
       }),
       providesTags: ['User'],
       keepUnusedDataFor: 5,
