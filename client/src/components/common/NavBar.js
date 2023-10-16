@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLogoutMutation } from '../../slices/userApiSlice';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../slices/authSlice';
+import { ROLE } from '../../constants/constants';
+import { FiHome } from 'react-icons/fi';
 
 function NavBar() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -55,32 +57,53 @@ function NavBar() {
           >
             Contact
           </Link>
-          {userInfo ? (
+          {userInfo ? (   
+              userInfo.role === ROLE.Merchant ? (
             <>
+            <Link
+                to='/profile'
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+              >
+                Profile
+              </Link>
+                  <Link to='/owner' className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'>
+                  <FiHome className='mr-2' /> My Dashboard
+              </Link>
+              <Link
+                onClick={logoutHandler}
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+              >
+                Sign Out
+              </Link>
+            </>
+
+              ) : (
+                <>
               <Link
                 to='/profile'
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg'
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
               >
                 Profile
               </Link>
               <Link
                 onClick={logoutHandler}
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg'
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
               >
                 Sign Out
               </Link>
-            </>
+            </> 
+              ) 
           ) : (
             <>
               <Link
                 to='/login'
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg'
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
               >
                 Sign In
               </Link>
               <Link
                 to='/register'
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg'
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
               >
                 Sign Up
               </Link>
