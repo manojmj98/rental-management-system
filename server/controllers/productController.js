@@ -1,5 +1,6 @@
 const Product = require('../models/productModel.js');
 const getProducts = async (req, res) => {
+console.log("Inside getproducts call");
 const pageSize = process.env.PAGINATION_LIMIT;
 const page = Number(req.query.pageNumber) || 1;
 
@@ -16,7 +17,7 @@ const page = Number(req.query.pageNumber) || 1;
   const products = await Product.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-
+  console.log("Products:",JSON.stringify(products));
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 };
 

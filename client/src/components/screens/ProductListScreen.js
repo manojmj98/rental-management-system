@@ -13,64 +13,46 @@ import {
 } from "../../slices/productsApiSlice";
 import { toast } from "react-toastify";
 import NavBar from "../common/NavBar";
+import  { useGetproductsMutation } from '../../slices/userApiSlice';
+import React,{useState} from 'react';
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useNavigate } from "react-router-dom";
 
 const ProductListScreen = () => {
   const { pageNumber } = useParams();
-
-  const { data, isLoading, error, refetch } = useGetProductsQuery({
-    pageNumber,
-  });
-
-  const [deleteProduct, { isLoading: loadingDelete }] =
-    useDeleteProductMutation();
-
-  const deleteHandler = async (id) => {
-    if (window.confirm("Are you sure")) {
-      try {
-        await deleteProduct(id);
-        refetch();
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
+  const [robots, setrobots] = useState(null);
+  console.log("Before calling get products mutation");
+  const [getProducts, { data }] = useGetproductsMutation(); 
+  console.log("data:",JSON.stringify(data));
+  React.useEffect(() => {
+    getProducts();
+    //console.log("Inside useeffect:",response.data);
+  }, []);
+  React.useEffect(() => {
+    if (data) {
+      setrobots(data.products);
     }
-  };
-
-  const [createProduct, { isLoading: loadingCreate }] =
-    useCreateProductMutation();
-
-  const createProductHandler = async () => {
-    if (window.confirm("Are you sure you want to create a new product?")) {
-      try {
-        await createProduct();
-        refetch();
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
-    }
-  };
-
+  }, [data]);
+const userInfo = useSelector(state => state.auth.userInfo?.id)
+const authenticated = useSelector(state => state.auth.userInfo)
+const navigate = useNavigate();
+if (!authenticated) {
+  navigate("/");
+  return null;
+}
+  console.log("data-part2:",JSON.stringify(data))
+  const isLoading = true;
+  if (robots){
+    console.log("I don't know why I am here");
+  }
   return (
     <>
-      <NavBar></NavBar>
       <Row className="align-items-center">
         <Col>
           <h1>Products</h1>
         </Col>
-        {/* <Col className="text-end">
-          <Button className="my-3" onClick={createProductHandler}>
-            <FaPlus /> Create Product
-          </Button>
-        </Col> */}
       </Row>
-
-      {loadingCreate && <Loader />}
-      {loadingDelete && <Loader />}
-      {isLoading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant="danger">{error.data.message}</Message>
-      ) : (
-        <>
+      <>
           <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
@@ -99,7 +81,7 @@ const ProductListScreen = () => {
                     <Button
                       variant="danger"
                       className="btn-sm"
-                      onClick={() => deleteHandler(product._id)}
+                      // onClick={() => deleteHandler(product._id)}
                     >
                       <FaTrash style={{ color: "white" }} />
                     </Button>
@@ -108,13 +90,10 @@ const ProductListScreen = () => {
               ))}
             </tbody>
           </Table>
-          {/*TODO:ADD LATER IF NEEDED */}
-          {/* <Paginate pages={data.pages} page={data.page} isAdmin={true} /> */}
-        </>
-      )}
       <footer className="fixed bottom-0 py-4 text-center text-gray-300">
         &copy; {new Date().getFullYear()} BotBazaar. All rights reserved.
       </footer>
+    </>
     </>
   );
 };

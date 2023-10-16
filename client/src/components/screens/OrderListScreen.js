@@ -12,7 +12,6 @@ const OrderListScreen = () => {
 
   return (
     <>
-      <NavBar></NavBar>
       <h1>Orders</h1>
       {isLoading ? (
         <Loader />

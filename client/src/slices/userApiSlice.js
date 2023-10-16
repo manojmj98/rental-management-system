@@ -87,13 +87,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
       },
     }),
     getproducts: builder.mutation({
-      query(data) {
-        return {
+      query:(data) => ({
           url: `${PRODUCT_URL}/get-products`,
           method: "POST",
           body: data,
-        };
-      },
+      }),
     }),
     getproductbyid: builder.mutation({
       query(data) {
@@ -104,7 +102,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         };
       }}),
       deleteproductbyid: builder.mutation({
-        query(data) {
+        query:(data) => {
           return {
             url: `../${PRODUCT_URL}/remove`,
             method: "DELETE",
