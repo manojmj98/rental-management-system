@@ -1,6 +1,7 @@
 
 import { apiSlice } from './apiSlice';
 const PRODUCTS_URL = '/api/products';
+//TODO:Reasses which of these are needed and remove others
 
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

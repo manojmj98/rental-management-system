@@ -2,6 +2,7 @@ import { apiSlice } from "./apiSlice";
 const AUTH_URL = "/api/auth";
 const USER_URL = "/api/user";
 const PRODUCT_URL = "api/product"
+//TODO:Need to properly organized
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

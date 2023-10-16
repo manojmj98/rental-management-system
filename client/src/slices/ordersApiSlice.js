@@ -1,6 +1,7 @@
 import { apiSlice } from './apiSlice';
 const ORDERS_URL = '/api/order';
 const PAYPAL_URL = '/api/config/paypal';
+//TODO:Reasses which of these are needed and remove others
 
 export const ordersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
