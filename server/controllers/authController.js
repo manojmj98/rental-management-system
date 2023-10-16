@@ -461,8 +461,8 @@ const googleOauthHandler = async(req,res) =>{
       },
       {
         email: googleUser.email,
-        name: googleUser.name,
-        picture: googleUser.picture, // TODO: Add picture if it is not already part of the user doc model
+        firstName: googleUser.firstName,
+        lastName:googleUser.lastName,
         username: googleUser.given_name
       },
       {
