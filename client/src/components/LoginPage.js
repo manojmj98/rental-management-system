@@ -31,18 +31,9 @@ function LoginPage() {
     e.preventDefault();
     try {
       // Check which button was clicked
-      if (e.nativeEvent.submitter.name === "googleLogin") {
-        // The Google login button was clicked
-        const googleOAuthResponse = await getGoogleOAuthURL();
-        console.log(googleOAuthResponse);
-        window.location.href = googleOAuthResponse;
-        navigate("/");
-      } else {
-        // The normal login button was clicked
         const res = await login({ email, password }).unwrap();
         dispatch(setCredentials(res.user));
         navigate("/");
-      }
     } catch (error) {
       console.log(error);
     }
@@ -53,6 +44,8 @@ function LoginPage() {
     const {credential,clientId} = response
     const result = await googleLogin({credential,clientId}).unwrap();
     console.log(JSON.stringify(result));
+    dispatch(setCredentials(result.user));
+    navigate("/");
     // You can make an Axios request or use any other method to access Google APIs here
   };
 

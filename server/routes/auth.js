@@ -284,7 +284,7 @@ router.put('/reset/:token', async (req, res) => {
     }
 });
 
-router.get('/google',async (req,res)=> {
+router.post('/google',async (req,res)=> {
     try {
         console.log('In the router')
         googleOauthHandler(req,res)

@@ -14,22 +14,10 @@ const accessTokenCookieOptions = {
 };
 
 async function googleOauthHandler(req, res) {
-  console.log("Indisde oauth handler");
-  //Get the code from qs
-  const code = req.query.code;
-  //get the id and access token with code
-  const { id_token, access_token } = await userService.getGoogleOauthTokens({
-    code,
-  });
-  console.log({ id_token, access_token });
-  //get user with tokens
-  const googleUser = await userService.getGoogleUser({
-    id_token,
-    access_token,
-  });
-  console.log({ googleUser });
 
-  if (!googleUser.verified_email) {
+  const googleUser = jwt.decode(req.body.credential)
+
+  if (!googleUser.email_verified) {
     return res.status(403).send("Google account is not verified");
   }
 
