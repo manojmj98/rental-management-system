@@ -18,6 +18,7 @@ import SecurityQuestionPage from './components/SecurityQuestionPage';
 import OwnerDashBoard from './components/ownerDashboard/ownerDashBoard';
 import ProductInput from './components/ownerDashboard/ProductInput';
 import Productpage from './components/ownerDashboard/Productpage';
+import MerchantRoute from './components/common/MerchantRoute';
 
 function App() {
   return (
@@ -37,13 +38,15 @@ function App() {
         <Route path='' element={<PrivateRoute />}>
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/reset" element={<ResetPage />} />
-          <Route path="/SecurityQuestions" element={<SecurityQuestionPage/>}/>
+          <Route path="/SecurityQuestions" element={<SecurityQuestionPage />} />
         </Route>
 
-        <Route path="/owner" element={<OwnerDashBoard />} />
-        <Route path="/robotInput" element={<ProductInput />} />
-        <Route path="/productpage/:id" element={<Productpage />} />
-
+        <Route path='' element={<MerchantRoute />}>
+          <Route path="/owner" element={<OwnerDashBoard />} />
+          <Route path="/robotInput" element={<ProductInput />} />
+          <Route path="/productpage/:id" element={<Productpage />} />
+        </Route>
+        
         {/* Admin Routes */}
         <Route path='' element={<AdminRoute />}>
           <Route path="/admin" element={<AdminPage />} />
