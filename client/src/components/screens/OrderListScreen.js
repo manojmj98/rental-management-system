@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom';
 import NavBar from "../common/NavBar";
 
 const OrderListScreen = () => {
-  const { data: orders, isLoading, error } = useGetOrdersQuery();
+  const { data: orders,refetch, isLoading, error } = useGetOrdersQuery();
 
   return (
     <>
@@ -33,7 +33,8 @@ const OrderListScreen = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+          {Array.isArray(orders) ? (
+            orders.map((order) => (
               <tr key={order._id}>
                 <td>{order._id}</td>
                 <td>{order.user && order.user.name}</td>
@@ -61,7 +62,7 @@ const OrderListScreen = () => {
                   </LinkContainer>
                 </td>
               </tr>
-            ))}
+            ))): null}
           </tbody>
         </Table>
       )}

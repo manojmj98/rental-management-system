@@ -12,7 +12,7 @@ const uri = process.env.MONGO_URI;
 const userRouter = require('./routes/userRoutes.js');
 const authRouter = require('./routes/auth.js');
 const productRouter = require('./routes/productRoutes.js')
-const orderRouter = require('./routes/userRoutes.js')
+const orderRouter = require('./routes/orderRoutes.js')
 
 app.use(cors());
 app.use(express.json());

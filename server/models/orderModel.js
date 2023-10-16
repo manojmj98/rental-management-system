@@ -1,37 +1,37 @@
-import mongoose from 'mongoose';
-import { PAYMENT_STATUS, STATUS } from '../constants/constants';
+const mongoose = require("mongoose");
+const { PAYMENT_STATUS, STATUS} = require('../constants/constants.js');
 
 const orderSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      required: false,
       ref: 'User',
     },
     orderItems: [
       {
-        name: { type: String, required: true },
-        qty: { type: Number, required: true },
-        image: { type: String, required: true },
-        price: { type: Number, required: true },
+        name: { type: String, required: false },
+        qty: { type: Number, required: false },
+        image: { type: String, required: false },
+        price: { type: Number, required: false },
         product: {
           type: mongoose.Schema.Types.ObjectId,
-          required: true,
+          required: false,
           ref: 'Product',
         },
       },
     ],
     customerAddress: {
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: true },
+      address: { type: String, required: false},
+      city: { type: String, required: false },
+      postalCode: { type: String, required: false },
+      country: { type: String, required: false },
     },
     pickupAddress: {
-        address: { type: String, required: true },
-        city: { type: String, required: true },
-        postalCode: { type: String, required: true },
-        country: { type: String, required: true },
+        address: { type: String, required: false },
+        city: { type: String, required: false },
+        postalCode: { type: String, required: false },
+        country: { type: String, required: false },
       },
     paymentMethod: {
       type: String,
@@ -45,22 +45,22 @@ const orderSchema = mongoose.Schema(
     },
     itemsPrice: {
       type: Number,
-      required: true,
+      required: false,
       default: 0.0,
     },
     taxPrice: {
       type: Number,
-      required: true,
+      required: false,
       default: 0.0,
     },
     totalPrice: {
       type: Number,
-      required: true,
+      required: false,
       default: 0.0,
     },
     isPaid: {
       type: Boolean,
-      required: true,
+      required: false,
       default: false,
     },
     paidAt: {
@@ -81,7 +81,6 @@ const orderSchema = mongoose.Schema(
     timestamps: true,
   }
 );
-
 const Order = mongoose.model('Order', orderSchema);
 
-export default Order;
+module.exports = Order;
