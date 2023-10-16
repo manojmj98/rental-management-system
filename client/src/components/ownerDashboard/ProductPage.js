@@ -1,20 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  useGetProductByIdMutation,
-  useDeleteProductByIdMutation,
-} from '../../slices/userApiSlice';
 import { toast } from 'react-toastify';
+import { useDeleteProductByIdMutation, useGetProductByIdQuery } from '../../slices/productApiSlice';
 
 const ProductPage = () => {
-  const [getProductById, { data }] = useGetProductByIdMutation();
   let { id } = useParams();
+  const { data, isLoading, error } = useGetProductByIdQuery({id});
   const [robot, setRobot] = useState(null);
   
-  React.useEffect(() => {
-    let body = { id: id };
-    getProductById(body);
-  }, [id, getProductById]);
+
   React.useEffect(() => {
     if (data) {
       setRobot(data);
@@ -23,6 +17,7 @@ const ProductPage = () => {
 
   const [deleteProduct] = useDeleteProductByIdMutation();
   const navigate = useNavigate();
+  
   const handleDeleteProduct = async () => {
     try {
       const response = await deleteProduct({ id: id }).unwrap();

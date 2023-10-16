@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useAddProductMutation } from '../../slices/userApiSlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useAddProductMutation } from '../../slices/productApiSlice';
 
 function ProductInput() {
   const [formData, setFormData] = useState({
