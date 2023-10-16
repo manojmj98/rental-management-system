@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { PAYMENT_STATUS, STATUS} = require('../constants/constants.js');
-
+//TODO: Think about the items that are absolutely necessary for an order and 
+//make them required
 const orderSchema = mongoose.Schema(
   {
     user: {

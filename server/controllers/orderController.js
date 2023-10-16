@@ -1,4 +1,5 @@
 const Order = require('../models/orderModel.js');
+
 const getOrders = async (req, res) => {
 console.log("Inside getproducts call");
 const pageSize = process.env.PAGINATION_LIMIT;
@@ -20,7 +21,7 @@ const page = Number(req.query.pageNumber) || 1;
   console.log("orders:",JSON.stringify(orders));
   res.json({ orders, page, pages: Math.ceil(count / pageSize) });
 };
-
+//TODO:This is hardcoded at the moment - should be rewritten to actually create orders
 const createOrder = async (req, res) => {
   const { orderItems, customerAddress, paymentMethod } = req.body;
 
