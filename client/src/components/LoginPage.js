@@ -109,8 +109,8 @@ function LoginPage() {
             </div>
             <div className="mb-6">
               <GoogleLogin
-                client_id={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                redirect_uri={process.env.REACT_APP_GOOGLE_OAUTH_REDIRECT_URL}
+                client_id={'684117628903-nomt57eit937h7n4jbqgvvg1sdq49kpo.apps.googleusercontent.com'}
+                redirect_uri={'http://localhost:5000/api/oauth/google'}
                 onSuccess={onSuccess}
                 onError={onError}
               />
