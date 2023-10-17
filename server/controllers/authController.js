@@ -471,7 +471,6 @@ const googleOauthHandler = async (req, res) => {
   
     const user = await User.findOne({ email: googleUser.email });
     
-    console.log(user);
     if (user) {
       generateToken(res, user._id);
       return res.status(200).json({
