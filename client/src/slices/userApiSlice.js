@@ -118,6 +118,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 body: data,
               };
             }}),
+            updateProduct: builder.mutation({
+              query(data) {
+                return {
+                  url: `../${PRODUCT_URL}/updatebyid`,
+                  method: "PUT",
+                  body: data,
+                };
+              }}),
 
     }),
 });
@@ -137,5 +145,6 @@ export const {
     useAddProductMutation,
     useGetProductsMutation,
     useGetProductByIdMutation,
-    useDeleteProductByIdMutation,} = userApiSlice;
+    useDeleteProductByIdMutation,
+    useUpdateProductMutation,} = userApiSlice;
     

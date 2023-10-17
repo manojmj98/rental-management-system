@@ -73,10 +73,8 @@ const createProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  const { name, price, description } =
-    req.body;
-
-  const product = await Product.findById(req.params.id);
+  const { name, price, description, id } = req.body;
+  const product = await Product.findById(id);
 
   if (product) {
     product.name = name;
