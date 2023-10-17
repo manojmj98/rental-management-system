@@ -12,8 +12,8 @@ import ProfilePage from './components/ProfilePage';
 import ResetPage from './components/ResetPage';
 import ForgotPage from './components/ForgotPage';
 import AdminPage from './components/AdminPage';
-import RobotListingPage from './components/store/ProductListPage';
-import RobotDetailsPage from './components/store/ProductItemPage';
+import RenterDashboard from './components/store/RenterDashboard';
+import RenterItemPage from './components/store/RenterItemList';
 import SecurityQuestionPage from './components/SecurityQuestionPage';
 import OwnerDashBoard from './components/ownerDashboard/ownerDashBoard';
 import ProductInput from './components/ownerDashboard/ProductInput';
@@ -31,8 +31,8 @@ function App() {
         <Route path='/about' element={<AboutPage />} />
         <Route path='/reset/:token' element={<ResetPage />} />
         <Route path='/forgot' element={<ForgotPage />} />
-        <Route path='/renter' element={<RobotListingPage />} />
-        <Route exact path='/renter/:id' element={<RobotDetailsPage />} />
+        <Route path='/renter' element={<RenterDashboard />} />
+        <Route exact path='/renter/:id' element={<RenterItemPage />} />
 
         {/* Logged in Routes */}
         <Route path='' element={<PrivateRoute />}>
