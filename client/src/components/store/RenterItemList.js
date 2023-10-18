@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-    useGetProductByIdMutation,
-} from '../../slices/userApiSlice';
 import { toast } from 'react-toastify';
+import { useGetProductByIdQuery } from '../../slices/productApiSlice';
 
 const RenterItemPage = () => {
-    const [getProductById, { data }] = useGetProductByIdMutation();
     let { id } = useParams();
+
+    const { data, isLoading, error } = useGetProductByIdQuery({ id });
+
     const [robot, setRobot] = useState(null);
 
-    React.useEffect(() => {
-        let body = { id: id };
-        getProductById(body);
-    }, [id, getProductById]);
     React.useEffect(() => {
         if (data) {
             setRobot(data);

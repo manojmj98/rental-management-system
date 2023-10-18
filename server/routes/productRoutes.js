@@ -6,8 +6,8 @@ const { createProduct, updateProduct, deleteProduct, getProductById, getProducts
 
 
 router.route('/create').post(auth, merchant, createProduct);
-router.route('/update/:id').put(auth, merchant, updateProduct)
+router.route('/updatebyid').put(auth, merchant, updateProduct)
 router.route('/remove').delete(auth, merchant, deleteProduct)
-router.route('/get-productbyid').post(auth, getProductById)
-router.route('/get-products').post(auth, getProducts)
+router.route('/get-productbyid').get(auth, getProductById)
+router.route('/get-products').get(auth, getProducts)
 module.exports = router;

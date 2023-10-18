@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../common/NavBar";
 import Card from "../common/Card";
-import { useGetProductsMutation } from "../../slices/userApiSlice";
 import { Link } from "react-router-dom";
+import { useGetProductsQuery } from "../../slices/productApiSlice";
 
 function RenterDashboard() {
     const [robots, setRobots] = useState(null);
-    const [getProducts, { data }] = useGetProductsMutation();
-
-    useEffect(() => {
-        getProducts();
-    }, []);
+    const { data, isLoading, error } = useGetProductsQuery();
 
     useEffect(() => {
         if (data) {

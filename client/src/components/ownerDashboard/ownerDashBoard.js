@@ -4,20 +4,15 @@ import Card from '../common/Card';
 import NavBar from '../common/NavBar';
 import { FaPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { useGetProductsMutation } from '../../slices/userApiSlice';
-import ProductPage from './ProductPage';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { useNavigate } from 'react-router-dom';
+import { useGetProductsQuery } from '../../slices/productApiSlice';
 
 function OwnerDashBoard(props) {
   const [robots, setRobots] = useState(null);
 
-  const [getProducts, { data }] = useGetProductsMutation();
+  const { data, isLoading, error } = useGetProductsQuery();
   const [selectedTab, setSelectedTab] = useState('myAds');
-
-  React.useEffect(() => {
-    getProducts();
-  }, [getProducts]);
 
   React.useEffect(() => {
     if (data) {
