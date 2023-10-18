@@ -1,0 +1,15 @@
+.slick-slide img {
+    width: 50%;
+  display: block;
+  margin: auto;
+
+}
+.picture{
+    border-radius: 20px;
+}
+.slick-dots{
+    background-color: black;
+}
+.imageee{
+    background-color: black;
+}
