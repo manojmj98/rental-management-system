@@ -29,7 +29,7 @@ function CartPage() {
       {/* Robot Listing Section */}
       <section className='container mx-auto flex flex-col items-center mt-8'>
         <h3 className='text-3xl font-semibold text-black mb-6'>
-          Available Robots for Rent
+          Your Shopping Cart
         </h3>
         <div className='grid grid-cols-1 gap-6'>
           {cartItems &&
