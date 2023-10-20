@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { logout } from '../../slices/authSlice';
 import { ROLE } from '../../constants/constants';
 import { FiHome } from 'react-icons/fi';
-import { FaStore } from 'react-icons/fa';
+import { FaStore, FaShoppingCart } from 'react-icons/fa';
+import { resetCart } from '../../slices/cartSlice';
 
 function NavBar() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -20,6 +21,7 @@ function NavBar() {
     try {
       await logOutApi().unwrap();
       dispatch(logout());
+      dispatch(resetCart());
       navigate('/');
     } catch (error) {
       console.log(error);
@@ -67,7 +69,10 @@ function NavBar() {
                 >
                   Profile
                 </Link>
-                <Link to='/owner' className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'>
+                <Link
+                  to='/owner'
+                  className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
                   <FiHome className='mr-2' /> My Dashboard
                 </Link>
                 <Link
@@ -77,17 +82,19 @@ function NavBar() {
                   Sign Out
                 </Link>
               </>
-
             ) : (
               <>
+                <Link
+                  to='/renter'
+                  className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  <FaStore className='mr-2' /> Product Catalog
+                </Link>
                 <Link
                   to='/profile'
                   className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
                 >
                   Profile
-                </Link>
-                <Link to='/renter' className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'>
-                  <FaStore className='mr-2' /> Product Catalog
                 </Link>
                 <Link
                   onClick={logoutHandler}
@@ -95,10 +102,22 @@ function NavBar() {
                 >
                   Sign Out
                 </Link>
+                <Link
+                  to='/cart'
+                  className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  <FaShoppingCart className='mr-2' size={'1.5em'} />
+                </Link>
               </>
             )
           ) : (
             <>
+              <Link
+                to='/renter'
+                className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+              >
+                <FaStore className='mr-2' /> Product Catalog
+              </Link>
               <Link
                 to='/login'
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
