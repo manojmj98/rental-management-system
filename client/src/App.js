@@ -19,6 +19,7 @@ import OwnerDashBoard from './components/ownerDashboard/ownerDashBoard';
 import ProductInput from './components/ownerDashboard/ProductInput';
 import ProductPage from './components/ownerDashboard/ProductPage';
 import MerchantRoute from './components/common/MerchantRoute';
+import CartPage from './components/CartPage';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path='/forgot' element={<ForgotPage />} />
         <Route path='/renter' element={<RenterDashboard />} />
         <Route exact path='/renter/:id' element={<RenterItemPage />} />
+        <Route path='/cart' element={<CartPage/>} />
 
         {/* Logged in Routes */}
         <Route path='' element={<PrivateRoute />}>
