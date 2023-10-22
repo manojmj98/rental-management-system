@@ -100,7 +100,6 @@ const deleteProduct = async (req, res) => {
 };
 const getCount = async (req,res) => {
   count = await Product.countDocuments();
-  console.log("Total products:",count);
   res.status(200).json(count);
 }
 
