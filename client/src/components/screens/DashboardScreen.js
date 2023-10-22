@@ -3,7 +3,7 @@ import { Table, Button } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
 import Message from '../../components/common/Message';
 import Loader from '../../components/common/Loader';
-import { useGetOrdersQuery } from '../../slices/ordersApiSlice';
+import { useGetOrdersQuery, useGetTotalOrdersQuery } from '../../slices/ordersApiSlice';
 import { Link } from 'react-router-dom';
 import NavBar from '../common/NavBar';
 import Card from 'react-bootstrap/Card';
@@ -13,6 +13,7 @@ import {FiUsers} from 'react-icons/fi';
 
 const DashboardScreen = () => {
   const { data: orders, refetch, isLoading, error } = useGetOrdersQuery();
+  const {data: ordersCount} = useGetTotalOrdersQuery();
 
   return (
     <>
@@ -22,7 +23,7 @@ const DashboardScreen = () => {
             <Card.Body>
               <BiSolidShoppingBags className='mr-10'/> 
               <Card.Header className='text-gray-900 font-semibold text-xl mb-2'>Total Orders</Card.Header>
-              <Card.Text>200</Card.Text>
+              <Card.Text>{ordersCount}</Card.Text>
             </Card.Body>
           </Card>
           <Card style={{ width: '40rem' }}>

@@ -49,8 +49,12 @@ const createOrder = async (req, res) => {
     res.status(201).json(createdOrder);
   }
 };
-
+const getCount = async (req,res) => {
+  count = await Order.countDocuments();
+  res.status(200).json(count);
+}
 module.exports=  {
   createOrder,
-  getOrders
+  getOrders,
+  getCount
 };
