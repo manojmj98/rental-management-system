@@ -1,7 +1,6 @@
 import { apiSlice } from './apiSlice';
 const AUTH_URL = '/api/auth';
 const USER_URL = '/api/user';
-const PRODUCT_URL = 'api/product';
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -98,6 +97,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    getUsersCount: builder.query({
+      query: () => ({
+        url: `${USER_URL}/total`,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ['User'],
+    }),
   }),
 });
 
@@ -115,4 +121,5 @@ export const {
   useCreateQuestionsMutation,
   useGetUsersQuery,
   useDeleteUserMutation,
+  useGetUsersCountQuery
 } = userApiSlice;

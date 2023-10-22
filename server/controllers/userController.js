@@ -62,9 +62,15 @@ const getUsers = async(req,res) =>{
         }); 
     }
 }
+const getCount = async (req,res) => {
+    count = await User.countDocuments();
+    console.log("Total users:",count)
+    res.status(200).json(count);
+  }
 
 module.exports = {
     updatedUser,
     userProfile,
-    getUsers
+    getUsers,
+    getCount
 }

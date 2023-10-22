@@ -98,6 +98,11 @@ const deleteProduct = async (req, res) => {
     throw new Error('Product not found');
   }
 };
+const getCount = async (req,res) => {
+  count = await Product.countDocuments();
+  console.log("Total products:",count);
+  res.status(200).json(count);
+}
 
 module.exports = {
   getProducts,
@@ -105,4 +110,5 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  getCount
 };

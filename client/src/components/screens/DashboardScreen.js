@@ -4,6 +4,8 @@ import { FaTimes } from 'react-icons/fa';
 import Message from '../../components/common/Message';
 import Loader from '../../components/common/Loader';
 import { useGetOrdersQuery, useGetTotalOrdersQuery } from '../../slices/ordersApiSlice';
+import {useGetUsersCountQuery} from '../../slices/userApiSlice';
+import { useGetProductsCountQuery } from '../../slices/productsApiSlice';
 import { Link } from 'react-router-dom';
 import NavBar from '../common/NavBar';
 import Card from 'react-bootstrap/Card';
@@ -12,9 +14,9 @@ import {PiRobot} from 'react-icons/pi';
 import {FiUsers} from 'react-icons/fi';
 
 const DashboardScreen = () => {
-  const { data: orders, refetch, isLoading, error } = useGetOrdersQuery();
   const {data: ordersCount} = useGetTotalOrdersQuery();
-
+  const {data: usersCount} = useGetUsersCountQuery();
+  const {data: productsCount} = useGetProductsCountQuery();
   return (
     <>
       <section className='container mx-auto flex flex-col items-center mt-8'>
@@ -30,14 +32,14 @@ const DashboardScreen = () => {
             <Card.Body>
               <PiRobot className='mr-10'/>
               <Card.Header className='text-gray-900 font-semibold text-xl mb-2'>Total Products</Card.Header>
-              <Card.Text>200</Card.Text>
+              <Card.Text>{productsCount}</Card.Text>
             </Card.Body>
           </Card>
           <Card style={{ width: '40rem' }}>
             <Card.Body>
                 <FiUsers/>
               <Card.Header className='text-gray-900 font-semibold text-xl mb-2'>Total Users</Card.Header>
-              <Card.Text>200</Card.Text>
+              <Card.Text>{usersCount}</Card.Text>
             </Card.Body>
           </Card>
         </div>
