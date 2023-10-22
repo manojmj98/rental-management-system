@@ -24,7 +24,7 @@ const ProductListScreen = () => {
   const { pageNumber } = useParams();
   const [robots, setrobots] = useState(null);
   console.log("Before calling get products mutation");
-  const [getProducts, { data }] = useGetproductsMutation(); 
+  const [getProducts, { data }] = useGetProductsQuery(); 
   console.log("data:",JSON.stringify(data));
   React.useEffect(() => {
     getProducts();
