@@ -12,6 +12,7 @@ const uri = process.env.MONGO_URI;
 const userRouter = require('./routes/userRoutes.js');
 const authRouter = require('./routes/auth.js');
 const productRouter = require('./routes/productRoutes.js')
+const orderRouter = require('./routes/orderRoutes.js')
 
 app.use(cors());
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
 app.use('/api/product',productRouter);
+app.use('/api/order',orderRouter);
 
 mongoose.connect(uri, {
     useNewUrlParser: true,

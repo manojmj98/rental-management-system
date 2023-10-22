@@ -50,9 +50,10 @@ function App() {
         </Route>
 
         {/* Admin Routes */}
-        <Route path='' element={<AdminRoute />}>
-          <Route path='/admin' element={<AdminPage />} />
-        </Route>
+        {/* <Route path="" element={<AdminRoute />}> */}
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/productlist" element={<ProductListScreen />} />
+        <Route path="/admin/orderlist" element={<OrderListScreen />} />
       </Routes>
     </Router>
   );
