@@ -7,15 +7,23 @@ import { Link } from "react-router-dom";
 import ProductListScreen from "../components/screens/ProductListScreen";
 import UserListScreen from "./screens/UserListScreen";
 import OrderListScreen from "./screens/OrderListScreen";
+import DashboardScreen from "./screens/DashboardScreen";
 function AdminPage() {
     
-const [selectedTab, setSelectedTab] = useState("Orders");
+const [selectedTab, setSelectedTab] = useState("Dashboard");
   return (
     <>
       <NavBar />
       <div className="grid grid-cols-5 bg-white ">
         <div className="flex flex-col items-center h-screen pt-3/12 col-span-1 w-100">
           <img src={logo}></img>
+          <button
+            className="bg-white text-gray-900 hover:bg-blue-700 w-full py-2 px-4 rounded"
+            onClick={() => setSelectedTab("Dashboard")}
+          >
+            Dashboard
+          </button>
+
           <button
             className="bg-white text-gray-900 hover:bg-blue-700 w-full py-2 px-4 rounded"
             onClick={() => setSelectedTab("Orders")}
@@ -64,6 +72,13 @@ const [selectedTab, setSelectedTab] = useState("Orders");
           <section className="md:container md:mx-auto flex flex-col items-center mt-4 col-span-4 w-80">
             <div className="flex items-center space-x-2 pb-4">
             <UserListScreen />
+            </div>
+          </section>
+        )}
+        {selectedTab === "Dashboard" && (
+          <section className="md:container md:mx-auto flex flex-col items-center mt-4 col-span-4 w-80">
+            <div className="flex items-center space-x-2 pb-4">
+            <DashboardScreen />
             </div>
           </section>
         )}
