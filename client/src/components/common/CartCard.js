@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function CartCard(props) {
-  const [qty, setQty] = useState(props.robot.qty);
-
   const removeHandler = () => {
     props.removeFromCart(props.robot._id);
   };
