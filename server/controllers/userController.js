@@ -65,11 +65,23 @@ const getUsers = async(req,res) =>{
 const getCount = async (req,res) => {
     count = await User.countDocuments();
     res.status(200).json(count);
-  }
+}
+const deleteUser = async(req,res)=>{
+    try{
+        const query = { _id: req.params.id };
+        const result = await User.deleteOne(query);
+        res.status(200).json("OK");
+    }
+    catch(error){
+        console.log("Error occurred while deletion",error)
+    }
+    
+}
 
 module.exports = {
     updatedUser,
     userProfile,
     getUsers,
-    getCount
+    getCount,
+    deleteUser
 }

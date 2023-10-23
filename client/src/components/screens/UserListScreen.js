@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button } from "react-bootstrap";
 import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
@@ -9,15 +9,28 @@ import {
   useGetUsersQuery,
 } from "../../slices/userApiSlice";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-import NavBar from "../common/NavBar";
 
 const UserListScreen = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
 
   const [deleteUser] = useDeleteUserMutation();
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isDeleteDropdownOpen, setDeleteDropdownOpen] = useState(false);
+  const handleDropDown =(user)=>{
+    if (isDeleteDropdownOpen)
+    {
+      setSelectedUser(null);
+      setDeleteDropdownOpen(false);
+    }
+    else
+      {
+        setSelectedUser(user);
+        setDeleteDropdownOpen(true);
+      }
+      
+  }
 
-  const deleteHandler = async (id) => {
+  const handleDelete = async (user,id) => {
     if (window.confirm("Are you sure")) {
       try {
         await deleteUser(id);
@@ -25,6 +38,10 @@ const UserListScreen = () => {
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
+    }
+    else{
+      // The user canceled the delete operation, so there's no need to perform any action.
+      setSelectedUser(null);
     }
   };
 
@@ -40,10 +57,11 @@ const UserListScreen = () => {
         <Table striped bordered hover responsive className="table-sm">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>ADMIN</th>
+              <th>Id</th>
+              <th>UserName</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Action</th>
               <th></th>
             </tr>
           </thead>
@@ -56,33 +74,25 @@ const UserListScreen = () => {
                   <a href={`mailto:${user.email}`}>{user.email}</a>
                 </td>
                 <td>
-                  {user.role == 'ADMIN' ? (
-                    <FaCheck style={{ color: "green" }} />
-                  ) : (
-                    <FaTimes style={{ color: "red" }} />
-                  )}
+                  {user.role}
                 </td>
                 <td>
-                  {!user.role == 'ADMIN' && (
-                    <>
-                      <LinkContainer
-                        to={`/admin/user/${user._id}/edit`}
-                        style={{ marginRight: "10px" }}
-                      >
-                        <Button variant="light" className="btn-sm">
-                          <FaEdit />
-                        </Button>
-                      </LinkContainer>
-                      <Button
-                        variant="danger"
-                        className="btn-sm"
-                        onClick={() => deleteHandler(user._id)}
-                      >
-                        <FaTrash style={{ color: "white" }} />
-                      </Button>
-                    </>
-                  )}
-                </td>
+              <div className="action-dropdown">
+                <button
+                  onClick={() => {
+                    handleDropDown(user)}
+                  }
+                  className="action-button"
+                >
+                  ...
+                </button>
+                {isDeleteDropdownOpen &&selectedUser === user && (
+                  <div className="dropdown-menu">
+                    <button onClick={() => handleDelete(user,user._id)}>Delete</button>
+                  </div>
+                )}
+              </div>
+            </td>
               </tr>
             ))}
           </tbody>
