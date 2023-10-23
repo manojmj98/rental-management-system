@@ -104,9 +104,9 @@ function NavBar() {
                 </Link>
                 <Link
                   to='/cart'
-                  className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                  className='justify-items-center	bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
                 >
-                  <FaShoppingCart className='mr-2' size={'1.5em'} />
+                  <FaShoppingCart size={'1.5em'} />
                 </Link>
               </>
             )
