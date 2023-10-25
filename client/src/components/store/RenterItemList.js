@@ -43,7 +43,10 @@ const RenterItemPage = () => {
             className='mt-1 px-4 py-2  border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white'
             placeholder='Answer'
             value={qty}
-            onChange={(ev) => setQty(ev.target.value)}
+            onChange={(ev) => {
+              const input = Number(ev.target.value);
+              if (input > 0) setQty(input);
+            }}
           />
           <button
             className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4'
