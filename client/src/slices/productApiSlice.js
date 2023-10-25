@@ -1,5 +1,5 @@
 import { apiSlice } from './apiSlice';
-const PRODUCT_URL = 'api/product';
+const PRODUCT_URL = '/api/product';
 
 export const productApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,7 +24,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
     getProductById: builder.query({
       query(data) {
         return {
-          url: `../${PRODUCT_URL}/get-productbyid`,
+          url: `${PRODUCT_URL}/get-productbyid`,
           method: 'GET',
           params: data,
         };
@@ -33,7 +33,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
     deleteProductById: builder.mutation({
       query(data) {
         return {
-          url: `../${PRODUCT_URL}/remove`,
+          url: `${PRODUCT_URL}/remove`,
           method: 'DELETE',
           body: data,
         };
@@ -42,7 +42,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
     updateProduct: builder.mutation({
       query(data) {
         return {
-          url: `../${PRODUCT_URL}/updatebyid`,
+          url: `/${PRODUCT_URL}/updatebyid`,
           method: 'PUT',
           body: data,
         };
