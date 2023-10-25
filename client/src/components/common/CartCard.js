@@ -38,9 +38,10 @@ function CartCard(props) {
           className='mt-1 px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white'
           placeholder='qty'
           value={props.robot.qty}
-          onChange={(ev) =>
-            props.addToCart(props.robot, Number(ev.target.value))
-          }
+          onChange={(ev) => {
+            const qty = Number(ev.target.value);
+            if (qty >= 0) props.addToCart(props.robot, qty);
+          }}
         />
       </div>
     </div>
