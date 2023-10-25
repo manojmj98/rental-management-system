@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Carousal from './common/Carousel';
 import NavBar from './common/NavBar';
 
@@ -15,6 +15,15 @@ const carouselData = [
 ];
 
 function LandingPage() {
+
+  const [search, setSearch] = useState('')
+  
+  const navigate = useNavigate();
+
+  const searchHandler = () => {
+    navigate(`/renter/${search}`)
+  }
+
   return (
     <div className='bg-black h-screen flex flex-col'>
       {/* Navbar */}
@@ -37,18 +46,17 @@ function LandingPage() {
           {/* Search Bar */}
           <div className='mb-6'>
             <input
-              type='text'
               placeholder='Search for robots...'
               className='px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white'
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
           {/* Call to Action */}
-          <Link
-            to='/register'
-            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg w-full text-center block transition duration-300 ease-in-out transform hover:scale-105'
-          >
+          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg w-full text-center block transition duration-300 ease-in-out transform hover:scale-105'
+          onClick={searchHandler}>
             Search
-          </Link>
+          </button>
         </div>
       </section>
 
