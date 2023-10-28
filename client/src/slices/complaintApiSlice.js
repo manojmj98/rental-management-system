@@ -1,7 +1,7 @@
 import { apiSlice } from './apiSlice';
 const COMPLAINT_URL = '/api/complaint';
 
-export const userApiSlice = apiSlice.injectEndpoints({
+export const complaintApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createComplaint: builder.mutation({
       query: (data) => ({
@@ -18,12 +18,15 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     updateStatus: builder.mutation({
-        query: (data) => ({
+      query(data) {
+        const { id, ...body } = data;
+        return {
           url: `${COMPLAINT_URL}/${id}`,
           method: 'PUT',
-          body: data,
-        }),
-      }),
+          body: body,
+        };
+      },
+    }),
   }),
 });
 

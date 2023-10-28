@@ -8,6 +8,7 @@ import ProductListScreen from "../components/screens/ProductListScreen";
 import UserListScreen from "./screens/UserListScreen";
 import OrderListScreen from "./screens/OrderListScreen";
 import DashboardScreen from "./screens/DashboardScreen";
+import ComplaintsListScreen from "./screens/ComplaintsScreen";
 function AdminPage() {
     
 const [selectedTab, setSelectedTab] = useState("Dashboard");
@@ -40,6 +41,12 @@ const [selectedTab, setSelectedTab] = useState("Dashboard");
           <button className="bg-white text-gray-900 hover:bg-blue-700 w-full py-2 px-4 rounded" 
             onClick={() => setSelectedTab("Products")}>
             Products
+          </button>
+          <button
+            className="bg-white text-gray-900 hover:bg-blue-700 w-full py-2 px-4 rounded"
+            onClick={() => setSelectedTab("Complaints")}
+          >
+            Complaints
           </button>
           <button
             className="bg-white text-gray-900 hover:bg-blue-700 w-full py-2 px-4 rounded"
@@ -86,6 +93,13 @@ const [selectedTab, setSelectedTab] = useState("Dashboard");
           <section className="md:container md:mx-auto flex flex-col items-center mt-4 col-span-4 w-80">
             <div className="flex items-center space-x-2 pb-4">
             <OrderListScreen />
+            </div>
+          </section>
+        )}
+        {selectedTab === "Complaints" && (
+          <section className="md:container md:mx-auto flex flex-col items-center mt-4 col-span-4 w-80">
+            <div className="flex items-center space-x-2 pb-4">
+            <ComplaintsListScreen />
             </div>
           </section>
         )}

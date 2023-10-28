@@ -18,9 +18,9 @@ const getComplaints = async (req, res) => {
 
     const count = await Complaint.count({ ...keyword });
     const complaints = await Complaint.find({ ...keyword })
+      .populate("customer")
       .limit(pageSize)
       .skip(pageSize * (page - 1));
-    console.log('complaints:', JSON.stringify(complaints));
     res.json({ complaints, page, pages: Math.ceil(count / pageSize) });
   } catch (error) {
     res.status(500).json({
@@ -32,18 +32,18 @@ const getComplaints = async (req, res) => {
 const createComplaint = async (req, res) => {
   try {
     //create a complaint and insert into db
-    const user = await User.findById(req.userId);
+    const user = await User.findById(req.user._id);
     if (!user) {
       res.status(404).json({ message: 'User not found' });
     }
     const complaint = {
-      description: req.description,
-      comments: req.comments,
-      orderId: req.orderId,
+      description: req.body.description,
+      comments: req.body.comments,
+      orderId: req.body.orderId,
       customer: req.user,
       complaintStatus: COMPLAINT_STATUS.Created,
     };
-    const result = await Complaint.insertOne(complaint);
+    const result = await Complaint.create(complaint);
     res.status(201).json(complaint);
   } catch (error) {
     res.status(500).json({

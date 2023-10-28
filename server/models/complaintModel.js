@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { COMPLAINT_STATUS } = require("../constants/constants");
+const User = require("../models/userModel.js");
 
 const complaintSchema = mongoose.Schema(
   {
