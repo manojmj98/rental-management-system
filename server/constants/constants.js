@@ -23,6 +23,13 @@ exports.PAYMENT_STATUS = {
     Refunded: 'Refund Issued',
     RefundProcessing:'Refund under process',
     RefundInitiated: 'Refund initiated'
+};
+exports.COMPLAINT_STATUS = {
+    Created: 'Complaint Created',
+    Investigation: 'Complaint under investigation',
+    Complete: 'Complaint resolved',
+    WithOwner: 'Awaiting response from owner',
+    RefundIssued: 'Refund Issued'
 }
 
 exports.SECURITY_QUESTIONS={
