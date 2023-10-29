@@ -3,16 +3,43 @@ const getProducts = async (req, res) => {
   const pageSize = process.env.PAGINATION_LIMIT;
   const page = Number(req.query.pageNumber) || 1;
 
-  const keyword = req.query.keyword ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
+  const { keyword, tags } = req.query;
+
+  const tagsArr = tags ? tags.replace(/\s/g, '').split(',') : [];
+
+  const keywordQuery = keyword
+    ? {
+        $or: [
+          {
+            name: {
+              $regex: keyword,
+              $options: 'i',
+            },
+          },
+          {
+            tags: {
+              // $in: keyword.split(' '),
+              $regex: keyword,
+              $options: 'i',
+            },
+          },
+          {
+            tags: {
+              $in: keyword.split(' '),
+            },
+          },
+        ],
       }
     : {};
 
-  const count = await Product.countDocuments({ ...keyword });
-  const products = await Product.find({ ...keyword })
+  const tagsQuery = tags
+    ? {
+        tags: { $all: tagsArr },
+      }
+    : {};
+
+  const count = await Product.countDocuments({ ...keywordQuery, ...tagsQuery });
+  const products = await Product.find({ ...keywordQuery, ...tagsQuery })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 
@@ -61,6 +88,7 @@ const createProduct = async (req, res) => {
       description,
       owner,
     });
+
     const createdProduct = await product.save();
     res.status(201).json(createdProduct);
   } catch (error) {
@@ -71,18 +99,29 @@ const createProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  const { name, price, description, id } = req.body;
-  const product = await Product.findById(id);
+  try {
+    const { name, price, description, id, stock, tags } = req.body;
+    const product = await Product.findById(id);
 
-  if (product) {
-    product.name = name;
-    product.price = price;
-    product.description = description;
+    if (!product) {
+      return res.status(404).json({ message: 'Product not fount' });
+    }
+
+    const tagsArr = tags ? tags.replace(/\s/g, '').split(',') : product.tags;
+
+    product.name = name || product.name;
+    product.price = price || product.price;
+    product.description = description || product.description;
+    product.tags = tagsArr;
+    product.stock = stock || product.stock;
+
     const updatedProduct = await product.save();
     res.json(updatedProduct);
-  } else {
-    res.status(404);
-    throw new Error('Product not found');
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.',
+    });
   }
 };
 

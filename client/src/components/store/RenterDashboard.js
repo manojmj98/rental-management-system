@@ -1,22 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import NavBar from '../common/NavBar';
 import Card from '../common/Card';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useGetProductsQuery } from '../../slices/productApiSlice';
 import { FaSearch } from 'react-icons/fa';
+import FilterBox from '../common/FilterBox';
 
 function RenterDashboard() {
-  const [robots, setRobots] = useState(null);
-  const [search, setSearch] = useState('');
-  const param = useParams();
+  const { keyword, pageNumber, tags } = useParams();
 
-  const { data } = useGetProductsQuery({ keyword: param.search });
+  const [robots, setRobots] = useState(null);
+  const [search, setSearch] = useState(keyword ? keyword : '');
+  const [tagArr, setTagArr] = useState(tags ? tags.split('#') : []);
 
   const navigate = useNavigate();
 
+  const { data } = useGetProductsQuery({
+    keyword,
+    pageNumber,
+    tags: tags ? tags.replace('/#/g', ',') : tags,
+  });
+
   const searchHandler = () => {
-    navigate(`/renter/${search}`);
+    if (tagArr.length === 0) {
+      if (search.length === 0) navigate(`/renter/page/1/`);
+      else navigate(`/renter/page/1/search/${search}`);
+    } else {
+      if (search.length === 0)
+        navigate(`/renter/page/1/tags/${tagArr.join('#')}`);
+      else navigate(`/renter/page/1/search/${search}`);
+    }
   };
+
+  useEffect(() => {
+    if (tagArr.length === 0) {
+      if (keyword) navigate(`/renter/page/1/search/${keyword}`);
+      else navigate(`/renter/page/1/`);
+    } else {
+      if (keyword)
+        navigate(`/renter/page/1/search/${keyword}/tags/${tagArr.join('#')}`);
+      else navigate(`/renter/page/1/tags/${tagArr.join('#')}`);
+    }
+  }, [keyword, navigate, tagArr]);
 
   useEffect(() => {
     if (data) {
@@ -41,26 +66,41 @@ function RenterDashboard() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          {/* Call to Action */}
           <button
             className='bg-blue-500 h-full hover:bg-blue-700 text-white py-3 px-4 rounded-r-lg justify-items-center float-left w-min'
             onClick={searchHandler}
           >
-            <FaSearch/>
+            <FaSearch />
           </button>
         </div>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {robots &&
-            robots.map((robot) => (
-              <Link to={`../renter/product/${robot._id}`}>
-                <Card
-                  key={robot._id}
-                  title={robot.name}
-                  description={robot.description}
-                  price={robot.price}
-                />
-              </Link>
-            ))}
+        <div className='grid grid-cols-[15%_85%] w-5/6'>
+          <div className='grid grid-cols-1 h-min'>
+            <FilterBox
+              label='Cooking'
+              value='cooking'
+              tagArr={tagArr}
+              setTagArr={setTagArr}
+            />
+            <FilterBox
+              label='Cleaning'
+              value='cleaning'
+              tagArr={tagArr}
+              setTagArr={setTagArr}
+            />
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+            {robots &&
+              robots.map((robot) => (
+                <Link to={`../renter/product/${robot._id}`}>
+                  <Card
+                    key={robot._id}
+                    title={robot.name}
+                    description={robot.description}
+                    price={robot.price}
+                  />
+                </Link>
+              ))}
+          </div>
         </div>
       </section>
 
