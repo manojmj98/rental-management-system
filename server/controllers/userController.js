@@ -5,7 +5,7 @@ const updatedUser = async (req, res) => {
         const user = await User.findById(req.user._id)
 
         if (!user) {
-            res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'User not found' });
         }
 
         if (req.body.email && req.body.email !== user.email) {

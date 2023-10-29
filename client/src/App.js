@@ -33,7 +33,10 @@ function App() {
         <Route path='/reset/:token' element={<ResetPage />} />
         <Route path='/forgot' element={<ForgotPage />} />
         <Route path='/renter' element={<RenterDashboard />} />
-        <Route path='/renter/:search' element={<RenterDashboard />} />
+        <Route path='/renter/page/:pageNumber' element={<RenterDashboard />} />
+        <Route path='/renter/page/:pageNumber/search/:keyword/' element={<RenterDashboard />} />
+        <Route path='/renter/page/:pageNumber/tags/:tags/' element={<RenterDashboard />} />
+        <Route path='/renter/page/:pageNumber/search/:keyword/tags/:tags/' element={<RenterDashboard />} />
         <Route exact path='/renter/product/:id' element={<RenterItemPage />} />
         <Route path='/cart' element={<CartPage/>} />
 
