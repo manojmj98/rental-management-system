@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import {
   useDeleteProductByIdMutation,
   useGetProductByIdQuery,
+  useGetProductsQuery,
   useUpdateProductMutation,
 } from '../../slices/productApiSlice';
 
@@ -25,12 +26,14 @@ const ProductPage = () => {
 
   const [update] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductByIdMutation();
+  const { data: products,isLoading: productsLoading,error: productserror,refetch } = useGetProductsQuery();
   const navigate = useNavigate();
 
   const handleDeleteProduct = async () => {
     try {
       const response = await deleteProduct({ id: id }).unwrap();
       if (response) {
+        refetch()
         navigate('/owner');
       }
     } catch (error) {
@@ -49,7 +52,7 @@ const ProductPage = () => {
       }).unwrap();
 
       if (response) {
-        console.log(response);
+        refetch()
         navigate('/owner');
       }
     } catch (error) {
