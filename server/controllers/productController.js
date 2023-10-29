@@ -63,7 +63,7 @@ const getProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const { name, price, description, owner, tags } = req.body;
+    const { name, price, description, owner } = req.body;
 
     if (!name) {
       return res

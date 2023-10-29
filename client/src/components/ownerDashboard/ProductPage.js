@@ -16,10 +16,15 @@ const ProductPage = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [tags,setTags] = useState('')
 
   React.useEffect(() => {
     if (data) {
       setRobot(data);
+      setName(data.name);
+      setDescription(data.description);
+      setPrice(data.price);
+      setTags(data.tags)
     }
   }, [data]);
 
@@ -45,6 +50,7 @@ const ProductPage = () => {
         name: name,
         description: description,
         price: price,
+        tags: tags,
         id: id,
       }).unwrap();
 
@@ -132,6 +138,22 @@ const ProductPage = () => {
                   onChange={(e) => setPrice(e.target.value)}
                   required
                   className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                />
+              </div>
+              <div className='mb-4'>
+                <label
+                  htmlFor='tags'
+                  className='block text-gray-700 font-bold mb-2'
+                >
+                  Tags (Comma Separated)
+                </label>
+                <input
+                  type='text'
+                  id='tags'
+                  name='tags'
+                  value={tags}
+                  onChange={(e) => setTags(e.target.value)}
+                  className='w-full border rounded py-2 px-3'
                 />
               </div>
               <button
