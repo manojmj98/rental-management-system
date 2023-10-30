@@ -60,19 +60,6 @@ const [selectedTab, setSelectedTab] = useState("Dashboard");
             <div className="flex items-center space-x-2 pb-4">
             <ProductListScreen />
             </div>
-            {/* <div className="grid grid-cols-3 gap-6 w-4/5">
-              {filterdrobots &&
-                filterdrobots.map((robot) => (
-                  <Link to={`../productpage/${robot._id}`}>
-                    <Card
-                      key={robot._id}
-                      title={robot.name}
-                      description={robot.description}
-                      price={robot.price}
-                    />
-                  </Link>
-                ))}
-            </div> */}
           </section>
         )}
         {selectedTab === "Users" && (
