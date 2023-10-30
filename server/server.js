@@ -29,7 +29,7 @@ app.use('/api/complaint',complaintRouter);
 mongoose.connect(uri, {
     useNewUrlParser: true,
 });
-const connection = mongoose.connection;5
+const connection = mongoose.connection;
 
 connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
