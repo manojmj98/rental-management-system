@@ -1,31 +1,35 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const productSchema = mongoose.Schema(
   {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     description: {
-        type:String,
-        required: true,
+      type: String,
+      required: true,
     },
     owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
     price: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
-    availability:{
-        type: Boolean,
-        default: true,
+    stock: {
+      type: Number,
+      required: true,
+      default: 0,
     },
-    isApproved:{
-        type: Boolean,
-        default: false
+    isApproved: {
+      type: Boolean,
+      default: false,
+    },
+    tags: {
+      type: [String],
     }
   },
   {

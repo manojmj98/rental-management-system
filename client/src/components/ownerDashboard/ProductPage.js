@@ -4,33 +4,41 @@ import { toast } from 'react-toastify';
 import {
   useDeleteProductByIdMutation,
   useGetProductByIdQuery,
+  useGetProductsQuery,
   useUpdateProductMutation,
 } from '../../slices/productApiSlice';
 
 const ProductPage = () => {
   let { id } = useParams();
-  const { data, isLoading, error } = useGetProductByIdQuery({ id });
+  const { data } = useGetProductByIdQuery({ id });
   const [robot, setRobot] = useState(null);
   const [updateProduct, setupdateProduct] = useState(false);
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [tags,setTags] = useState('')
 
   React.useEffect(() => {
     if (data) {
       setRobot(data);
+      setName(data.name);
+      setDescription(data.description);
+      setPrice(data.price);
+      setTags(data.tags)
     }
   }, [data]);
 
   const [update] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductByIdMutation();
+  const { refetch } = useGetProductsQuery();
   const navigate = useNavigate();
 
   const handleDeleteProduct = async () => {
     try {
       const response = await deleteProduct({ id: id }).unwrap();
       if (response) {
+        refetch()
         navigate('/owner');
       }
     } catch (error) {
@@ -45,11 +53,12 @@ const ProductPage = () => {
         name: name,
         description: description,
         price: price,
+        tags: tags,
         id: id,
       }).unwrap();
 
       if (response) {
-        console.log(response);
+        refetch()
         navigate('/owner');
       }
     } catch (error) {
@@ -132,6 +141,22 @@ const ProductPage = () => {
                   onChange={(e) => setPrice(e.target.value)}
                   required
                   className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                />
+              </div>
+              <div className='mb-4'>
+                <label
+                  htmlFor='tags'
+                  className='block text-gray-700 font-bold mb-2'
+                >
+                  Tags (Comma Separated)
+                </label>
+                <input
+                  type='text'
+                  id='tags'
+                  name='tags'
+                  value={tags}
+                  onChange={(e) => setTags(e.target.value)}
+                  className='w-full border rounded py-2 px-3'
                 />
               </div>
               <button

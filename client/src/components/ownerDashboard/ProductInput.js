@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useAddProductMutation } from '../../slices/productApiSlice';
+import { useAddProductMutation,useGetProductsQuery } from '../../slices/productApiSlice';
 
 function ProductInput() {
   const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ function ProductInput() {
   });
   
   const [addProduct] = useAddProductMutation();
+  const { refetch } = useGetProductsQuery();
   const userInfo = useSelector((state) => state.auth.userInfo.id);
 
   React.useEffect(() => {
@@ -38,6 +39,7 @@ function ProductInput() {
     try {
       const res = await addProduct({ ...formData }).unwrap();
       if (res) {
+        refetch()
         navigate('/owner');
       }
     } catch (error) {

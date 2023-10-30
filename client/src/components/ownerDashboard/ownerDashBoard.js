@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { useNavigate } from 'react-router-dom';
 import { useGetProductsQuery } from '../../slices/productApiSlice';
-
+import ProfileSection from '../ProfileSection';
+import BookingsPage from './bookingsPage';
 function OwnerDashBoard(props) {
   const [robots, setRobots] = useState(null);
 
@@ -63,40 +64,66 @@ function OwnerDashBoard(props) {
           </button>
         </div>
         {selectedTab === 'myAds' && (
-          <section className='md:container md:mx-auto flex flex-col items-center mt-4 col-span-4 w-80'>
-            <div className='flex items-center space-x-2 pb-4'>
-              <FaPlus className='text-green-300 text-2xl' />
-              <Link
-                to={`/robotInput`}
-                className='text-blue-500 font-semibold hover:underline'
-              >
-                Add a Robot Listing
+        <section className='md:container md:mx-auto flex flex-col items-center mt-4 col-span-4 w-80'>
+          <div className='flex items-center space-x-2 pb-4'>
+            <FaPlus className='text-green-300 text-2xl' />
+            <Link
+              to={`/robotInput`}
+              className='text-blue-500 font-semibold hover:underline'
+            >
+              Add a Robot Listing
+            </Link>
+          </div>
+          <div className='grid grid-cols-3 gap-6 w-4/5'>
+        {filteredRobots &&
+          filteredRobots
+            .filter((robot) => robot.isApproved)
+            .map((robot) => (
+              <Link to={`../productpage/${robot._id}`} key={robot._id}>
+                <Card
+                  title={robot.name}
+                  description={robot.description}
+                  price={robot.price}
+                  isApproved={robot.isApproved}
+                />
               </Link>
-            </div>
-            <div className='grid grid-cols-3 gap-6 w-4/5'>
-              {filteredRobots &&
-                filteredRobots.map((robot) => (
-                  <Link to={`../productpage/${robot._id}`}>
-                    <Card
-                      key={robot._id}
-                      title={robot.name}
-                      description={robot.description}
-                      price={robot.price}
-                    />
-                  </Link>
-                ))}
-            </div>
-          </section>
-        )}
-        {selectedTab === 'settings' && (
-          <section className='md:container md:mx-auto flex flex-col items-center mt-4 col-span-4 w-80'>
-            {/* Content for the Settings tab */}
-            <h1>Settings Page</h1>
-            {/* Add any additional content specific to the Settings tab */}
-          </section>
-        )}
+            ))}
       </div>
-    </>
+
+      <hr className='border-t my-8 w-4/5 border-gray-300' />
+
+      <div className='grid grid-cols-3 gap-6 w-4/5'>
+        {filteredRobots && 
+          filteredRobots
+            .filter((robot) => !robot.isApproved)
+            .map((robot) => (
+              <Link to={`../productpage/${robot._id}`} key={robot._id}>
+                <Card
+                  title={robot.name}
+                  description={robot.description}
+                  price={robot.price}
+                  isApproved={robot.isApproved}
+                />
+              </Link>
+            ))}
+      </div>
+        </section>
+      )}
+      {
+        selectedTab === 'myBookings' && (
+          <div className='col-span-4 pt-5'>
+          <BookingsPage />
+          </div>
+        )
+      }
+      {
+        selectedTab === 'settings' && (
+          <div className='col-span-4 pt-10'>
+          <ProfileSection page={false} />
+          </div>)
+      }
+    </div>
+          </>
   );
 }
 

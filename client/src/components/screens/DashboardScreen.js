@@ -5,7 +5,7 @@ import Message from '../../components/common/Message';
 import Loader from '../../components/common/Loader';
 import { useGetOrdersQuery, useGetTotalOrdersQuery } from '../../slices/ordersApiSlice';
 import {useGetUsersCountQuery} from '../../slices/userApiSlice';
-import { useGetProductsCountQuery } from '../../slices/productsApiSlice';
+import { useGetProductsCountQuery } from '../../slices/productApiSlice';
 import { Link } from 'react-router-dom';
 import NavBar from '../common/NavBar';
 import Card from 'react-bootstrap/Card';
