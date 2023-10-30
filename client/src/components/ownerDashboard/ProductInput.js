@@ -13,7 +13,7 @@ function ProductInput() {
   });
   
   const [addProduct] = useAddProductMutation();
-  const { data, isLoading, error,refetch } = useGetProductsQuery();
+  const { refetch } = useGetProductsQuery();
   const userInfo = useSelector((state) => state.auth.userInfo.id);
 
   React.useEffect(() => {

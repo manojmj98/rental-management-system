@@ -10,7 +10,7 @@ import {
 
 const ProductPage = () => {
   let { id } = useParams();
-  const { data, isLoading, error } = useGetProductByIdQuery({ id });
+  const { data } = useGetProductByIdQuery({ id });
   const [robot, setRobot] = useState(null);
   const [updateProduct, setupdateProduct] = useState(false);
 
@@ -31,7 +31,7 @@ const ProductPage = () => {
 
   const [update] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductByIdMutation();
-  const { data: products,isLoading: productsLoading,error: productserror,refetch } = useGetProductsQuery();
+  const { refetch } = useGetProductsQuery();
   const navigate = useNavigate();
 
   const handleDeleteProduct = async () => {

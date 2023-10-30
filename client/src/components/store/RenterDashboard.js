@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '../common/NavBar';
 import Card from '../common/Card';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -90,16 +90,20 @@ function RenterDashboard() {
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
             {robots &&
-              robots.map((robot) => (
-                <Link to={`../renter/product/${robot._id}`}>
-                  <Card
-                    key={robot._id}
-                    title={robot.name}
-                    description={robot.description}
-                    price={robot.price}
-                  />
-                </Link>
-              ))}
+              robots.map((robot) => {
+                if (robot.isApproved) {
+                  return (<Link to={`../renter/product/${robot._id}`}>
+                    <Card
+                      key={robot._id}
+                      title={robot.name}
+                      description={robot.description}
+                      price={robot.price}
+                      isApproved={robot.isApproved}
+                    />
+                  </Link>)
+                }
+                return null;
+            })}
           </div>
         </div>
       </section>
