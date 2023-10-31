@@ -4,11 +4,11 @@ import logo from "../logo.svg";
 import React, { useState } from "react";
 import { FaPlus } from 'react-icons/fa';
 import { Link } from "react-router-dom";
-import ProductListScreen from "../components/screens/ProductListScreen";
-import UserListScreen from "./screens/UserListScreen";
-import OrderListScreen from "./screens/OrderListScreen";
-import DashboardScreen from "./screens/DashboardScreen";
-import ComplaintsListScreen from "./screens/ComplaintsScreen";
+import ProductListScreen from "./adminDashboard/products";
+import UserListScreen from "./adminDashboard/users";
+import OrderListScreen from "./adminDashboard/orders";
+import DashboardScreen from "./adminDashboard/dashboard";
+import ComplaintsListScreen from "./adminDashboard/complaints";
 function AdminPage() {
     
 const [selectedTab, setSelectedTab] = useState("Dashboard");

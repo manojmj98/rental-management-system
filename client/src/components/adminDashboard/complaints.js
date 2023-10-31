@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button } from 'react-bootstrap';
 import { FaTrash, FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
-import Message from '../../components/common/Message';
-import Loader from '../../components/common/Loader';
+import Message from '../common/Message';
+import Loader from '../common/Loader';
 import {
   useCreateComplaintMutation,
   useGetComplaintsQuery,
@@ -11,7 +11,7 @@ import {
 } from '../../slices/complaintApiSlice';
 import { toast } from 'react-toastify';
 
-const ComplaintsListScreen = () => {
+const Complaints = () => {
   const { data: complaints, refetch, isLoading, error } = useGetComplaintsQuery();
   console.log("Complaints:",complaints);
   return (
@@ -59,4 +59,4 @@ const ComplaintsListScreen = () => {
   );
 };
 
-export default ComplaintsListScreen;
+export default Complaints;

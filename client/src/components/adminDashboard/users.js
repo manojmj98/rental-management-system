@@ -2,15 +2,15 @@ import React,{useState} from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button } from "react-bootstrap";
 import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
-import Message from "../../components/common/Message";
-import Loader from "../../components/common/Loader";
+import Message from "../common/Message";
+import Loader from "../common/Loader";
 import {
   useDeleteUserMutation,
   useGetUsersQuery,
 } from "../../slices/userApiSlice";
 import { toast } from "react-toastify";
 
-const UserListScreen = () => {
+const Users = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
 
   const [deleteUser] = useDeleteUserMutation();
@@ -105,4 +105,4 @@ const UserListScreen = () => {
   );
 };
 
-export default UserListScreen;
+export default Users;

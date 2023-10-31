@@ -19,8 +19,8 @@ import ProductInput from './components/ownerDashboard/ProductInput';
 import ProductPage from './components/ownerDashboard/ProductPage';
 import MerchantRoute from './components/common/MerchantRoute';
 import CartPage from './components/CartPage';
-import ProductListScreen from './components/screens/ProductListScreen';
-import OrderListScreen from './components/screens/OrderListScreen';
+import ProductListScreen from './components/adminDashboard/products';
+import OrderListScreen from './components/adminDashboard/orders';
 
 function App() {
   return (

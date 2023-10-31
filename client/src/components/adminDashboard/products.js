@@ -2,8 +2,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
-import Message from '../../components/common/Message';
-import Loader from '../../components/common/Loader';
+import Message from '../common/Message';
+import Loader from '../common/Loader';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import NavBar from '../common/NavBar';
@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 
 //TODO : This doesn't work yet - have to identify the reason for failure
 
-const ProductListScreen = () => {
+const Products = () => {
   const { data: products, refetch, isLoading, error } = useGetProductsQuery();
   console.log('Products:', products);
   return (
@@ -70,4 +70,4 @@ const ProductListScreen = () => {
   );
 };
 
-export default ProductListScreen;
+export default Products;
