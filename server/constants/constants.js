@@ -10,6 +10,28 @@ exports.ROLE = {
     Merchant: 'MERCHANT'
 };
 
+exports.STATUS = {
+    Delivered:'DELIVERED',
+    Initial: 'INITIAL',
+    Completed: 'COMPLETED',
+    Processing: 'PROCESSING'
+};
+
+exports.PAYMENT_STATUS = {
+    Completed: 'Payment complete',
+    Processing: 'Payment under process',
+    Refunded: 'Refund Issued',
+    RefundProcessing:'Refund under process',
+    RefundInitiated: 'Refund initiated'
+};
+exports.COMPLAINT_STATUS = {
+    Created: 'Complaint Created',
+    Investigation: 'Complaint under investigation',
+    Complete: 'Complaint resolved',
+    WithOwner: 'Awaiting response from owner',
+    RefundIssued: 'Refund Issued'
+}
+
 exports.SECURITY_QUESTIONS={
     Question_1: 'What was your first pets name?',
     Question_2: 'What city were you born in?',

@@ -42,7 +42,7 @@ const getProducts = async (req, res) => {
   const products = await Product.find({ ...keywordQuery, ...tagsQuery })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-
+  console.log("Products:",JSON.stringify(products));
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 };
 
@@ -137,6 +137,10 @@ const deleteProduct = async (req, res) => {
     throw new Error('Product not found');
   }
 };
+const getCount = async (req,res) => {
+  count = await Product.countDocuments();
+  res.status(200).json(count);
+}
 
 module.exports = {
   getProducts,
@@ -144,4 +148,5 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  getCount
 };

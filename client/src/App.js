@@ -7,7 +7,6 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import AboutPage from './components/AboutPage';
 import PrivateRoute from './components/common/PrivateRoute';
-import AdminRoute from './components/common/AdminRoute';
 import ProfilePage from './components/ProfilePage';
 import ResetPage from './components/ResetPage';
 import ForgotPage from './components/ForgotPage';
@@ -20,6 +19,8 @@ import ProductInput from './components/ownerDashboard/ProductInput';
 import ProductPage from './components/ownerDashboard/ProductPage';
 import MerchantRoute from './components/common/MerchantRoute';
 import CartPage from './components/CartPage';
+import ProductListScreen from './components/adminDashboard/products';
+import OrderListScreen from './components/adminDashboard/orders';
 
 function App() {
   return (
@@ -54,9 +55,10 @@ function App() {
         </Route>
 
         {/* Admin Routes */}
-        <Route path='' element={<AdminRoute />}>
-          <Route path='/admin' element={<AdminPage />} />
-        </Route>
+        {/* <Route path="" element={<AdminRoute />}> */}
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/productlist" element={<ProductListScreen />} />
+        <Route path="/admin/orderlist" element={<OrderListScreen />} />
       </Routes>
     </Router>
   );

@@ -27,6 +27,39 @@
 .App-link {
   color: #61dafb;
 }
+table {
+  width: 100%;
+  border-collapse: separate; /* Separate borders between cells */
+  border-spacing: 0 10px; /* Increase the gap between rows */
+}
+
+th {
+  border-bottom: 1px solid black;
+  border: 1px solid #e0e0e0;
+  padding: 8px;
+}
+
+td {
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  padding: 8px;
+}
+.action-dropdown {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #000000;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  top: 100%;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+}
 
 @keyframes App-logo-spin {
   from {

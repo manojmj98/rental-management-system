@@ -48,6 +48,13 @@ export const productApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+    getProductsCount: builder.query({
+      query: () => ({
+        url: `/api/product/total`,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ['Products'],
+    }),
   }),
 });
 
@@ -57,4 +64,5 @@ export const {
   useGetProductByIdQuery,
   useDeleteProductByIdMutation,
   useUpdateProductMutation,
+  useGetProductsCountQuery,
 } = productApiSlice;
