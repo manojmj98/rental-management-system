@@ -19,12 +19,13 @@ const Products = () => {
   console.log('Products:', products);
   return (
     <>
-      <Row className='align-items-center'>
-        <Col>
-          <h1>Products</h1>
-        </Col>
-      </Row>
-      <>
+      {isLoading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
+      ) : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
@@ -37,7 +38,7 @@ const Products = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {products.products.map((product) => (
               <tr key={product._id}>
                 <td>{product._id}</td>
                 <td>{product.name}</td>
@@ -62,11 +63,12 @@ const Products = () => {
             ))}
           </tbody>
         </Table>
+
+      )}
         <footer className='fixed bottom-0 py-4 text-center text-gray-300'>
           &copy; {new Date().getFullYear()} BotBazaar. All rights reserved.
         </footer>
       </>
-    </>
   );
 };
 
