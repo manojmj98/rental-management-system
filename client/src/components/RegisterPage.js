@@ -43,7 +43,6 @@ function RegisterPage() {
       navigate('/');
     } catch (error) {
       toast.error(error?.data?.error || error);
-      console.log(error);
     }
   }
 

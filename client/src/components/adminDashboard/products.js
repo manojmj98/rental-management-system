@@ -1,22 +1,14 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col } from 'react-bootstrap';
-import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
-import Message from '../common/Message';
-import Loader from '../common/Loader';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import NavBar from '../common/NavBar';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useGetProductsQuery } from '../../slices/productApiSlice';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux/es/hooks/useSelector';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 //TODO : This doesn't work yet - have to identify the reason for failure
 
 const Products = () => {
-  const { data: products, refetch, isLoading, error } = useGetProductsQuery();
-  console.log('Products:', products);
+  const { data: products, } = useGetProductsQuery();
+
   return (
     <>
       <Row className='align-items-center'>

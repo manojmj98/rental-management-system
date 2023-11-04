@@ -12,7 +12,7 @@ import BookingsPage from './bookingsPage';
 function OwnerDashBoard(props) {
   const [robots, setRobots] = useState(null);
 
-  const { data, isLoading, error } = useGetProductsQuery();
+  const { data } = useGetProductsQuery();
   const [selectedTab, setSelectedTab] = useState('myAds');
 
   React.useEffect(() => {

@@ -8,6 +8,7 @@ import { ROLE } from '../../constants/constants';
 import { FiHome } from 'react-icons/fi';
 import { FaStore, FaShoppingCart } from 'react-icons/fa';
 import { resetCart } from '../../slices/cartSlice';
+import { toast } from 'react-toastify';
 
 function NavBar() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -24,7 +25,7 @@ function NavBar() {
       dispatch(resetCart());
       navigate('/');
     } catch (error) {
-      console.log(error);
+      toast.error(error?.data?.error || error);
     }
   };
 

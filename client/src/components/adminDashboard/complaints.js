@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 
 const Complaints = () => {
   const { data: complaints, refetch, isLoading, error } = useGetComplaintsQuery();
-  console.log("Complaints:",complaints);
+
   return (
     <>
       {isLoading ? (
