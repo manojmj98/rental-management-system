@@ -1,18 +1,10 @@
 import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button, Row, Col } from 'react-bootstrap';
+import { Table, Button} from 'react-bootstrap';
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
 import Message from '../common/Message';
 import Loader from '../common/Loader';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import NavBar from '../common/NavBar';
 import { useGetProductsQuery } from '../../slices/productApiSlice';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux/es/hooks/useSelector';
-import { useNavigate } from 'react-router-dom';
-
-//TODO : This doesn't work yet - have to identify the reason for failure
+import React from 'react';
 
 const Products = () => {
   const { data: products, refetch, isLoading, error } = useGetProductsQuery();
@@ -31,20 +23,25 @@ const Products = () => {
             <tr>
               <th>ID</th>
               <th>NAME</th>
+              <th>OWNER NAME</th>
+              <th>OWNER EMAIL</th>
               <th>PRICE</th>
-              <th>CATEGORY</th>
-              <th>BRAND</th>
-              <th></th>
+              <th>STOCK</th>
+              <th>DESCRIPTION</th>
+              <th>EDIT</th>
             </tr>
           </thead>
           <tbody>
-            {products.products.map((product) => (
+            {Array.isArray(products.products)?(
+              products.products.map((product) => (
               <tr key={product._id}>
                 <td>{product._id}</td>
                 <td>{product.name}</td>
+                <td>{product.owner?.username}</td>
+                <td>{product.owner?.email}</td>
                 <td>${product.price}</td>
-                <td>{product.category}</td>
-                <td>{product.brand}</td>
+                <td>{product.stock}</td>
+                <td>{product.description}</td>
                 <td>
                   <LinkContainer to={`/admin/product/${product._id}/edit`}>
                     <Button variant='light' className='btn-sm mx-2'>
@@ -60,7 +57,7 @@ const Products = () => {
                   </Button>
                 </td>
               </tr>
-            ))}
+            ))):null}
           </tbody>
         </Table>
 

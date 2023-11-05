@@ -21,6 +21,9 @@ import MerchantRoute from './components/common/MerchantRoute';
 import CartPage from './components/CartPage';
 import ProductListScreen from './components/adminDashboard/products';
 import OrderListScreen from './components/adminDashboard/orders';
+import EditProduct from './components/adminDashboard/editProduct';
+import EditOrder from './components/adminDashboard/editOrder';
+import EditComplaint from './components/adminDashboard/editComplaint';
 
 function App() {
   return (
@@ -55,10 +58,11 @@ function App() {
         </Route>
 
         {/* Admin Routes */}
-        {/* <Route path="" element={<AdminRoute />}> */}
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/admin/productlist" element={<ProductListScreen />} />
-        <Route path="/admin/orderlist" element={<OrderListScreen />} />
+        <Route path='/admin' element={<AdminPage />} />
+        <Route path='/admin/productlist' element={<ProductListScreen />} />
+        <Route path='/admin/orderlist' element={<OrderListScreen />} />
+        <Route path='/admin/product/:id/edit' element= {<EditProduct/>}/>
+        <Route path='/admin/complaint/:id/edit' element={<EditComplaint/>} />
       </Routes>
     </Router>
   );

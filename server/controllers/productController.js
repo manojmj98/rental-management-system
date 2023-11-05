@@ -40,6 +40,7 @@ const getProducts = async (req, res) => {
 
   const count = await Product.countDocuments({ ...keywordQuery, ...tagsQuery });
   const products = await Product.find({ ...keywordQuery, ...tagsQuery })
+    .populate("owner")
     .limit(pageSize)
     .skip(pageSize * (page - 1));
   console.log("Products:",JSON.stringify(products));
