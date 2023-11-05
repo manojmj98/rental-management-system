@@ -22,7 +22,6 @@ import CartPage from './components/CartPage';
 import ProductListScreen from './components/adminDashboard/products';
 import OrderListScreen from './components/adminDashboard/orders';
 import EditProduct from './components/adminDashboard/editProduct';
-import EditOrder from './components/adminDashboard/editOrder';
 import EditComplaint from './components/adminDashboard/editComplaint';
 
 function App() {
