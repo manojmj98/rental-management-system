@@ -1,4 +1,26 @@
 const mongoose = require('mongoose');
+const { ROLE} = require('../constants/constants.js');
+
+const commentSchema = new mongoose.Schema(
+  {
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    commenter: {
+      type: String,
+      default: ROLE.Admin,
+      enum: [ROLE.Admin, ROLE.Merchant]
+    },
+    comment: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 const productSchema = mongoose.Schema(
   {
@@ -28,6 +50,7 @@ const productSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    comments:[commentSchema],
     tags: {
       type: [String],
     }

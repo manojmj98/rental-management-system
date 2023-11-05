@@ -101,20 +101,22 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const { name, price, description, id, stock, tags } = req.body;
+    const { name, price, description, id, stock,comments,isApproved,tags } = req.body;
     const product = await Product.findById(id);
 
     if (!product) {
       return res.status(404).json({ message: 'Product not fount' });
     }
+    const tagsArr = typeof tags === 'string' ? tags.replace(/\s/g, '').split(',') : product.tags;
 
-    const tagsArr = tags ? tags.replace(/\s/g, '').split(',') : product.tags;
 
     product.name = name || product.name;
     product.price = price || product.price;
     product.description = description || product.description;
     product.tags = tagsArr;
     product.stock = stock || product.stock;
+    product.comments = comments || product.comments;
+    product.isApproved = isApproved;
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);

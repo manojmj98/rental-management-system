@@ -4,11 +4,14 @@ import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
 import Message from '../common/Message';
 import Loader from '../common/Loader';
 import { useGetProductsQuery } from '../../slices/productApiSlice';
-import React from 'react';
+import React ,{useEffect} from 'react';
 
 const Products = () => {
   const { data: products, refetch, isLoading, error } = useGetProductsQuery();
   console.log('Products:', products);
+  useEffect(() => {
+    refetch();
+  }, []);
   return (
     <>
       {isLoading ? (
@@ -28,6 +31,7 @@ const Products = () => {
               <th>PRICE</th>
               <th>STOCK</th>
               <th>DESCRIPTION</th>
+              <th>STATUS</th>
               <th>EDIT</th>
             </tr>
           </thead>
@@ -42,6 +46,9 @@ const Products = () => {
                 <td>${product.price}</td>
                 <td>{product.stock}</td>
                 <td>{product.description}</td>
+                <td>
+                    {product.isApproved ? 'Approved' : 'Pending'}
+                  </td> 
                 <td>
                   <LinkContainer to={`/admin/product/${product._id}/edit`}>
                     <Button variant='light' className='btn-sm mx-2'>
