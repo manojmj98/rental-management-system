@@ -14,6 +14,11 @@ function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('MEMBER');
+  const [street,setStreet] = useState('')
+  const [city,setCity] = useState('')
+  const [state,setStatee] = useState('')
+  const [country,setCountry] = useState('')
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,6 +43,10 @@ function RegisterPage() {
         email,
         password,
         role,
+        street,
+        city,
+        state,
+        country
       }).unwrap();
       dispatch(setCredentials(res.user));
       navigate('/');
@@ -156,8 +165,74 @@ function RegisterPage() {
                 <option>MERCHANT</option>
               </select>
             </div>
-            {/* Add fields for any other registration data */}
-            {/* ... (Similar to the login form) */}
+            <div className='mb-4'>
+              <label
+                htmlFor='street'
+                className='block text-gray-300 text-sm font-medium'
+              >
+                Street
+              </label>
+              <input
+                type='street'
+                id='street'
+                name='street'
+                className='mt-1 px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white'
+                placeholder='Enter the Street'
+                value={street}
+                onChange={(ev) => setStreet(ev.target.value)}
+              />
+            </div>
+            <div className='mb-4'>
+              <label
+                htmlFor='city'
+                className='block text-gray-300 text-sm font-medium'
+              >
+                City
+              </label>
+              <input
+                type='city'
+                id='city'
+                name='city'
+                className='mt-1 px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white'
+                placeholder='Enter the city'
+                value={city}
+                onChange={(ev) => setCity(ev.target.value)}
+              />
+            </div>
+            <div className='mb-4'>
+              <label
+                htmlFor='State'
+                className='block text-gray-300 text-sm font-medium'
+              >
+                State
+              </label>
+              <input
+                type='state'
+                id='state'
+                name='state'
+                className='mt-1 px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white'
+                placeholder='Enter state'
+                value={state}
+                onChange={(ev) => setStatee(ev.target.value)}
+              />
+            </div>
+            <div className='mb-4'>
+              <label
+                htmlFor='country'
+                className='block text-gray-300 text-sm font-medium'
+              >
+                Country
+              </label>
+              <input
+                type='country'
+                id='country'
+                name='country'
+                className='mt-1 px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white'
+                placeholder='Enter Country'
+                value={country}
+                onChange={(ev) => setCountry(ev.target.value)}
+              />
+            </div>
             <div className='mb-6'>
               <button
                 type='submit'

@@ -31,6 +31,15 @@ const productSchema = mongoose.Schema(
     tags: {
       type: [String],
     }
+  ,
+      latitude: {
+      type: Number,
+      required: true,
+    },
+      longitude: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
