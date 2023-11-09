@@ -21,6 +21,7 @@ const EditProduct = () => {
   useEffect(() => {
     if (productData) {
       setProduct(productData);
+      setPreviousComments(productData.comments);
     }
   }, [productData]);
 
@@ -30,8 +31,6 @@ const EditProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (newComment.trim() !== '') {
-      // You can implement the logic to submit the new comment to the backend here.
-      // After submitting, you may want to update the comments state and clear the newComment input.
       const updatedComments = [
         ...previousComments,
         {

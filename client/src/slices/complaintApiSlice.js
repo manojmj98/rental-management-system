@@ -19,11 +19,28 @@ export const complaintApiSlice = apiSlice.injectEndpoints({
     }),
     updateStatus: builder.mutation({
       query(data) {
-        const { id, ...body } = data;
         return {
-          url: `${COMPLAINT_URL}/${id}`,
+          url: `${COMPLAINT_URL}/updatebyid`,
           method: 'PUT',
-          body: body,
+          body: data,
+        };
+      },
+    }),
+    // updateProduct: builder.mutation({
+    //   query(data) {
+    //     return {
+    //       url: `${PRODUCT_URL}/updatebyid`,
+    //       method: 'PUT',
+    //       body: data,
+    //     };
+    //   },
+    // }),
+    getComplaintById: builder.query({
+      query(data) {
+        return {
+          url: `${COMPLAINT_URL}/get-complaintbyid`,
+          method: 'GET',
+          params: data,
         };
       },
     }),
@@ -34,4 +51,5 @@ export const {
     useCreateComplaintMutation,
     useGetComplaintsQuery,
     useUpdateStatusMutation,
+    useGetComplaintByIdQuery
 } = complaintApiSlice;

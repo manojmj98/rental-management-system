@@ -4,10 +4,12 @@ const auth = require('../middleware/auth.js')
 const merchant = require('../middleware/authMerchant.js')
 const {getComplaints,
     createComplaint,
-    updateStatus} = require('../controllers/complaintsController.js')
+    updateStatus,
+    getComplaintById} = require('../controllers/complaintsController.js')
 
 
 router.route('/results').get(auth,getComplaints);
 router.route('/').post(auth,createComplaint);
-router.route('/:id').put(auth,updateStatus);
+router.route('/updatebyid').put(updateStatus);
+router.route('/get-complaintbyid').get(getComplaintById)
 module.exports = router;

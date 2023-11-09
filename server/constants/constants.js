@@ -31,7 +31,9 @@ exports.COMPLAINT_STATUS = {
     Investigation: 'Complaint under investigation',
     Complete: 'Complaint resolved',
     WithOwner: 'Awaiting response from owner',
-    RefundIssued: 'Refund Issued'
+    RefundIssued: 'Refund Issued',
+    Accepted: 'Complaint Accepted',
+    Denied: 'Complaint rejected'
 }
 
 exports.SECURITY_QUESTIONS={
