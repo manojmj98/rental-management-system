@@ -36,7 +36,6 @@ async function registerUser(e) {
     dispatch(setCredentials(res));
   } catch (error) {
     toast.error(error?.data?.error || error);
-    console.log(error);
   }
 }
     return (

@@ -28,10 +28,26 @@ const userSchema = mongoose.Schema({
         type: String
     },
     firstName: {
-        type: String
+        type: String,
     },
     lastName: {
         type: String
+    },
+    street: {
+        type: String,
+        required: true,
+    },
+    city: {
+        type: String,
+        required: true,
+    },
+    state: {
+        type: String,
+        required: true,
+    },
+    country: {
+        type: String,
+        required: true,
     },
     role: {
         type: String,

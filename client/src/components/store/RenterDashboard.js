@@ -11,14 +11,14 @@ function RenterDashboard() {
 
   const [robots, setRobots] = useState(null);
   const [search, setSearch] = useState(keyword ? keyword : '');
-  const [tagArr, setTagArr] = useState(tags ? tags.split('#') : []);
+  const [tagArr, setTagArr] = useState(tags ? tags.split('-') : []);
 
   const navigate = useNavigate();
 
   const { data } = useGetProductsQuery({
     keyword,
     pageNumber,
-    tags: tags ? tags.replace('/#/g', ',') : tags,
+    tags: tags ? tags.replace(/-/g, ',') : tags,
   });
 
   const searchHandler = () => {
@@ -27,7 +27,7 @@ function RenterDashboard() {
       else navigate(`/renter/page/1/search/${search}`);
     } else {
       if (search.length === 0)
-        navigate(`/renter/page/1/tags/${tagArr.join('#')}`);
+        navigate(`/renter/page/1/tags/${tagArr.join('-')}`);
       else navigate(`/renter/page/1/search/${search}`);
     }
   };
@@ -38,8 +38,8 @@ function RenterDashboard() {
       else navigate(`/renter/page/1/`);
     } else {
       if (keyword)
-        navigate(`/renter/page/1/search/${keyword}/tags/${tagArr.join('#')}`);
-      else navigate(`/renter/page/1/tags/${tagArr.join('#')}`);
+        navigate(`/renter/page/1/search/${keyword}/tags/${tagArr.join('-')}`);
+      else navigate(`/renter/page/1/tags/${tagArr.join('-')}`);
     }
   }, [keyword, navigate, tagArr]);
 
@@ -92,9 +92,8 @@ function RenterDashboard() {
             {robots &&
               robots.map((robot) => {
                 if (robot.isApproved) {
-                  return (<Link to={`../renter/product/${robot._id}`}>
+                  return (<Link to={`../renter/product/${robot._id}`} key={robot._id}>
                     <Card
-                      key={robot._id}
                       title={robot.name}
                       description={robot.description}
                       price={robot.price}
