@@ -61,77 +61,72 @@ function NavBar() {
           >
             Contact
           </Link>
-          {userInfo ? (
-            userInfo.role === ROLE.Merchant ? (
-              <>
-                <Link
-                  to='/profile'
-                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-                >
-                  Profile
-                </Link>
-                <Link
-                  to='/owner'
-                  className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-                >
-                  <FiHome className='mr-2' /> My Dashboard
-                </Link>
-                <Link
-                  onClick={logoutHandler}
-                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-                >
-                  Sign Out
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link
-                  to='/renter'
-                  className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-                >
-                  <FaStore className='mr-2' /> Product Catalog
-                </Link>
-                <Link
-                  to='/profile'
-                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-                >
-                  Profile
-                </Link>
-                <Link
-                  onClick={logoutHandler}
-                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-                >
-                  Sign Out
-                </Link>
-                <Link
-                  to='/cart'
-                  className='justify-items-center	bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-                >
-                  <FaShoppingCart size={'1.5em'} />
-                </Link>
-              </>
-            )
-          ) : (
+          {userInfo && userInfo.role === ROLE.Admin && (
             <>
               <Link
-                to='/renter'
+                  to='/profile'
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  Profile
+                </Link>
+              <Link
+                to='/admin' // Change the route for the admin dashboard
                 className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
               >
-                <FaStore className='mr-2' /> Product Catalog
+                <FiHome className='mr-2' /> My Dashboard
               </Link>
               <Link
-                to='/login'
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-              >
-                Sign In
-              </Link>
-              <Link
-                to='/register'
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-              >
-                Sign Up
-              </Link>
+                  onClick={logoutHandler}
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  Sign Out
+                </Link>
+
             </>
+          )}
+          {userInfo && userInfo.role === ROLE.Merchant && (
+            <>
+            <Link
+              to='/profile'
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+            >
+              Profile
+            </Link>
+            <Link
+              to='/owner'
+              className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+            >
+              <FiHome className='mr-2' /> My Dashboard
+            </Link>
+            <Link
+              onClick={logoutHandler}
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+            >
+              Sign Out
+            </Link>
+          </>
+          )}
+          {!userInfo && (
+             <>
+             <Link
+               to='/renter'
+               className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+             >
+               <FaStore className='mr-2' /> Product Catalog
+             </Link>
+             <Link
+               to='/login'
+               className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+             >
+               Sign In
+             </Link>
+             <Link
+               to='/register'
+               className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+             >
+               Sign Up
+             </Link>
+           </>
           )}
         </div>
       </div>
