@@ -5,6 +5,7 @@ import { useGetProductByIdQuery } from '../../slices/productApiSlice';
 import NavBar from '../common/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../slices/cartSlice';
+import AddressInput from '../ownerDashboard/AddressInput';
 
 const RenterItemPage = () => {
   const [qty, setQty] = useState(1);
@@ -38,6 +39,10 @@ const RenterItemPage = () => {
           />
           <p className='text-gray-700 mb-4'>{robot.description}</p>
           <p className='text-2xl font-bold text-green-600'>${robot.price}</p>
+          <div className='w-3/6'>
+          <AddressInput lat={robot.latitude} lng={robot.longitude}></AddressInput>
+          </div>
+          
           <input
             type='number'
             className='mt-1 px-4 py-2  border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white'

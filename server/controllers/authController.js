@@ -11,7 +11,7 @@ const { log } = require('console');
 
 const registerUser = async (req, res) => {
   try {
-    const { username, email, password, firstName, lastName, role, street, city, state, country } = req.body;
+    const { username, email, password, firstName, lastName, role, street, city, state, country,latitude, longitude } = req.body;
 
     if (!email) {
       return res
@@ -59,7 +59,9 @@ const registerUser = async (req, res) => {
       street,
       city,
       state,
-      country
+      country,
+      latitude,
+      longitude
     });
 
     const salt = await bcrypt.genSalt(10);
