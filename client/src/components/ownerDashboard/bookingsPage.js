@@ -1,80 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import AddressInput from './AddressInput';
-import NavBar from '../common/NavBar';
 
 function BookingsPage() {
-  const data = {
-    "user": "userId123",
-    "orderItems": [
-      {
-        "name": "Robot 1",
-        "qty": 2,
-        "price": 15,
-        "product": "654f76f03d28ed8443beec02"
-      }
-    ],
-    "customerAddress": {
-      "latitude":39.1778971,
-      "longitude":-86.5288379,
+  const [bookedProducts, setBookedProducts] = useState([
+    {
+      id: 1,
+      title: 'Booked Product 1',
+      description: 'Description for Booked Product 1',
     },
-    "pickupAddress": {
-      "address": "1320 E 10th St",
-      "city": "Bloomington",
-      "postalCode": "47405",
-      "country": "United States"
+    {
+      id: 2,
+      title: 'Booked Product 2',
+      description: 'Description for Booked Product 2',
     },
-    "paymentMethod": "Credit Card",
-    "paymentResult": {
-      "id": "paymentId123",
-      "status": "succeeded",
-      "update_time": "2023-01-01T12:34:56Z",
-      "email_address": "user@example.com"
+    {
+      id: 3,
+      title: 'Booked Product 3',
+      description: 'Description for Booked Product 3',
     },
-    "itemsPrice": 30,
-    "taxPrice": 5,
-    "totalPrice": 35,
-    "isPaid": true,
-    "paidAt": "2023-01-02T10:30:00Z",
-    "status": "Processing",
-    "paymentStatus": "Completed"
-  }
-
-  // Function to get the background color based on the order status
-  const getStatusColor = () => {
-    switch (data.status) {
-      case "Completed":
-        return "bg-green-200";
-      case "Processing":
-        return "bg-yellow-200";
-      // Add more cases for other statuses if needed
-      default:
-        return "bg-gray-200";
-    }
-  };
-
+  ]);
 
   return (
-    <>
-    <div className="max-w-2xl mx-auto p-4 rounded-md">
-      
-      <h2 className="text-3xl font-bold mb-6">Order Details</h2>
-    
-      <div className="flex flex-col">
-        <div className="mb-4">
-          <p className="text-lg"><strong>Product Name:</strong> {data.orderItems[0].name}</p>
-          <p className="text-lg"><strong>Order Status:</strong> {data.status}</p>
-        </div>
-    
-        <div className="border-t pt-4">
-          <p className="text-sm"><strong>Payment Method:</strong> {data.paymentMethod}</p>
-          <p className="text-sm"><strong>Total Price:</strong> ${data.totalPrice.toFixed(2)}</p>
-          <p className="text-sm"><strong>Payment Status:</strong> {data.paymentStatus}</p>
-        </div>
-      </div>
-          <AddressInput lat = {data.customerAddress.latitude} lng = {data.customerAddress.longitude}/>
-        </div>
-    </>
-    
+    <div className="max-w-xl mx-auto p-4 bg-white shadow-lg rounded-lg">
+      <h1 className="text-3xl font-bold mb-4">Booked Products</h1>
+      <ul className="space-y-4">
+        {bookedProducts.map((product) => (
+          <li key={product.id} className="border p-4 rounded-lg">
+            <h3 className="text-xl font-bold mb-2">{product.title}</h3>
+            <p>{product.description}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
