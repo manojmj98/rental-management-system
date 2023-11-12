@@ -141,10 +141,10 @@ const deleteProduct = async (req, res) => {
 // @desc    Create new review
 // @route   POST /api/products/:id/reviews
 // @access  Private
- const createProductReview = asyncHandler(async (req, res) => {
-  const { rating, comment } = req.body;
+ const createProductReview = async (req, res) => {
+  const {id, rating, comment } = req.body;
 
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(id);
 
   if (product) {
     const alreadyReviewed = product.reviews.find(
@@ -157,7 +157,7 @@ const deleteProduct = async (req, res) => {
     }
 
     const review = {
-      name: req.user.name,
+      name: req.user.username,
       rating: Number(rating),
       comment,
       user: req.user._id,
@@ -177,16 +177,16 @@ const deleteProduct = async (req, res) => {
     res.status(404);
     throw new Error('Product not found');
   }
-});
+};
 
 // @desc    Get top rated products
 // @route   GET /api/products/top
 // @access  Public
-const getTopProducts = asyncHandler(async (req, res) => {
+const getTopProducts = async (req, res) => {
   const products = await Product.find({}).sort({ rating: -1 }).limit(3);
 
   res.json(products);
-});
+};
 
 
 module.exports = {
@@ -195,10 +195,6 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
-<<<<<<< Updated upstream
-};
-=======
   createProductReview,
   getTopProducts,
 };
->>>>>>> Stashed changes

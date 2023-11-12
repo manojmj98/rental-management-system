@@ -8,10 +8,14 @@ const path = require('path');
 
 const port = process.env.PORT || 5001;
 const uri = process.env.MONGO_URI;
+const stripePublicKey=process.env.STRIPE_PUBLIC_KEY;
+const stripeSecretKey=process.env.STRIPE_SECRET_KEY;
 
 const userRouter = require('./routes/userRoutes.js');
 const authRouter = require('./routes/auth.js');
-const productRouter = require('./routes/productRoutes.js')
+const productRouter = require('./routes/productRoutes.js');
+const orderRouter = require('./routes/orderRoutes.js');
+const complaintRouter = require('./routes/complaintRoutes.js');
 
 app.use(cors());
 app.use(express.json());
@@ -21,6 +25,8 @@ app.use(cookieParser());
 app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
 app.use('/api/product',productRouter);
+app.use('/api/order',orderRouter);
+app.use('/api/complaint',complaintRouter);
 
 mongoose.connect(uri, {
     useNewUrlParser: true,
