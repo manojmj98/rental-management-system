@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Carousal from './common/Carousel';
-import Loader from './common/Loader';
 import NavBar from './common/NavBar';
 import { useGetRecommendedQuery } from '../slices/productApiSlice';
 
@@ -13,7 +12,7 @@ function LandingPage() {
   const { data, isLoading } = useGetRecommendedQuery();
 
   const searchHandler = () => {
-    navigate(`/renter/${search}`);
+    navigate(`/renter/page/1/search/${search}`);
   };
 
   return (

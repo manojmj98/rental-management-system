@@ -76,7 +76,7 @@ const getProductById = async (req, res) => {
 // Placeholder, waiting on ratings and transactions to implement proper recommendation system 
 const getRecommendedProducts = async (req, res) => {
   try {
-    const products = await Product.find().limit(5);
+    const products = await Product.find({isApproved: true}).limit(5);
 
     res.status(200).json({ products });
   } catch (error) {
