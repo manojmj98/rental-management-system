@@ -51,8 +51,37 @@ const userProfile = async (req, res) => {
     }
 }
 
+const getUsers = async(req,res) =>{
+    try{
+        const users = await User.find({});
+        res.json(users);
+    }
+    catch(error){
+        res.status(500).json({
+            error: 'Unable fetch users now.Please try again'
+        }); 
+    }
+}
+const getCount = async (req,res) => {
+    count = await User.countDocuments();
+    res.status(200).json(count);
+}
+const deleteUser = async(req,res)=>{
+    try{
+        const query = { _id: req.params.id };
+        const result = await User.deleteOne(query);
+        res.status(200).json("OK");
+    }
+    catch(error){
+        console.log("Error occurred while deletion",error)
+    }
+    
+}
 
 module.exports = {
     updatedUser,
-    userProfile
+    userProfile,
+    getUsers,
+    getCount,
+    deleteUser
 }

@@ -48,6 +48,13 @@ export const productApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+    getProductsCount: builder.query({
+      query: () => ({
+        url: `/api/product/total`,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ['Products'],
+    }),
 
     createReview: builder.mutation({
       query: (data) => ({
@@ -71,5 +78,6 @@ export const {
   useGetProductByIdQuery,
   useDeleteProductByIdMutation,
   useUpdateProductMutation,
+  useGetProductsCountQuery,
   useCreateReviewMutation
 } = productApiSlice;

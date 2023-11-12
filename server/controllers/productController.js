@@ -42,7 +42,7 @@ const getProducts = async (req, res) => {
   const products = await Product.find({ ...keywordQuery, ...tagsQuery })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-
+  console.log("Products:",JSON.stringify(products));
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 };
 
@@ -63,7 +63,7 @@ const getProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const { name, price, description, owner } = req.body;
+    const { name, price, description, owner,latitude, longitude } = req.body;
 
     if (!name) {
       return res
@@ -81,12 +81,19 @@ const createProduct = async (req, res) => {
     if (!owner) {
       return res.status(400).json({ error: 'Unable to process the request' });
     }
+    if (!longitude || !latitude) {
+      return res
+        .status(400)
+        .json({ error: 'Please provide your address' });
+    }
 
     const product = new Product({
       name,
       price,
       description,
       owner,
+      latitude,
+      longitude
     });
 
     const createdProduct = await product.save();
@@ -137,6 +144,10 @@ const deleteProduct = async (req, res) => {
     throw new Error('Product not found');
   }
 };
+const getCount = async (req,res) => {
+  count = await Product.countDocuments();
+  res.status(200).json(count);
+}
 
 // @desc    Create new review
 // @route   POST /api/products/:id/reviews
@@ -195,6 +206,7 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  getCount
   createProductReview,
   getTopProducts,
 };

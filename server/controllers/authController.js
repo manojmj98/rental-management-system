@@ -11,7 +11,7 @@ const { log } = require('console');
 
 const registerUser = async (req, res) => {
   try {
-    const { username, email, password, firstName, lastName, role } = req.body;
+    const { username, email, password, firstName, lastName, role, street, city, state, country } = req.body;
 
     if (!email) {
       return res
@@ -56,6 +56,10 @@ const registerUser = async (req, res) => {
       firstName,
       lastName,
       role,
+      street,
+      city,
+      state,
+      country
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -129,6 +133,10 @@ const loginUser = async (req, res) => {
         lastName: user.lastName,
         email: user.email,
         role: user.role,
+        street: user.street,
+        city: user.city,
+        state: user.state,
+        country: user.country
       },
     });
   } catch (error) {

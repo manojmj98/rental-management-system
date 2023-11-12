@@ -41,10 +41,9 @@ function LoginPage() {
   };
   const onSuccess = async (response) => {
     // Handle the successful Google OAuth response here
-    console.log("Google OAuth successful:", response);
     const {credential,clientId} = response
     const result = await googleLogin({credential,clientId}).unwrap();
-    console.log(JSON.stringify(result));
+
     dispatch(setCredentials(result.user));
     navigate("/");
     // You can make an Axios request or use any other method to access Google APIs here
