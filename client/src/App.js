@@ -21,6 +21,7 @@ import MerchantRoute from './components/common/MerchantRoute';
 import CartPage from './components/CartPage';
 import ProductListScreen from './components/adminDashboard/products';
 import OrderListScreen from './components/adminDashboard/orders';
+import BookingsPage from './components/ownerDashboard/bookingsPage';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
 
         <Route path='' element={<MerchantRoute />}>
           <Route path='/owner' element={<OwnerDashBoard />} />
+          <Route path='/booking' element={<BookingsPage/ >} />
           <Route path='/robotInput' element={<ProductInput />} />
           <Route path='/productpage/:id' element={<ProductPage />} />
         </Route>

@@ -49,6 +49,14 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    latitude: {
+        type: Number,
+        required: true,
+      },
+        longitude: {
+        type: Number,
+        required: true,
+      },
     role: {
         type: String,
         default: ROLE.Member,
