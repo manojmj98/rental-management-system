@@ -18,6 +18,8 @@ function RegisterPage() {
   const [city,setCity] = useState('')
   const [state,setStatee] = useState('')
   const [country,setCountry] = useState('')
+  const [latitude,setLatitude] = useState('')
+  const [longitude,setLongitude] = useState('')
 
 
   const navigate = useNavigate();
@@ -36,6 +38,27 @@ function RegisterPage() {
   async function registerUser(e) {
     e.preventDefault();
     try {
+      const address = `${street}, ${city}, ${state}, ${country}`;
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+            address
+          )}&key=AIzaSyAIGULR3p6qn-h-AStpV91ZSN-w-WlV98w`
+        );
+  
+        if (!response.ok) {
+          throw new Error("Network error");
+        }
+        const data = await response.json();
+  
+        if (data.results && data.results.length > 0) {
+          const { lat, lng } = data.results[0].geometry.location;
+          setLatitude(lat);
+          setLongitude(lng);
+
+        } else {
+          throw new Error("No results found");
+        }
+
       const res = await register({
         username,
         firstName,
@@ -46,12 +69,15 @@ function RegisterPage() {
         street,
         city,
         state,
-        country
+        country,
+        latitude,
+        longitude
       }).unwrap();
       dispatch(setCredentials(res.user));
       navigate('/');
     } catch (error) {
-      toast.error(error?.data?.error || error);
+      console.log(error)
+      toast.error(error?.data?.error || "Enter Valid Address");
     }
   }
 
