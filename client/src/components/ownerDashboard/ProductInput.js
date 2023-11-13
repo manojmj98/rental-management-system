@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useAddProductMutation,useGetProductsQuery } from '../../slices/productApiSlice';
+import {
+  useAddProductMutation,
+  useGetProductsQuery,
+} from '../../slices/productApiSlice';
 
 function ProductInput() {
   const [formData, setFormData] = useState({
@@ -11,21 +14,13 @@ function ProductInput() {
     owner: '',
     price: '',
   });
-  const [latitude, setLatitude] = useState(null)
-  const [longitude, setLongitude] = useState(null)
+
   const [addProduct] = useAddProductMutation();
   const { refetch } = useGetProductsQuery();
   const userInfo = useSelector((state) => state.auth.userInfo.id);
   const user = useSelector((state) => state.auth.userInfo);
 
-  React.useEffect(() => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      owner: userInfo,
-    }));
-  }, [userInfo]);
   const navigate = useNavigate();
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,41 +30,42 @@ function ProductInput() {
     });
   };
 
-
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      const address = `${user.street}, ${user.city}, ${user.state}, ${user.country}`;
-  
-      try {
-        const response = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-            address
-          )}&key=AIzaSyAIGULR3p6qn-h-AStpV91ZSN-w-WlV98w`
-        );
-  
-        if (!response.ok) {
-          throw new Error("Network error");
-        }
-  
-        const data = await response.json();
-  
-        if (data.results && data.results.length > 0) {
-          const { lat, lng } = data.results[0].geometry.location;
-          setLatitude(lat);
-          setLongitude(lng);
+    e.preventDefault();
+    const address = `${user.street}, ${user.city}, ${user.state}, ${user.country}`;
 
-        } else {
-          throw new Error("No results found");
-        }
-        const res = await addProduct({ ...formData,latitude : latitude, longitude:longitude}).unwrap();
-        if (res) {
-          refetch()
-          navigate('/owner');
-       }
-      } 
-      catch (error) {
-        toast.error(error?.data?.error || error);
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+          address
+        )}&key=AIzaSyAIGULR3p6qn-h-AStpV91ZSN-w-WlV98w`
+      );
+
+      if (!response.ok) {
+        throw new Error('Network error');
       }
+
+      const data = await response.json();
+
+      if (!(data.results && data.results.length > 0)) {
+        throw new Error('No results found');
+      }
+      
+      const { lat, lng } = data.results[0].geometry.location;
+
+      const res = await addProduct({
+        ...formData,
+        owner: userInfo,
+        latitude: lat,
+        longitude: lng,
+      }).unwrap();
+      if (res) {
+        refetch();
+        navigate('/owner');
+      }
+    } catch (error) {
+      toast.error(error?.data?.error || error);
+    }
   };
 
   return (
@@ -121,7 +117,7 @@ function ProductInput() {
             required
           />
         </div>
-        
+
         <button
           type='submit'
           className='bg-blue-500 text-white font-bold py-2 px-4 rounded'
