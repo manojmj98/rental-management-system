@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button } from 'react-bootstrap';
-import { FaTrash, FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
+import React from 'react';
+import { Table } from 'react-bootstrap';
 import Message from '../common/Message';
 import Loader from '../common/Loader';
 import {
-  useCreateComplaintMutation,
-  useGetComplaintsQuery,
-  useUpdateStatusMutation,
+  useGetComplaintsQuery
 } from '../../slices/complaintApiSlice';
-import { toast } from 'react-toastify';
 
 const Complaints = () => {
-  const { data: complaints, refetch, isLoading, error } = useGetComplaintsQuery();
+  const { data: complaints, isLoading, error } = useGetComplaintsQuery();
 
   return (
     <>

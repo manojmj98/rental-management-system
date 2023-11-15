@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useGetProductByIdQuery } from '../../slices/productApiSlice';
 import NavBar from '../common/NavBar';
 import { useDispatch, useSelector } from 'react-redux';

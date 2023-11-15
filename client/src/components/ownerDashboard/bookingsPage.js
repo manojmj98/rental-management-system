@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import AddressInput from './AddressInput';
-import NavBar from '../common/NavBar';
 
 function BookingsPage() {
   const data = {
