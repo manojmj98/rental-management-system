@@ -9,8 +9,3 @@ Client
 ```console
 $ npm run client
 ```
-
-Build
-```console
-$ npm run build
-```
