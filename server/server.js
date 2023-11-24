@@ -14,6 +14,7 @@ const authRouter = require('./routes/auth.js');
 const productRouter = require('./routes/productRoutes.js');
 const orderRouter = require('./routes/orderRoutes.js');
 const complaintRouter = require('./routes/complaintRoutes.js');
+const messageRouter = require('./routes/messageRoutes.js')
 
 app.use(cors());
 app.use(express.json());
@@ -24,7 +25,8 @@ app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
 app.use('/api/product',productRouter);
 app.use('/api/order',orderRouter);
-app.use('/api/complaint',complaintRouter);
+app.use('/api/complaint',complaintRouter)
+app.use('/api/message',messageRouter);
 
 mongoose.connect(uri, {
     useNewUrlParser: true,
