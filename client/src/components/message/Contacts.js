@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import './messages.css'
+import './messages.css';
 
 function Contacts({ currentUser, contacts, changeChat }) {
   const [currentSelected, setCurrentSelected] = useState(undefined);
@@ -10,8 +10,19 @@ function Contacts({ currentUser, contacts, changeChat }) {
     changeChat(contact);
   };
 
+  const newChatHandler = () => {
+    
+  }
+
   return (
-      <ListGroup className='overflow-scroll overflow-x-hidden bg-gray-900 rounded-l-lg no-scrollbar' variant='flush'>
+    <div
+      className='grid min-h-full max-h-full bg-gray-900 rounded-l-lg'
+      style={{ gridTemplateRows: '95% 5%' }}
+    >
+      <ListGroup
+        className='overflow-scroll overflow-x-hidden no-scrollbar'
+        variant='flush'
+      >
         {contacts.map((contact, index) => {
           return (
             <ListGroup.Item
@@ -24,6 +35,10 @@ function Contacts({ currentUser, contacts, changeChat }) {
           );
         })}
       </ListGroup>
+      <div>
+        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 w-full' onClick={newChatHandler}>New Chat</button>
+      </div>
+    </div>
   );
 }
 

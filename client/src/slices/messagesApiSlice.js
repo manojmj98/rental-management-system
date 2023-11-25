@@ -21,10 +21,19 @@ export const messagesApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+    getContacts: builder.query({
+      query() {
+        return {
+          url: `${MESSAGE_URL}/get-contacts`,
+          method: 'GET',
+        };
+      },
+    }),
   }),
 });
 
 export const {
   useAddMessageMutation,
   useGetMessagesQuery,
+  useGetContactsQuery,
 } = messagesApiSlice;

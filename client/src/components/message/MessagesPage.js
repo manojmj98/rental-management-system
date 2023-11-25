@@ -1,24 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../common/NavBar';
 import Contacts from './Contacts';
 import ChatContainer from './ChatContainer';
+import { useGetContactsQuery } from '../../slices/messagesApiSlice';
 
 function MessagesPage(props) {
   const [currentChat, setCurrentChat] = useState(undefined);
+  const [contacts, setContacts] = useState(undefined);
 
   const { userInfo } = useSelector((state) => state.auth);
+  const { data } = useGetContactsQuery();
 
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };
 
-  const testData = [
-    {
-      recipients: ['651b6267acef841744a388c8'],
-      usernames: ['Username'],
-    },
-  ];
+  useEffect(() => {
+    if (data) {
+      let tempContacts = [];
+      for (let i = 0; i < data.contacts.length; i++) {
+        let recipients = [];
+        let usernames = [];
+        for (let j = 0; j < data.contacts[i].length; j++) {
+          recipients.push(data.contacts[i][j].id);
+          usernames.push(data.contacts[i][j].username);
+        }
+        tempContacts.push({ recipients, usernames });
+      }
+      setContacts(tempContacts);
+    }
+  }, [data, setContacts]);
 
   return (
     <>
@@ -26,7 +38,11 @@ function MessagesPage(props) {
         <NavBar />
         <div className='flex flex-col justify-center items-center'>
           <div className='h-[85vh] w-[65vw] grid grid-cols-5 bg-transparent'>
-            <Contacts contacts={testData} changeChat={handleChatChange} />
+            {contacts === undefined ? (
+              <></>
+            ) : (
+              <Contacts contacts={contacts} changeChat={handleChatChange} />
+            )}
             {currentChat === undefined ? (
               <></>
             ) : (
