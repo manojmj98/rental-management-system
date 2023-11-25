@@ -16,7 +16,7 @@ function LandingPage() {
   };
 
   return (
-    <div className='bg-black h-screen flex flex-col'>
+    <div className='bg-black flex flex-col'>
       {/* Navbar */}
       <NavBar></NavBar>
 
