@@ -16,7 +16,7 @@ function MessagesPage(props) {
   const testData = [
     {
       recipients: ['651b6267acef841744a388c8'],
-      usernames: ['idk'],
+      usernames: ['Username'],
     },
   ];
 
@@ -25,7 +25,7 @@ function MessagesPage(props) {
       <div className='w-screen h-screen bg-black'>
         <NavBar />
         <div className='flex flex-col justify-center items-center'>
-          <div className='h-[85vh] w-[65vw] grid grid-cols-5 bg-white'>
+          <div className='h-[85vh] w-[65vw] grid grid-cols-5 bg-transparent'>
             <Contacts contacts={testData} changeChat={handleChatChange} />
             {currentChat === undefined ? (
               <></>

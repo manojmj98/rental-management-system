@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import './messages.css'
 
 function Contacts({ currentUser, contacts, changeChat }) {
   const [currentSelected, setCurrentSelected] = useState(undefined);
@@ -11,7 +11,7 @@ function Contacts({ currentUser, contacts, changeChat }) {
   };
 
   return (
-      <ListGroup className='overflow-scroll overflow-x-hidden' variant='flush'>
+      <ListGroup className='overflow-scroll overflow-x-hidden bg-gray-900 rounded-l-lg no-scrollbar' variant='flush'>
         {contacts.map((contact, index) => {
           return (
             <ListGroup.Item
