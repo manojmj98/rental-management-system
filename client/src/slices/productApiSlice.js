@@ -50,7 +50,14 @@ export const productApiSlice = apiSlice.injectEndpoints({
     }),
     getProductsCount: builder.query({
       query: () => ({
-        url: `/api/product/total`,
+        url: `${PRODUCT_URL}/total`,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ['Products'],
+    }),
+    getRecommended: builder.query({
+      query: () => ({
+        url: `${PRODUCT_URL}/get-recommended`,
       }),
       keepUnusedDataFor: 5,
       providesTags: ['Products'],
@@ -65,4 +72,5 @@ export const {
   useDeleteProductByIdMutation,
   useUpdateProductMutation,
   useGetProductsCountQuery,
+  useGetRecommendedQuery,
 } = productApiSlice;

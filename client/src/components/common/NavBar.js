@@ -28,7 +28,7 @@ function NavBar() {
       toast.error(error?.data?.error || error);
     }
   };
-
+  console.log('UserInfo:',userInfo);
   return (
     <nav className='bg-gray-900 p-4 mb-4'>
       <div className='container mx-auto flex justify-between items-center'>
@@ -103,6 +103,34 @@ function NavBar() {
               className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
             >
               Sign Out
+            </Link>
+          </>
+          )}
+          {userInfo && userInfo.role === ROLE.Member && (
+            <>
+            <Link
+              to='/renter'
+              className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+            >
+              <FaStore className='mr-2' /> Product Catalog
+            </Link>
+            <Link
+              to='/profile'
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+            >
+              Profile
+            </Link>
+            <Link
+              onClick={logoutHandler}
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+            >
+              Sign Out
+            </Link>
+            <Link
+              to='/cart'
+              className='justify-items-center	bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+            >
+              <FaShoppingCart size={'1.5em'} />
             </Link>
           </>
           )}

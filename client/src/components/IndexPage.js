@@ -2,27 +2,18 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Carousal from './common/Carousel';
 import NavBar from './common/NavBar';
-
-const carouselData = [
-  {
-    src: 'https://images.pexels.com/photos/2085832/pexels-photo-2085832.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    alt: 'Image 1',
-  },
-  {
-    src: 'https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/04/14/12/c3po-red-arm.jpg?quality=75&width=990&crop=3%3A2%2Csmart&auto=webp',
-    alt: 'Image 2',
-  },
-];
+import { useGetRecommendedQuery } from '../slices/productApiSlice';
 
 function LandingPage() {
+  const [search, setSearch] = useState('');
 
-  const [search, setSearch] = useState('')
-  
   const navigate = useNavigate();
 
+  const { data, isLoading } = useGetRecommendedQuery();
+
   const searchHandler = () => {
-    navigate(`/renter/${search}`)
-  }
+    navigate(`/renter/page/1/search/${search}`);
+  };
 
   return (
     <div className='bg-black h-screen flex flex-col'>
@@ -30,40 +21,48 @@ function LandingPage() {
       <NavBar></NavBar>
 
       {/* Hero Section */}
-      <section className='container mx-auto flex justify-center items-center flex-grow'>
-        <div className='w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-md'>
-          {/* BotBazaar Title */}
-          <div className='mb-4 text-center'>
-            <h2 className='text-4xl font-semibold text-white'>
-              Welcome to BotBazaar
-            </h2>
+      <div className='grid grid-col-1 justify-items-center'>
+        <section className='w-1/4'>
+          <div className='w-fit p-6 bg-gray-900 rounded-lg shadow-md'>
+            {/* BotBazaar Title */}
+            <div className='mb-4 text-center'>
+              <h2 className='text-4xl font-semibold text-white'>
+                Welcome to BotBazaar
+              </h2>
+            </div>
+            {/* Description */}
+            <p className='text-gray-300 text-lg mb-4'>
+              Rent robots for your business or personal projects. Explore our
+              wide range of robotic solutions.
+            </p>
+            {/* Search Bar */}
+            <div className='mb-6'>
+              <input
+                placeholder='Search for robots...'
+                className='px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white'
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            {/* Call to Action */}
+            <button
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg w-full text-center block transition duration-300 ease-in-out transform hover:scale-105'
+              onClick={searchHandler}
+            >
+              Search
+            </button>
           </div>
-          {/* Description */}
-          <p className='text-gray-300 text-lg mb-4'>
-            Rent robots for your business or personal projects. Explore our wide
-            range of robotic solutions.
-          </p>
-          {/* Search Bar */}
-          <div className='mb-6'>
-            <input
-              placeholder='Search for robots...'
-              className='px-4 py-2 w-full border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white'
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-          {/* Call to Action */}
-          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg w-full text-center block transition duration-300 ease-in-out transform hover:scale-105'
-          onClick={searchHandler}>
-            Search
-          </button>
-        </div>
-      </section>
+        </section>
 
-      {/* Carousal Section */}
-      <section className='container mx-auto flex justify-center items-center flex-grow mt-8'>
-        <Carousal data={carouselData} />
-      </section>
+        {/* Carousal Section */}
+        {isLoading ? (
+          <></>
+        ) : (
+          <section className='mt-8 w-2/5'>
+            <Carousal data={data.products} />
+          </section>
+        )}
+      </div>
 
       {/* Features Section */}
       <section className='bg-gray-800 py-12'>

@@ -1,7 +1,5 @@
-import React,{useState} from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button } from "react-bootstrap";
-import { FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
+import React, { useState } from "react";
+import { Table } from "react-bootstrap";
 import Message from "../common/Message";
 import Loader from "../common/Loader";
 import {
