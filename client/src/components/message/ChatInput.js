@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import './messages.css';
 import { IoMdSend } from "react-icons/io";
 
 function ChatInput({handleSendMsg}) {
@@ -14,15 +15,16 @@ function ChatInput({handleSendMsg}) {
 
 
   return (
-    <div>
+    <div className='h-full'>
       <form className="input-container" onSubmit={(event) => sendChat(event)}>
         <input
+          className='input-container-input'
           type="text"
           placeholder="Message"
           onChange={(e) => setMsg(e.target.value)}
           value={msg}
         />
-        <button type="submit">
+        <button type="submit" className='input-container-button'>
           <IoMdSend />
         </button>
       </form>

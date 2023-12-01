@@ -1,18 +1,49 @@
 import React, { useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { FaPlus } from 'react-icons/fa';
 import './messages.css';
 
-function Contacts({ currentUser, contacts, changeChat }) {
+function Contacts({ contacts, changeChat, setContacts }) {
   const [currentSelected, setCurrentSelected] = useState(undefined);
+  const [newChat, setNewChat] = useState(false);
+  const [newChatInput, setNewChatInput] = useState('');
+
+  const getUserID = async (username) => {
+    const response = await fetch(
+      '/api/user/get-id?' + new URLSearchParams({ username })
+    );
+    const id = await response.json()
+
+    return id._id;
+  };
 
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
   };
 
+  const startChat = async (e) => {
+    e.preventDefault();
+    const usernames = newChatInput.split(',');
+    let ids = [];
+
+    console.log(usernames);
+
+    for (let i = 0; i < usernames.length; i++) {
+      getUserID(usernames[i]).then(id => {
+        console.log(id);
+        ids.push(id);
+      })
+    }
+    const contact = { recipients: ids, usernames };
+
+    setContacts([contact, ...contacts]);
+    setNewChatInput(false)
+  };
+
   const newChatHandler = () => {
-    
-  }
+    setNewChat(true);
+  };
 
   return (
     <div
@@ -36,7 +67,30 @@ function Contacts({ currentUser, contacts, changeChat }) {
         })}
       </ListGroup>
       <div>
-        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 w-full' onClick={newChatHandler}>New Chat</button>
+        {newChat ? (
+          <form
+            className='input-container'
+            onSubmit={(event) => startChat(event)}
+          >
+            <input
+              className='input-container-input'
+              type='text'
+              placeholder='Usernames'
+              onChange={(e) => setNewChatInput(e.target.value)}
+              value={newChatInput}
+            />
+            <button type='submit' className='input-container-button'>
+              <FaPlus />
+            </button>
+          </form>
+        ) : (
+          <button
+            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 w-full'
+            onClick={newChatHandler}
+          >
+            New Chat
+          </button>
+        )}
       </div>
     </div>
   );

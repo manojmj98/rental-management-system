@@ -41,7 +41,7 @@ function MessagesPage(props) {
             {contacts === undefined ? (
               <></>
             ) : (
-              <Contacts contacts={contacts} changeChat={handleChatChange} />
+              <Contacts contacts={contacts} changeChat={handleChatChange} setContacts={setContacts} />
             )}
             {currentChat === undefined ? (
               <></>
