@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { FaPlus } from 'react-icons/fa';
 import './messages.css';
+import { toast } from 'react-toastify';
 
 function Contacts({ contacts, changeChat, setContacts }) {
   const [currentSelected, setCurrentSelected] = useState(undefined);
@@ -12,7 +13,7 @@ function Contacts({ contacts, changeChat, setContacts }) {
     const response = await fetch(
       '/api/user/get-id?' + new URLSearchParams({ username })
     );
-    const id = await response.json()
+    const id = await response.json();
 
     return id._id;
   };
@@ -24,21 +25,26 @@ function Contacts({ contacts, changeChat, setContacts }) {
 
   const startChat = async (e) => {
     e.preventDefault();
+
+    if (!newChatInput) return;
+
     const usernames = newChatInput.split(',');
     let ids = [];
 
-    console.log(usernames);
-
     for (let i = 0; i < usernames.length; i++) {
-      getUserID(usernames[i]).then(id => {
-        console.log(id);
+        const id = await getUserID(usernames[i]);
+        if(!id) {
+          toast.error(`User ${usernames[i]} not found`);
+          return;
+        }
         ids.push(id);
-      })
     }
+    
     const contact = { recipients: ids, usernames };
-
     setContacts([contact, ...contacts]);
-    setNewChatInput(false)
+    changeCurrentChat(0,contact);
+    setNewChatInput('');
+    setNewChat(false);
   };
 
   const newChatHandler = () => {

@@ -8,7 +8,7 @@ import {
 import ChatInput from './ChatInput';
 import { toast } from 'react-toastify';
 
-function ChatContainer({ currentChat, userInfo }) {
+function ChatContainer({ currentChat, userInfo, socket }) {
   const [messages, setMessages] = useState([]);
 
   const recipients = [...currentChat.recipients];
@@ -24,22 +24,51 @@ function ChatContainer({ currentChat, userInfo }) {
     }
   }, [setMessages, data]);
 
+  const haveSameContents = (a, b) => {
+    for (const v of new Set([...a, ...b]))
+      if (a.filter((e) => e === v).length !== b.filter((e) => e === v).length)
+        return false;
+    return true;
+  };
+
   const handleSendMsg = async (msg) => {
     try {
-      await sendMessage({ recipients, message: msg });
+      const res = await sendMessage({ recipients, message: msg });
+      socket.emit('send-msg', {
+        recipients: recipients,
+        from: userInfo.id,
+        message: msg,
+        id: res.data._id,
+      });
       const msgs = [...messages];
-      setMessages([{ from: userInfo.id, message: msg }].concat(msgs));
+      setMessages([{ from: userInfo.id, message: msg, id: res.data._id }].concat(msgs));
     } catch (error) {
-      console.log(error);
       toast.error(
         error?.data?.error || 'Your request was unable to be processed'
       );
     }
   };
 
+  useEffect(() => {
+    function onReceiveMessage(data) {
+      if (haveSameContents(data.users, [userInfo.id, ...recipients])) {
+        const msgs = [...messages];
+        console.log(msgs);
+        setMessages([{ from: data.from, message: data.message, id: data.id }].concat(msgs));
+      }
+    }
+
+    socket.on('msg-receive', onReceiveMessage);
+
+    return () => {
+      socket.off('msg-receive', onReceiveMessage)
+    }
+
+  }, [messages, socket, userInfo]);
+
   return (
     <div
-      className='grid min-h-full max-h-full'
+      className='grid h-full'
       style={{ gridTemplateRows: '5% 90% 5%' }}
     >
       <div className='grid grid-cols-3 bg-[#142039] rounded-tr-lg'>
@@ -55,7 +84,10 @@ function ChatContainer({ currentChat, userInfo }) {
           messages.map((message) => {
             if (message.from === userInfo.id) {
               return (
-                <div className='flex items-center justify-end mr-3' key={message.id}>
+                <div
+                  className='flex items-center justify-end mr-3'
+                  key={message.id}
+                >
                   <p className='max-w-[50%] rounded-2xl p-2.5 bg-green-800'>
                     {message.message}
                   </p>

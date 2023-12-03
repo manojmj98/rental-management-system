@@ -25,7 +25,7 @@ function ChatInput({handleSendMsg}) {
           value={msg}
         />
         <button type="submit" className='input-container-button'>
-          <IoMdSend />
+          <IoMdSend style={{fontSize: '1.5rem', color:'white'}}/>
         </button>
       </form>
     </div>
