@@ -78,6 +78,12 @@ function NavBar() {
                   <FiHome className='mr-2' /> Dashboard
                 </Link>
                 <Link
+                  to='/messages'
+                  className='justify-items-center	bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  <IoIosChatbubbles size={'1.5em'} />
+                </Link>
+                <Link
                   onClick={logoutHandler}
                   className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
                 >
