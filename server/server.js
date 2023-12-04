@@ -8,8 +8,6 @@ const path = require('path');
 
 const port = process.env.PORT || 5001;
 const uri = process.env.MONGO_URI;
-const stripePublicKey=process.env.STRIPE_PUBLIC_KEY;
-const stripeSecretKey=process.env.STRIPE_SECRET_KEY;
 
 const userRouter = require('./routes/userRoutes.js');
 const authRouter = require('./routes/auth.js');

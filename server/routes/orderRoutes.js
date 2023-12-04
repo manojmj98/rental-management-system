@@ -8,7 +8,6 @@ const {createOrder,getOrders,getCount, payOrder} = require('../controllers/order
 router.route('/get-orders').post(auth,getOrders);//TODO:Should be get ideally
 router.route('/create').post(auth,createOrder);
 router.route('/total').get(auth,getCount);
-router.route('/create-customer').post(auth,payOrder);
 
 
 

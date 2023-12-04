@@ -162,10 +162,6 @@ const getCount = async (req,res) => {
       (r) => r.user.toString() === req.user._id.toString()
     );
 
-    if (alreadyReviewed) {
-      res.status(400);
-      throw new Error('Product already reviewed');
-    }
 
     const review = {
       name: req.user.username,

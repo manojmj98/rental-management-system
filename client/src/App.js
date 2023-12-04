@@ -21,9 +21,8 @@ import MerchantRoute from './components/common/MerchantRoute';
 import CartPage from './components/CartPage';
 import ProductListScreen from './components/adminDashboard/products';
 import OrderListScreen from './components/adminDashboard/orders';
-
 import SuccessPage from './components/SuccessPage';
-
+import CreditCardForm from './components/CreditCard';
 function App() {
   return (
     <Router>
@@ -42,8 +41,9 @@ function App() {
         <Route path='/renter/page/:pageNumber/search/:keyword/tags/:tags/' element={<RenterDashboard />} />
         <Route exact path='/renter/product/:id' element={<RenterItemPage />} />
         <Route path='/cart' element={<CartPage/>} />
-
         <Route path='/success' element={<SuccessPage/>} />
+        <Route path='/pay' element={<CreditCardForm/>} />
+
 
 
         {/* Logged in Routes */}

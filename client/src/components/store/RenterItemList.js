@@ -25,12 +25,15 @@ const RenterItemPage = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
+
   const addToCartHandler = () => {
     if (!userInfo) {
       return navigate('/login');
     }
     dispatch(addToCart({ qty, ...robot }));
   };
+
+  const userHasReviewed = robot && robot.reviews && robot.reviews.some(review => review.id === userInfo?.id);
 
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
@@ -99,7 +102,10 @@ const RenterItemPage = () => {
         </li>
         ))}
         </ul>
-
+        {userHasReviewed ? (
+            <p>You have already reviewed this product.</p>
+          ) : (
+            <>
         <h2 className='text-2xl font-bold mb-4'>Create Review</h2>
         <form onSubmit={submitHandler}>
         <label style={{ display: 'block', fontWeight: 'bold' }}>
@@ -132,7 +138,8 @@ const RenterItemPage = () => {
         </button>
 
       </form>
-
+      </>
+          )}
         </div>
       )}
     </>
