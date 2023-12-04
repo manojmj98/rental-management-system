@@ -61,5 +61,4 @@ module.exports=  {
   createOrder,
   getOrders,
   getCount, 
-  payOrder
 };
