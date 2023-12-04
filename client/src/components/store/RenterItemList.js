@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useGetProductByIdQuery, useCreateReviewMutation } from '../../slices/productApiSlice';
 import NavBar from '../common/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +8,7 @@ import Rating from '../Rating';
 import Loader from '../Loader';
 import Message from '../Message';
 import { ListGroup, Button, Form } from 'react-bootstrap';
+import AddressInput from '../ownerDashboard/AddressInput';
 
 const RenterItemPage = () => {
   const { id: productId } = useParams();
@@ -69,6 +69,10 @@ const RenterItemPage = () => {
           />
           <p className='text-gray-700 mb-4'>{robot.description}</p>
           <p className='text-2xl font-bold text-green-600'>${robot.price}</p>
+          <div className='w-3/6'>
+          <AddressInput lat={robot.latitude} lng={robot.longitude}></AddressInput>
+          </div>
+          
           <div className='w-3/6'>
           </div>
           

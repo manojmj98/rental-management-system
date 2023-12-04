@@ -1,0 +1,53 @@
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.input-container {
+  width: 100%;
+  border-radius: 2rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background-color: #ffffff34;
+}
+
+.input-container-input {
+  width: 90%;
+  height: 100%;
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding-left: 1rem;
+  font-size: 1.2rem;
+
+  &::selection {
+    background-color: #9a86f3;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+.input-container-button {
+  padding: 0.3rem 2rem;
+  border-radius: 2rem;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #9a86f3;
+  border: none;
+  @media screen and (min-width: 720px) and (max-width: 1080px) {
+    padding: 0.3rem 1rem;
+    svg {
+      font-size: 1rem;
+    }
+  }
+}

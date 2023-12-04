@@ -1,49 +1,61 @@
 const Product = require('../models/productModel.js');
 const getProducts = async (req, res) => {
-  const pageSize = process.env.PAGINATION_LIMIT;
-  const page = Number(req.query.pageNumber) || 1;
+  try {
+    const pageSize = process.env.PAGINATION_LIMIT;
+    const page = Number(req.query.pageNumber) || 1;
 
-  const { keyword, tags } = req.query;
+    const { keyword, tags } = req.query;
 
-  const tagsArr = tags ? tags.replace(/\s/g, '').split(',') : [];
+    const tagsArr = tags ? tags.replace(/\s/g, '').split(',') : [];
 
-  const keywordQuery = keyword
-    ? {
-        $or: [
-          {
-            name: {
-              $regex: keyword,
-              $options: 'i',
+    const keywordQuery = keyword
+      ? {
+          $or: [
+            {
+              name: {
+                $regex: keyword,
+                $options: 'i',
+              },
             },
-          },
-          {
-            tags: {
-              // $in: keyword.split(' '),
-              $regex: keyword,
-              $options: 'i',
+            {
+              tags: {
+                // $in: keyword.split(' '),
+                $regex: keyword,
+                $options: 'i',
+              },
             },
-          },
-          {
-            tags: {
-              $in: keyword.split(' '),
+            {
+              tags: {
+                $in: keyword.split(' '),
+              },
             },
-          },
-        ],
-      }
-    : {};
+          ],
+        }
+      : {};
 
-  const tagsQuery = tags
-    ? {
-        tags: { $all: tagsArr },
-      }
-    : {};
+    const tagsQuery = tags
+      ? {
+          tags: { $all: tagsArr },
+        }
+      : {};
 
-  const count = await Product.countDocuments({ ...keywordQuery, ...tagsQuery });
-  const products = await Product.find({ ...keywordQuery, ...tagsQuery })
-    .limit(pageSize)
-    .skip(pageSize * (page - 1));
-  console.log("Products:",JSON.stringify(products));
-  res.json({ products, page, pages: Math.ceil(count / pageSize) });
+    const count = await Product.countDocuments({
+      ...keywordQuery,
+      ...tagsQuery,
+    });
+
+    const products = await Product.find({ ...keywordQuery, ...tagsQuery })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+
+    res
+      .status(200)
+      .json({ products, page, pages: Math.ceil(count / pageSize) });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.',
+    });
+  }
 };
 
 const getProductById = async (req, res) => {
@@ -61,9 +73,22 @@ const getProductById = async (req, res) => {
   }
 };
 
+// Placeholder, waiting on ratings and transactions to implement proper recommendation system 
+const getRecommendedProducts = async (req, res) => {
+  try {
+    const products = await Product.find({isApproved: true}).limit(5);
+
+    res.status(200).json({ products });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.',
+    });
+  }
+};
+
 const createProduct = async (req, res) => {
   try {
-    const { name, price, description, owner,latitude, longitude } = req.body;
+    const { name, price, description, owner, latitude, longitude } = req.body;
 
     if (!name) {
       return res
@@ -82,9 +107,7 @@ const createProduct = async (req, res) => {
       return res.status(400).json({ error: 'Unable to process the request' });
     }
     if (!longitude || !latitude) {
-      return res
-        .status(400)
-        .json({ error: 'Please provide your address' });
+      return res.status(400).json({ error: 'Please provide your address' });
     }
 
     const product = new Product({
@@ -93,7 +116,7 @@ const createProduct = async (req, res) => {
       description,
       owner,
       latitude,
-      longitude
+      longitude,
     });
 
     const createdProduct = await product.save();
@@ -144,10 +167,10 @@ const deleteProduct = async (req, res) => {
     throw new Error('Product not found');
   }
 };
-const getCount = async (req,res) => {
+const getCount = async (req, res) => {
   count = await Product.countDocuments();
   res.status(200).json(count);
-}
+};
 
 // @desc    Create new review
 // @route   POST /api/products/:id/reviews
@@ -199,6 +222,7 @@ const getTopProducts = async (req, res) => {
 module.exports = {
   getProducts,
   getProductById,
+  getRecommendedProducts,
   createProduct,
   updateProduct,
   deleteProduct,

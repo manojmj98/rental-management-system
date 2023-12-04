@@ -1,17 +1,10 @@
-import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button } from 'react-bootstrap';
-import { FaTimes } from 'react-icons/fa';
-import Message from '../common/Message';
-import Loader from '../common/Loader';
-import { useGetOrdersQuery, useGetTotalOrdersQuery } from '../../slices/ordersApiSlice';
-import {useGetUsersCountQuery} from '../../slices/userApiSlice';
+import { useGetTotalOrdersQuery } from '../../slices/ordersApiSlice';
+import { useGetUsersCountQuery } from '../../slices/userApiSlice';
 import { useGetProductsCountQuery } from '../../slices/productApiSlice';
-import { Link } from 'react-router-dom';
-import NavBar from '../common/NavBar';
 import Card from 'react-bootstrap/Card';
-import {BiSolidShoppingBags} from 'react-icons/bi';
-import {PiRobot} from 'react-icons/pi';
-import {FiUsers} from 'react-icons/fi';
+import { BiSolidShoppingBags } from 'react-icons/bi';
+import { PiRobot } from 'react-icons/pi';
+import { FiUsers } from 'react-icons/fi';
 
 const Dashboard = () => {
   const {data: ordersCount} = useGetTotalOrdersQuery();

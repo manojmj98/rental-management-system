@@ -36,7 +36,7 @@ function OwnerDashBoard(props) {
       <NavBar />
       <div className='grid grid-cols-5 bg-white '>
         <div className='flex flex-col items-center h-screen pt-3/12 col-span-1 w-100'>
-          <img src={logo}></img>
+          <img src={logo} alt='Logo'></img>
           <button
             className='bg-white text-gray-900 hover:bg-blue-700 w-full py-2 px-4 rounded'
             onClick={() => setSelectedTab('myAds')}

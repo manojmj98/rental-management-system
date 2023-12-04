@@ -11,7 +11,7 @@ const { log } = require('console');
 
 const registerUser = async (req, res) => {
   try {
-    const { username, email, password, firstName, lastName, role, street, city, state, country } = req.body;
+    const { username, email, password, firstName, lastName, role, street, city, state, country,latitude, longitude } = req.body;
 
     if (!email) {
       return res
@@ -49,6 +49,12 @@ const registerUser = async (req, res) => {
         .json({ error: 'Creation of admin account is restricted' });
     }
 
+    if(!street || !city || !state || !country){
+      return res
+        .status(400)
+        .json({ error: 'Enter complete address' });
+    }
+
     const user = new User({
       username,
       email,
@@ -59,7 +65,9 @@ const registerUser = async (req, res) => {
       street,
       city,
       state,
-      country
+      country,
+      latitude,
+      longitude
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -78,6 +86,10 @@ const registerUser = async (req, res) => {
         lastName: registeredUser.lastName,
         email: registeredUser.email,
         role: registeredUser.role,
+        street: registeredUser.street,
+        city: registeredUser.city,
+        state: registeredUser.state,
+        country: registeredUser.country,
       },
     });
   } catch (error) {

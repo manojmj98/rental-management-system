@@ -1,14 +1,11 @@
-import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { FaTimes } from "react-icons/fa";
 import Message from "../common/Message";
 import Loader from "../common/Loader";
 import { useGetOrdersQuery } from "../../slices/ordersApiSlice";
-import {Link} from 'react-router-dom';
-import NavBar from "../common/NavBar";
 
 const Orders = () => {
-  const { data:orders,refetch, isLoading, error } = useGetOrdersQuery();
+  const { data:orders, isLoading, error } = useGetOrdersQuery();
 
   return (
     <>
