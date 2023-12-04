@@ -206,7 +206,7 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
-  getCount
+  getCount,
   createProductReview,
   getTopProducts,
 };

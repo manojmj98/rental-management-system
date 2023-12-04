@@ -1,4 +1,4 @@
-const stripeSecretKey=require('../server.js');
+
 const Order = require('../models/orderModel.js');
 
 const getOrders = async (req, res) => {
@@ -55,28 +55,33 @@ const getCount = async (req,res) => {
   res.status(200).json(count);
 }
 
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 const payOrder=async (req,res) => {
-
-  const stripe = require("stripe")(stripeSecretKey);
-
-  const { amount, email, token } = req.body;
-
-  stripe.customers
-    .create({
-      email: email,
+  const {amount, token } = req.body;
+  try{
+  const customer=await stripe.customers.create({
+    name:req.user.name,
+    email: req.user.email,
+  });
+  res.status(200).send(customer);
+}catch(error){
+  console.error(err);
+    res.status(500).send('Customer does not exist');
+}
+  try {
+    const charge = await stripe.charges.create({
+      amount,
+      currency: 'usd',
       source: token.id,
-      name: token.card.name,
-    })
-    .then((customer) => {
-      return stripe.charges.create({
-        amount: parseFloat(amount) * 100,
-        description: `Payment for USD ${amount}`,
-        currency: "USD",
-        customer: customer.id,
-      });
-    })
-    .then((charge) => res.status(200).send(charge))
-    .catch((err) => console.log(err));
+      description: 'Payment',
+    });
+
+    res.send('Payment successful');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Payment failed');
+  }
 }
 module.exports=  {
   createOrder,
