@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { logout } from '../../slices/authSlice';
 import { ROLE } from '../../constants/constants';
 import { FiHome } from 'react-icons/fi';
-import { FaStore, FaShoppingCart } from 'react-icons/fa';
+import { FaStore, FaShoppingCart, FaSignOutAlt } from 'react-icons/fa';
+import { IoIosChatbubbles } from "react-icons/io";
 import { resetCart } from '../../slices/cartSlice';
 import { toast } from 'react-toastify';
 
@@ -99,39 +100,51 @@ function NavBar() {
               <FiHome className='mr-2' /> My Dashboard
             </Link>
             <Link
-              onClick={logoutHandler}
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-            >
-              Sign Out
-            </Link>
+                  to='/messages'
+                  className='justify-items-center	bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  <IoIosChatbubbles size={'1.5em'} />
+                </Link>
+                <Link
+                  onClick={logoutHandler}
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  <FaSignOutAlt size={'1.5em'} />
+                </Link>
           </>
           )}
           {userInfo && userInfo.role === ROLE.Member && (
             <>
-            <Link
-              to='/renter'
-              className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-            >
-              <FaStore className='mr-2' /> Product Catalog
-            </Link>
-            <Link
-              to='/profile'
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-            >
-              Profile
-            </Link>
-            <Link
-              onClick={logoutHandler}
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-            >
-              Sign Out
-            </Link>
-            <Link
-              to='/cart'
-              className='justify-items-center	bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
-            >
-              <FaShoppingCart size={'1.5em'} />
-            </Link>
+             <Link
+                  to='/renter'
+                  className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  <FaStore className='mr-2' /> Catalog
+                </Link>
+                <Link
+                  to='/profile'
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  Profile
+                </Link>
+                <Link
+                  to='/messages'
+                  className='justify-items-center	bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  <IoIosChatbubbles size={'1.5em'} />
+                </Link>
+                <Link
+                  to='/cart'
+                  className='justify-items-center	bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  <FaShoppingCart size={'1.5em'} />
+                </Link>
+                <Link
+                  onClick={logoutHandler}
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  <FaSignOutAlt size={'1.5em'} />
+                </Link>
           </>
           )}
           {!userInfo && (
@@ -140,7 +153,7 @@ function NavBar() {
                to='/renter'
                className='inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
              >
-               <FaStore className='mr-2' /> Product Catalog
+               <FaStore className='mr-2' /> Catalog
              </Link>
              <Link
                to='/login'
