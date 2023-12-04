@@ -59,7 +59,7 @@ function RenterDashboard() {
         <h3 className='text-3xl font-semibold text-black mb-6'>
           Available Robots for Rent
         </h3>
-        <div className='mb-6'>
+        <div className='mb-6 w-[350px]'>
           <input
             placeholder='Search for robots...'
             className='px-4 py-2 h-full border rounded-l-lg focus:ring-blue-500 focus:border-blue-500 text-black float-left w-4/5'
