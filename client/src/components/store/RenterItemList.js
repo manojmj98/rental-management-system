@@ -11,7 +11,6 @@ import { ListGroup, Button, Form } from 'react-bootstrap';
 import AddressInput from '../ownerDashboard/AddressInput';
 
 const RenterItemPage = () => {
-  const { id: productId } = useParams();
   const [qty, setQty] = useState(1);
 
   const { id } = useParams();
