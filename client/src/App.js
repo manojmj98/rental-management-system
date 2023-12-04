@@ -12,7 +12,7 @@ import ResetPage from './components/ResetPage';
 import ForgotPage from './components/ForgotPage';
 import AdminPage from './components/AdminPage';
 import RenterDashboard from './components/store/RenterDashboard';
-import RenterItemPage from './components/store/RenterItemList';
+import RenterItemPage from './components/store/RenterItemPage';
 import SecurityQuestionPage from './components/SecurityQuestionPage';
 import OwnerDashBoard from './components/ownerDashboard/ownerDashBoard';
 import ProductInput from './components/ownerDashboard/ProductInput';

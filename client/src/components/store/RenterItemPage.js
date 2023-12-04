@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { useGetProductByIdQuery, useCreateReviewMutation } from '../../slices/productApiSlice';
+import {
+  useGetProductByIdQuery,
+  useCreateReviewMutation,
+} from '../../slices/productApiSlice';
 import NavBar from '../common/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../slices/cartSlice';
@@ -22,7 +25,6 @@ const RenterItemPage = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-
   const addToCartHandler = () => {
     if (!userInfo) {
       return navigate('/login');
@@ -30,21 +32,30 @@ const RenterItemPage = () => {
     dispatch(addToCart({ qty, ...robot }));
   };
 
-  const userHasReviewed = robot && robot.reviews && robot.reviews.some(review => review.id === userInfo?.id);
+  const userHasReviewed =
+    robot &&
+    robot.reviews &&
+    robot.reviews.some((review) => review.id === userInfo?.id);
 
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
 
-    const submitHandler = async (e) => {
-      e.preventDefault();
-    
-      try {
-        await createReview({id, rating, comment }); 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await createReview({ id, rating, comment });
+      if (res.error) {
+        toast.error('Your request could not be processed');
+      } else {
         toast.success('Review created successfully');
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
+        setRating(0);
+        setComment('');
       }
-    };
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
 
   function renderStars(rating) {
     const fullStars = '★'.repeat(Math.floor(rating));
@@ -67,12 +78,14 @@ const RenterItemPage = () => {
           <p className='text-gray-700 mb-4'>{robot.description}</p>
           <p className='text-2xl font-bold text-green-600'>${robot.price}</p>
           <div className='w-3/6'>
-          <AddressInput lat={robot.latitude} lng={robot.longitude}></AddressInput>
+            <AddressInput
+              lat={robot.latitude}
+              lng={robot.longitude}
+            ></AddressInput>
           </div>
-          
-          <div className='w-3/6'>
-          </div>
-          
+
+          <div className='w-3/6'></div>
+
           <input
             type='number'
             className='mt-1 px-4 py-2  border rounded-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-800 text-white'
@@ -90,56 +103,61 @@ const RenterItemPage = () => {
             Add to Cart
           </button>
 
-
           <h2 className='text-2xl font-bold mb-4'>Previous Reviews</h2>
           <ul>
-          {robot.reviews.map(review => (
-          <li key={review.id}>
-          <div style={{ border: '1px solid #ccc', padding: '10px', margin: '10px', borderRadius: '5px' }}>
-            <strong>Username:</strong> {review.username} <br />
-            <strong>Rating:</strong> {renderStars(review.rating)} <br />
-            <strong>Review:</strong> {review.comment}
-          </div>
-        </li>
-        ))}
-        </ul>
-        {userHasReviewed ? (
+            {robot.reviews.map((review) => (
+              <li key={review._id}>
+                <div
+                  style={{
+                    border: '1px solid #ccc',
+                    padding: '10px',
+                    margin: '10px',
+                    borderRadius: '5px',
+                  }}
+                >
+                  <strong>Username:</strong> {review.name} <br />
+                  <strong>Rating:</strong> {renderStars(review.rating)} <br />
+                  <strong>Review:</strong> {review.comment}
+                </div>
+              </li>
+            ))}
+          </ul>
+          {userHasReviewed ? (
             <p>You have already reviewed this product.</p>
           ) : (
             <>
-        <h2 className='text-2xl font-bold mb-4'>Create Review</h2>
-        <form onSubmit={submitHandler}>
-        <label style={{ display: 'block', fontWeight: 'bold' }}>
-          Rating:
-          <input
-            type="number"
-            min="0"
-            max="5"
-            step="0.5"
-            value={rating}
-            onChange={(e) => setRating(parseFloat(e.target.value))}
-          />
-        </label>
-        <br />
-        <label style={{ display: 'block', fontWeight: 'bold' }}>
-          Comment:
-          <textarea
-            row='3'
-            required
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
-        </label>
-        <br />
-        <button
-          type="submit"
-          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4'
-            >
-          Submit Review
-        </button>
-
-      </form>
-      </>
+              <h2 className='text-2xl font-bold mb-4'>Create Review</h2>
+              <form onSubmit={submitHandler}>
+                <label style={{ display: 'block', fontWeight: 'bold' }}>
+                  Rating:
+                  <input
+                    type='number'
+                    min='0'
+                    max='5'
+                    step='0.5'
+                    value={rating}
+                    onChange={(e) => setRating(parseFloat(e.target.value))}
+                  />
+                </label>
+                <br />
+                <label style={{ display: 'block', fontWeight: 'bold' }}>
+                  Comment:
+                  <textarea
+                    row='3'
+                    required
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                </label>
+                <br />
+                <button
+                  type='submit'
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4'
+                >
+                  Submit Review
+                </button>
+              </form>
+            </>
           )}
         </div>
       )}

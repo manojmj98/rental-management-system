@@ -73,10 +73,10 @@ const getProductById = async (req, res) => {
   }
 };
 
-// Placeholder, waiting on ratings and transactions to implement proper recommendation system 
+// Placeholder, waiting on ratings and transactions to implement proper recommendation system
 const getRecommendedProducts = async (req, res) => {
   try {
-    const products = await Product.find({isApproved: true}).limit(5);
+    const products = await Product.find({ isApproved: true }).limit(5);
 
     res.status(200).json({ products });
   } catch (error) {
@@ -156,17 +156,25 @@ const updateProduct = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-  const { id } = req.body;
-  const product = await Product.findById(id);
+  try {
+    const { id } = req.body;
+    const product = await Product.findById(id);
 
-  if (product) {
-    await Product.deleteOne({ _id: product._id });
-    res.json({ message: 'Product removed' });
-  } else {
-    res.status(404);
-    throw new Error('Product not found');
+    if (product) {
+      await Product.deleteOne({ _id: product._id });
+      res.json({ message: 'Product removed' });
+    } else {
+      res.status(404);
+      throw new Error('Product not found');
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.',
+    });
   }
 };
+
 const getCount = async (req, res) => {
   count = await Product.countDocuments();
   res.status(200).json(count);
@@ -175,37 +183,43 @@ const getCount = async (req, res) => {
 // @desc    Create new review
 // @route   POST /api/products/:id/reviews
 // @access  Private
- const createProductReview = async (req, res) => {
-  const {id, rating, comment } = req.body;
+const createProductReview = async (req, res) => {
+  try {
+    const { id, rating, comment } = req.body;
 
-  const product = await Product.findById(id);
+    const product = await Product.findById(id);
 
-  if (product) {
-    const alreadyReviewed = product.reviews.find(
-      (r) => r.user.toString() === req.user._id.toString()
-    );
+    if (product) {
+      const alreadyReviewed = product.reviews.find(
+        (r) => r.user.toString() === req.user._id.toString()
+      );
 
+      const review = {
+        name: req.user.username,
+        rating: Number(rating),
+        comment,
+        user: req.user._id,
+      };
 
-    const review = {
-      name: req.user.username,
-      rating: Number(rating),
-      comment,
-      user: req.user._id,
-    };
+      product.reviews.push(review);
 
-    product.reviews.push(review);
+      product.numReviews = product.reviews.length;
 
-    product.numReviews = product.reviews.length;
+      product.rating =
+        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        product.reviews.length;
 
-    product.rating =
-      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      product.reviews.length;
-
-    await product.save();
-    res.status(201).json({ message: 'Review added' });
-  } else {
-    res.status(404);
-    throw new Error('Product not found');
+      await product.save();
+      res.status(201).json({ message: 'Review added' });
+    } else {
+      res.status(404);
+      throw new Error('Product not found');
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.',
+    });
   }
 };
 
@@ -213,11 +227,17 @@ const getCount = async (req, res) => {
 // @route   GET /api/products/top
 // @access  Public
 const getTopProducts = async (req, res) => {
-  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+  try {
+    const products = await Product.find({}).sort({ rating: -1 }).limit(3);
 
-  res.json(products);
+    res.json(products);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.',
+    });
+  }
 };
-
 
 module.exports = {
   getProducts,
