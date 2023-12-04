@@ -1,3 +1,4 @@
+
 const Order = require('../models/orderModel.js');
 
 const getOrders = async (req, res) => {
@@ -53,8 +54,11 @@ const getCount = async (req,res) => {
   count = await Order.countDocuments();
   res.status(200).json(count);
 }
+
+
+
 module.exports=  {
   createOrder,
   getOrders,
-  getCount
+  getCount, 
 };

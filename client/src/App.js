@@ -12,7 +12,7 @@ import ResetPage from './components/ResetPage';
 import ForgotPage from './components/ForgotPage';
 import AdminPage from './components/AdminPage';
 import RenterDashboard from './components/store/RenterDashboard';
-import RenterItemPage from './components/store/RenterItemList';
+import RenterItemPage from './components/store/RenterItemPage';
 import SecurityQuestionPage from './components/SecurityQuestionPage';
 import OwnerDashBoard from './components/ownerDashboard/ownerDashBoard';
 import ProductInput from './components/ownerDashboard/ProductInput';
@@ -21,7 +21,8 @@ import MerchantRoute from './components/common/MerchantRoute';
 import CartPage from './components/CartPage';
 import ProductListScreen from './components/adminDashboard/products';
 import OrderListScreen from './components/adminDashboard/orders';
-import BookingsPage from './components/ownerDashboard/bookingsPage';
+import SuccessPage from './components/SuccessPage';
+import CreditCardForm from './components/CreditCard';import BookingsPage from './components/ownerDashboard/bookingsPage';
 import MessagesPage from './components/message/MessagesPage';
 
 function App() {
@@ -51,6 +52,10 @@ function App() {
         />
         <Route exact path='/renter/product/:id' element={<RenterItemPage />} />
         <Route path='/cart' element={<CartPage />} />
+        <Route path='/success' element={<SuccessPage/>} />
+        <Route path='/pay' element={<CreditCardForm/>} />
+
+
 
         {/* Logged in Routes */}
         <Route path='' element={<PrivateRoute />}>
