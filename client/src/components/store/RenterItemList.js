@@ -4,11 +4,9 @@ import { useGetProductByIdQuery, useCreateReviewMutation } from '../../slices/pr
 import NavBar from '../common/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../slices/cartSlice';
-import Rating from '../Rating';
-import Loader from '../Loader';
-import Message from '../Message';
-import { ListGroup, Button, Form } from 'react-bootstrap';
 import AddressInput from '../ownerDashboard/AddressInput';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RenterItemPage = () => {
   const [qty, setQty] = useState(1);
