@@ -6,6 +6,7 @@ import IndexPage from './components/IndexPage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import AboutPage from './components/AboutPage';
+import ContactPage from './components/ContactPage';
 import PrivateRoute from './components/common/PrivateRoute';
 import ProfilePage from './components/ProfilePage';
 import ResetPage from './components/ResetPage';
@@ -34,6 +35,7 @@ function App() {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/about' element={<AboutPage />} />
+        <Route path='/contact' element={<ContactPage />} />
         <Route path='/reset/:token' element={<ResetPage />} />
         <Route path='/forgot' element={<ForgotPage />} />
         <Route path='/renter' element={<RenterDashboard />} />
