@@ -12,7 +12,7 @@ function Card(props) {
   return (
     <div className='bg-white rounded-lg shadow-md p-6 transition duration-300 transform hover:scale-105' style={cardStyles}>
       <img
-        src={imageUrl}
+        src={props.renterBool ? `${props.url}/${props.imagePath}` : imageUrl}
         alt='Sunset in the mountains'
         className='w-48 h-48 mx-auto mb-4 rounded-full'
       />

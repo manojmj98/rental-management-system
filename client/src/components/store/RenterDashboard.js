@@ -8,7 +8,7 @@ import FilterBox from '../common/FilterBox';
 
 function RenterDashboard() {
   const { keyword, pageNumber, tags } = useParams();
-
+  const currentUrl = window.location.href; 
   const [robots, setRobots] = useState(null);
   const [search, setSearch] = useState(keyword ? keyword : '');
   const [tagArr, setTagArr] = useState(tags ? tags.split('-') : []);
@@ -98,6 +98,9 @@ function RenterDashboard() {
                       description={robot.description}
                       price={robot.price}
                       isApproved={robot.isApproved}
+                      renterBool = {true}
+                      url = {`${currentUrl}../../../`}
+                      imagePath = {robot.image}
                     />
                   </Link>)
                 }
