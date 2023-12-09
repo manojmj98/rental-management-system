@@ -26,8 +26,8 @@ const Products = () => {
             <tr>
               <th>ID</th>
               <th>NAME</th>
-              <th>OWNER NAME</th>
-              <th>OWNER EMAIL</th>
+              {/* <th>OWNER NAME</th>
+              <th>OWNER EMAIL</th> */}
               <th>PRICE</th>
               <th>STOCK</th>
               <th>DESCRIPTION</th>
@@ -41,8 +41,8 @@ const Products = () => {
               <tr key={product._id}>
                 <td>{product._id}</td>
                 <td>{product.name}</td>
-                <td>{product.owner?.username}</td>
-                <td>{product.owner?.email}</td>
+                {/* <td>{product.ownerDetails?.username}</td>
+                <td>{product.ownerDetails?.email}</td> */}
                 <td>${product.price}</td>
                 <td>{product.stock}</td>
                 <td>{product.description}</td>
@@ -58,9 +58,8 @@ const Products = () => {
                   <Button
                     variant='danger'
                     className='btn-sm'
-                    // onClick={() => deleteHandler(product._id)}
                   >
-                    <FaTrash style={{ color: 'white' }} />
+                    <FaTrash style={{ color: 'black' }} />
                   </Button>
                 </td>
               </tr>

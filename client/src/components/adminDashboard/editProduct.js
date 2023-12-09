@@ -83,7 +83,7 @@ const EditProduct = () => {
         <form onSubmit={handleSubmit} className='max-w-md mx-auto'>
           <div className='mb-4'>
             <label htmlFor='name' className='block text-gray-700 font-bold mb-2'>
-              Product Name: <span>{product.name}</span>
+              Product Name : <span>{product.name}</span>
             </label>
           </div>
           <div className='mb-4'>
@@ -91,22 +91,32 @@ const EditProduct = () => {
               htmlFor='description'
               className='block text-gray-700 font-bold mb-2'
             >
-              Description: <span>{product.description}</span>
+              Description : <span>{product.description}</span>
             </label>
           </div>
           <div className='mb-4'>
             <label htmlFor='price' className='block text-gray-700 font-bold mb-2'>
-              Price: <span>{product.price}</span>
+              Price : <span>{product.price}</span>
             </label>
           </div>
           <div className='mb-4'>
             <label htmlFor='price' className='block text-gray-700 font-bold mb-2'>
-              Stock: <span>{product.stock}</span>
+              Stock : <span>{product.stock}</span>
             </label>
           </div>
           <div className='mb-4'>
             <label htmlFor='price' className='block text-gray-700 font-bold mb-2'>
-              Availability: <span>{product.availability}</span>
+              Availability : <span>{product.availability}</span>
+            </label>
+          </div>
+          <div className='mb-4'>
+            <label htmlFor='price' className='block text-gray-700 font-bold mb-2'>
+              Owner Name : <span>{product.owner.firstName} {product.owner.lastName}</span>
+            </label>
+          </div>
+          <div className='mb-4'>
+            <label htmlFor='price' className='block text-gray-700 font-bold mb-2'>
+              Owner Email : <span>{product.owner.email}</span>
             </label>
           </div>
           <div className='mb-4'>

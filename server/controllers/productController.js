@@ -45,7 +45,6 @@ const getProducts = async (req, res) => {
     });
 
     const products = await Product.find({ ...keywordQuery, ...tagsQuery })
-    .populate("owner")
       .limit(pageSize)
       .skip(pageSize * (page - 1));
 
@@ -62,7 +61,7 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const { id } = req.query;
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate("owner");
     if (product) {
       return res.json(product);
     } else {

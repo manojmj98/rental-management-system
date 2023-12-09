@@ -76,6 +76,7 @@ const Orders = () => {
                         variant="primary"
                         onClick={() => handleRefundClick(order._id)}
                         disabled={order.isRefundIssued}
+                        style={{ color: "black" }}
                       >
                         {order.isRefundIssued ? 'Refund Issued' : 'Refund'}
                       </Button>
