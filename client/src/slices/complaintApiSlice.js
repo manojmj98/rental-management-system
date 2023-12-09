@@ -26,15 +26,6 @@ export const complaintApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
-    // updateProduct: builder.mutation({
-    //   query(data) {
-    //     return {
-    //       url: `${PRODUCT_URL}/updatebyid`,
-    //       method: 'PUT',
-    //       body: data,
-    //     };
-    //   },
-    // }),
     getComplaintById: builder.query({
       query(data) {
         return {

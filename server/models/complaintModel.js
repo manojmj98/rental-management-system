@@ -19,6 +19,14 @@ const complaintSchema = mongoose.Schema(
         ref: 'User', //Info of user who is raising the complaint
         required: true
     },
+    preferredCommunication:{
+        type: String,
+        required: false,
+    },
+    prefferredCommunicationMethodDetails: {
+      type:String, //field for storing email / phone
+      required: false
+    },
     complaintStatus: {
         type: String,
         default: COMPLAINT_STATUS.Created,

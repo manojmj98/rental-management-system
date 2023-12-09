@@ -26,6 +26,10 @@ import CreditCardForm from './components/CreditCard';import BookingsPage from '.
 import MessagesPage from './components/message/MessagesPage';
 import EditProduct from './components/adminDashboard/editProduct';
 import EditComplaint from './components/adminDashboard/editComplaint';
+import RenterComplaintsList from './components/renter/complaints';
+import ViewOwnerComplaint from './components/ownerDashboard/viewComplaint';
+import UpdateRenterComplaint from './components/renter/updateComplaint';
+import RenterPage from './components/renterComplaints';
 
 function App() {
   return (
@@ -71,6 +75,7 @@ function App() {
           <Route path='/owner' element={<OwnerDashBoard />} />
           <Route path='/booking' element={<BookingsPage />} />
           <Route path='/robotInput' element={<ProductInput />} />
+          <Route path='/owner/complaint/:id/view' element={<ViewOwnerComplaint />} />
           <Route path='/productpage/:id' element={<ProductPage />} />
         </Route>
 
@@ -80,6 +85,11 @@ function App() {
         <Route path='/admin/orderlist' element={<OrderListScreen />} />
         <Route path='/admin/product/:id/edit' element= {<EditProduct/>}/>
         <Route path='/admin/complaint/:id/edit' element={<EditComplaint/>} />
+
+        {/*Renter Routes*/}
+        <Route path='/renter/Dashboard' element={<RenterPage/>}/>
+        <Route path='/renter/complaints' element={<RenterComplaintsList/>}/>
+        <Route path='/renter/complaint/:id' element={<UpdateRenterComplaint/>}/>
       </Routes>
     </Router>
   );

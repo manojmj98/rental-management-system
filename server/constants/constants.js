@@ -33,7 +33,8 @@ exports.COMPLAINT_STATUS = {
     WithOwner: 'Awaiting response from owner',
     RefundIssued: 'Refund Issued',
     Accepted: 'Complaint Accepted',
-    Denied: 'Complaint rejected'
+    Denied: 'Complaint rejected',
+    WithAdmin: 'Awaiting response from Admin'
 }
 
 exports.SECURITY_QUESTIONS={

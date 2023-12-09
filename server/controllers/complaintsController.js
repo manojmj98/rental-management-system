@@ -42,6 +42,8 @@ const createComplaint = async (req, res) => {
       orderId: req.body.orderId,
       customer: req.user,
       complaintStatus: COMPLAINT_STATUS.Created,
+      preferredCommunication: req.preferredCommunication,
+      prefferredCommunicationMethodDetails: req.prefferredCommunicationMethodDetails
     };
     const result = await Complaint.create(complaint);
     res.status(201).json(complaint);
@@ -70,6 +72,9 @@ const updateStatus = async (req, res) => {
     }
     else if(req.body.complaintStatus == 'assginedToOwner'){
       complaint.complaintStatus = COMPLAINT_STATUS.WithOwner
+    }
+    else if(req.body.complaintStatus == 'toAdmin'){
+      complaint.complaintStatus = COMPLAINT_STATUS.WithAdmin
     }
     complaint.comments = req.body.comments;
     const result = await complaint.save();

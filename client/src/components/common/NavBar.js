@@ -128,6 +128,12 @@ function NavBar() {
                   Profile
                 </Link>
                 <Link
+                  to='/renter/Dashboard'
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
+                >
+                  Complaints
+                </Link>
+                <Link
                   to='/messages'
                   className='justify-items-center	bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300'
                 >
