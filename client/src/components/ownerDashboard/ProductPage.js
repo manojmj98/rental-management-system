@@ -28,7 +28,7 @@ const ProductPage = () => {
       setPrice(data.price);
       setTags(data.tags);
       const currentUrl = window.location.href; 
-      const imageUrl = `${currentUrl}/../${data.image}`; 
+      const imageUrl = `${currentUrl}/../../${data.image}`; 
       setUrl(imageUrl) 
     }
   }, [data]);
@@ -37,7 +37,7 @@ const ProductPage = () => {
   const [deleteProduct] = useDeleteProductByIdMutation();
   const { refetch } = useGetProductsQuery();
   const navigate = useNavigate();
-
+  
   const handleDeleteProduct = async () => {
     try {
       const response = await deleteProduct({ id: id }).unwrap();
@@ -77,7 +77,7 @@ const ProductPage = () => {
         <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-8">
         <div className="w-full md:w-1/2 flex justify-center items-center">
   <img
-    src={`http://localhost:4000/${robot.image}`}
+    src={url}
     alt={robot.name}
     className="mb-4 rounded-lg"
     style={{ width: '400px', height: '400px' }}
