@@ -85,6 +85,7 @@ function OwnerDashBoard(props) {
                   description={robot.description}
                   price={robot.price}
                   isApproved={robot.isApproved}
+                  imagePath={robot.image}
                 />
               </Link>
             ))}
@@ -103,6 +104,7 @@ function OwnerDashBoard(props) {
                   description={robot.description}
                   price={robot.price}
                   isApproved={robot.isApproved}
+                  imagePath={robot.image}
                 />
               </Link>
             ))}

@@ -89,6 +89,8 @@ const getRecommendedProducts = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const { name, price, description, owner, latitude, longitude } = req.body;
+    const imagePath = req.file.path;
+    console.log(imagePath)
 
     if (!name) {
       return res
@@ -104,7 +106,7 @@ const createProduct = async (req, res) => {
         .json({ error: 'Please provide description of the product' });
     }
     if (!owner) {
-      return res.status(400).json({ error: 'Unable to process the request' });
+      return res.status(400).json({ error: 'enter owner' });
     }
     if (!longitude || !latitude) {
       return res.status(400).json({ error: 'Please provide your address' });
@@ -117,6 +119,7 @@ const createProduct = async (req, res) => {
       owner,
       latitude,
       longitude,
+      image: imagePath,
     });
 
     const createdProduct = await product.save();

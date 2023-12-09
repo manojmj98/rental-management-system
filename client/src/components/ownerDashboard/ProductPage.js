@@ -12,12 +12,13 @@ const ProductPage = () => {
   let { id } = useParams();
   const { data } = useGetProductByIdQuery({ id });
   const [robot, setRobot] = useState(null);
-  const [updateProduct, setupdateProduct] = useState(false);
+  const [updateProduct, setUpdateProduct] = useState(false);
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [tags,setTags] = useState('')
+  const [tags, setTags] = useState('');
+  const [url,setUrl] = useState('');
 
   React.useEffect(() => {
     if (data) {
@@ -25,7 +26,10 @@ const ProductPage = () => {
       setName(data.name);
       setDescription(data.description);
       setPrice(data.price);
-      setTags(data.tags)
+      setTags(data.tags);
+      const currentUrl = window.location.href; 
+      const imageUrl = `${currentUrl}/../${data.image}`; 
+      setUrl(imageUrl) 
     }
   }, [data]);
 
@@ -38,13 +42,14 @@ const ProductPage = () => {
     try {
       const response = await deleteProduct({ id: id }).unwrap();
       if (response) {
-        refetch()
+        refetch();
         navigate('/owner');
       }
     } catch (error) {
       toast.error('Please try again later');
     }
   };
+  
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
 
@@ -58,7 +63,7 @@ const ProductPage = () => {
       }).unwrap();
 
       if (response) {
-        refetch()
+        refetch();
         navigate('/owner');
       }
     } catch (error) {
@@ -68,29 +73,35 @@ const ProductPage = () => {
 
   return (
     robot && (
-      <div className='container mx-auto mt-8'>
-        <div className='flex flex-col items-center'>
-          <h2 className='text-2xl font-bold mb-4'>{robot.name}</h2>
-          <img
-            src='https://picsum.photos/200/300'
-            alt={robot.name}
-            className='mb-4 rounded-lg'
-          />
-          <p className='text-gray-700 mb-4'>{robot.description}</p>
-          <p className='text-2xl font-bold text-green-600'>${robot.price}</p>
-          <div>
-            <button
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4'
-              onClick={() => setupdateProduct(true)}
-            >
-              update
-            </button>
-            <button
-              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-4'
-              onClick={handleDeleteProduct}
-            >
-              delete
-            </button>
+      <div className="container mx-auto mt-8 p-4 bg-white shadow-lg rounded-lg">
+        <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-8">
+        <div className="w-full md:w-1/2 flex justify-center items-center">
+  <img
+    src={`http://localhost:4000/${robot.image}`}
+    alt={robot.name}
+    className="mb-4 rounded-lg"
+    style={{ width: '400px', height: '400px' }}
+  />
+</div>
+
+          <div className="w-full md:w-1/2">
+            <h2 className="text-3xl font-bold mb-4">{robot.name}</h2>
+            <p className="text-gray-700 mb-4">{robot.description}</p>
+            <p className="text-2xl font-bold text-green-600 mb-4">${robot.price}</p>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setUpdateProduct(true)}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Update
+              </button>
+              <button
+                onClick={handleDeleteProduct}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
         {updateProduct && (

@@ -55,7 +55,7 @@ function LandingPage() {
         </section>
 
         {/* Carousal Section */}
-        {isLoading ? (
+        {isLoading || !data ? (
           <></>
         ) : (
           <section className='mt-8 w-2/5'>
