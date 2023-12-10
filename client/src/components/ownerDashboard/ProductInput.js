@@ -11,16 +11,24 @@ function ProductInput() {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    owner: '',
     price: '',
+    owner: ''
   });
-
+  const [image, setImage] = useState(null);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
   const [addProduct] = useAddProductMutation();
   const { refetch } = useGetProductsQuery();
   const userInfo = useSelector((state) => state.auth.userInfo.id);
   const user = useSelector((state) => state.auth.userInfo);
-
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      owner: userInfo,
+    }));
+  }, [userInfo]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,6 +36,11 @@ function ProductInput() {
       ...formData,
       [name]: value,
     });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
   };
 
   const handleSubmit = async (e) => {
@@ -47,18 +60,24 @@ function ProductInput() {
 
       const data = await response.json();
 
-      if (!(data.results && data.results.length > 0)) {
+      if (data.results && data.results.length > 0) {
+        const { lat, lng } = data.results[0].geometry.location;
+        setLatitude(lat);
+        setLongitude(lng);
+      } else {
         throw new Error('No results found');
       }
-      
-      const { lat, lng } = data.results[0].geometry.location;
 
-      const res = await addProduct({
-        ...formData,
-        owner: userInfo,
-        latitude: lat,
-        longitude: lng,
-      }).unwrap();
+      const formDataWithImage = new FormData();
+      formDataWithImage.append('name', formData.name);
+      formDataWithImage.append('description', formData.description);
+      formDataWithImage.append('price', formData.price);
+      formDataWithImage.append('owner',formData.owner)
+      formDataWithImage.append('image', image);
+      formDataWithImage.append('latitude', latitude);
+      formDataWithImage.append('longitude', longitude);
+
+      const res = await addProduct(formDataWithImage).unwrap();
       if (res) {
         refetch();
         navigate('/owner');
@@ -71,7 +90,8 @@ function ProductInput() {
   return (
     <div className='container mx-auto mt-8'>
       <h2 className='text-2xl font-bold mb-4'>Add a New Product</h2>
-      <form onSubmit={handleSubmit} className='max-w-md mx-auto'>
+      <form onSubmit={handleSubmit} className='max-w-md mx-auto' encType='multipart/form-data'>
+        {/* Existing form fields */}
         <div className='mb-4'>
           <label htmlFor='name' className='block text-gray-700 font-bold mb-2'>
             Product Name
@@ -102,7 +122,6 @@ function ProductInput() {
             required
           />
         </div>
-
         <div className='mb-4'>
           <label htmlFor='price' className='block text-gray-700 font-bold mb-2'>
             Price
@@ -117,7 +136,20 @@ function ProductInput() {
             required
           />
         </div>
-
+        <div className='mb-4'>
+          <label htmlFor='image' className='block text-gray-700 font-bold mb-2'>
+            Image
+          </label>
+          <input
+            type='file'
+            id='image'
+            name='image'
+            accept='image/*'
+            onChange={handleImageChange}
+            className='w-full border rounded py-2 px-3'
+            required
+          />
+        </div>
         <button
           type='submit'
           className='bg-blue-500 text-white font-bold py-2 px-4 rounded'
@@ -125,8 +157,7 @@ function ProductInput() {
           Submit
         </button>
       </form>
-    </div>
-  );
-}
+      </div>
+   )}
 
-export default ProductInput;
+  export default ProductInput;

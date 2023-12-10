@@ -22,6 +22,12 @@ const RenterItemPage = () => {
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  const [url,setUrl] = useState('')
+  var imageUrl= ''
+
+  useEffect(() => {
+    setUrl(window.location.href)
+  }, []);
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -71,9 +77,10 @@ const RenterItemPage = () => {
         <div className='container mx-auto mt-8 flex flex-col items-center'>
           <h2 className='text-2xl font-bold mb-4'>{robot.name}</h2>
           <img
-            src='https://picsum.photos/200/300'
+            src={`${url}/../../../${robot.image}`}
             alt={robot.name}
-            className='mb-4 rounded-lg'
+            className="mb-4 rounded-lg"
+            style={{ width: '400px', height: '400px' }}
           />
           <p className='text-gray-700 mb-4'>{robot.description}</p>
           <p className='text-2xl font-bold text-green-600'>${robot.price}</p>
