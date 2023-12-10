@@ -26,6 +26,7 @@ function Carousal({ data }) {
                 description={item.description}
                 price={item.price}
                 isApproved={item.isApproved}
+                imagePath={item.image}
               />
             </Link>
           );
