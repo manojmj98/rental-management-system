@@ -15,8 +15,6 @@ function ProductInput() {
     owner: ''
   });
   const [image, setImage] = useState(null);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
   const [addProduct] = useAddProductMutation();
   const { refetch } = useGetProductsQuery();
   const userInfo = useSelector((state) => state.auth.userInfo.id);
@@ -62,26 +60,25 @@ function ProductInput() {
 
       if (data.results && data.results.length > 0) {
         const { lat, lng } = data.results[0].geometry.location;
-        setLatitude(lat);
-        setLongitude(lng);
-      } else {
+        const formDataWithImage = new FormData();
+        formDataWithImage.append('name', formData.name);
+        formDataWithImage.append('description', formData.description);
+        formDataWithImage.append('price', formData.price);
+        formDataWithImage.append('owner',formData.owner)
+        formDataWithImage.append('image', image);
+        formDataWithImage.append('latitude', lat);
+        formDataWithImage.append('longitude', lng);
+
+        const res = await addProduct(formDataWithImage).unwrap();
+        if (res) {
+          refetch();
+          navigate('/owner');
+        }
+      } 
+      else {
         throw new Error('No results found');
       }
 
-      const formDataWithImage = new FormData();
-      formDataWithImage.append('name', formData.name);
-      formDataWithImage.append('description', formData.description);
-      formDataWithImage.append('price', formData.price);
-      formDataWithImage.append('owner',formData.owner)
-      formDataWithImage.append('image', image);
-      formDataWithImage.append('latitude', latitude);
-      formDataWithImage.append('longitude', longitude);
-
-      const res = await addProduct(formDataWithImage).unwrap();
-      if (res) {
-        refetch();
-        navigate('/owner');
-      }
     } catch (error) {
       toast.error(error?.data?.error || error);
     }
