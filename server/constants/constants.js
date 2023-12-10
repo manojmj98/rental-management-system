@@ -14,7 +14,8 @@ exports.STATUS = {
     Delivered:'DELIVERED',
     Initial: 'INITIAL',
     Completed: 'COMPLETED',
-    Processing: 'PROCESSING'
+    Processing: 'PROCESSING',
+    Cancelled: 'CANCELLED'
 };
 
 exports.PAYMENT_STATUS = {
@@ -22,14 +23,18 @@ exports.PAYMENT_STATUS = {
     Processing: 'Payment under process',
     Refunded: 'Refund Issued',
     RefundProcessing:'Refund under process',
-    RefundInitiated: 'Refund initiated'
+    RefundInitiated: 'Refund initiated',
+    RefundFailed: 'Refund process failed'
 };
 exports.COMPLAINT_STATUS = {
     Created: 'Complaint Created',
     Investigation: 'Complaint under investigation',
     Complete: 'Complaint resolved',
     WithOwner: 'Awaiting response from owner',
-    RefundIssued: 'Refund Issued'
+    RefundIssued: 'Refund Issued',
+    Accepted: 'Complaint Accepted',
+    Denied: 'Complaint rejected',
+    WithAdmin: 'Awaiting response from Admin'
 }
 
 exports.SECURITY_QUESTIONS={

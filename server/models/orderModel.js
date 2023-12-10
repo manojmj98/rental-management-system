@@ -6,7 +6,7 @@ const orderSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: false,
+      required: true,
       ref: 'User',
     },
     orderItems: [
@@ -70,12 +70,17 @@ const orderSchema = mongoose.Schema(
     status:{
         type: String,
         default: STATUS.Initial,
-        enum: [STATUS.Completed,STATUS.Delivered,STATUS.Processing,STATUS.Initial]
+        enum: [STATUS.Completed,STATUS.Delivered,STATUS.Processing,STATUS.Initial,STATUS.Cancelled]
     },
     paymentStatus:{
         type: String,
         default: PAYMENT_STATUS.Processing,
-        enum:[PAYMENT_STATUS.Completed,PAYMENT_STATUS.Processing,PAYMENT_STATUS.RefundInitiated,PAYMENT_STATUS.RefundProcessing,PAYMENT_STATUS.Refunded]
+        enum:[PAYMENT_STATUS.Completed,PAYMENT_STATUS.Processing,PAYMENT_STATUS.RefundInitiated,
+          PAYMENT_STATUS.RefundProcessing,PAYMENT_STATUS.RefundFailed,PAYMENT_STATUS.Refunded]
+    },
+    isRefundIssued:{
+      type: Boolean,
+      default: false
     }
   },
   {
