@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGetProductsQuery } from '../../slices/productApiSlice';
 import ProfileSection from '../ProfileSection';
 import BookingsPage from './bookingsPage';
+import Complaints from './complaints';
 function OwnerDashBoard(props) {
   const [robots, setRobots] = useState(null);
 
@@ -55,6 +56,12 @@ function OwnerDashBoard(props) {
           </button>
           <button className='bg-white text-gray-900 hover:bg-blue-700 w-full py-2 px-4 rounded'>
             Reports
+          </button>
+          <button
+            className='bg-white text-gray-900 hover:bg-blue-700 w-full py-2 px-4 rounded'
+            onClick={() => setSelectedTab('complaints')}
+          >
+            Complaints
           </button>
           <button
             className='bg-white text-gray-900 hover:bg-blue-700 w-full py-2 px-4 rounded'
@@ -115,6 +122,13 @@ function OwnerDashBoard(props) {
         selectedTab === 'myBookings' && (
           <div className='col-span-4 pt-5'>
           <BookingsPage />
+          </div>
+        )
+      }
+      {
+        selectedTab === 'complaints' && (
+          <div className='col-span-4 pt-5'>
+          <Complaints />
           </div>
         )
       }

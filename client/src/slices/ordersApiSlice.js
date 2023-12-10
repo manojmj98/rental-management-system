@@ -18,6 +18,12 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    processRefund: builder.mutation({
+      query: (orderId) => ({
+        url: `${ORDERS_URL}/refund/${orderId}`,
+        method: 'PUT',
+      }),
+    }),    
     payOrder: builder.mutation({
       query: ({ orderId, details }) => ({
         url: `${ORDERS_URL}/${orderId}/pay`,
@@ -67,5 +73,6 @@ export const {
   useGetMyOrdersQuery,
   useGetOrdersQuery,
   useDeliverOrderMutation,
-  useGetTotalOrdersQuery
+  useGetTotalOrdersQuery,
+  useProcessRefundMutation
 } = ordersApiSlice;

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom"; // Import useHistory from react-router-dom
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
 function CreditCardForm() {
@@ -23,7 +22,7 @@ function CreditCardForm() {
   function handleSubmit(e) {
     e.preventDefault();
     // Perform form submission logic here
-
+    
     // Redirect to the success page
     window.location.href = "/success";
   }

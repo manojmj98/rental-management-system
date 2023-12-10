@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+const { ROLE} = require('../constants/constants.js');
+const commentSchema = require('./commentModel.js');
 const reviewSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -55,6 +56,7 @@ const productSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    comments:[commentSchema],
     tags: {
       type: [String],
     }

@@ -10,6 +10,7 @@ import {
   useUpdateStatusMutation,
 } from '../../slices/complaintApiSlice';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
@@ -23,6 +24,8 @@ const Complaints = () => {
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const [statusToUpdate, setStatusToUpdate] = useState(null);
   const [assignToOwner, setAssignToOwner] = useState(false);
+  const { userInfo } = useSelector((state) => state.auth);
+  console.log("User:",userInfo);
 
   const updateStatusMutation = useUpdateStatusMutation();
   // const assignToOwnerMutation = useAssignToOwnerMutation();
@@ -41,26 +44,6 @@ const Complaints = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-  const handleStatusUpdate = async () => {
-    try {
-      const response = await updateStatusMutation.mutateAsync({
-        id: selectedComplaint._id,
-        status: statusToUpdate,
-      });
-
-      if (response) {
-        refetch();
-        toast.success('Complaint status updated successfully!');
-      }
-    } catch (error) {
-      console.error('Error updating complaint status:', error);
-      toast.error('Failed to update complaint status. Please try again.');
-    } finally {
-      setSelectedComplaint(null);
-      setStatusToUpdate(null);
-    }
-  };
 
   console.log('Complaints:', complaints);
   return (
@@ -87,6 +70,7 @@ const Complaints = () => {
           <tbody>
             {complaints.complaints &&
               complaints.complaints.map((complaint) => (
+                userInfo.id === complaint.customer._id && ( //TODO: Need to undo this before merging
                 <tr key={complaint._id}>
                   <td>{complaint._id}</td>
                   <td>{complaint.description}</td>
@@ -99,21 +83,14 @@ const Complaints = () => {
                   <td>{complaint.orderId}</td>
                   <td>{complaint.complaintStatus}</td>
                   <td>
-                  <LinkContainer to={`/admin/complaint/${complaint._id}/edit`}>
+                  <LinkContainer to={`/owner/complaint/${complaint._id}/view`}>
                     <Button variant='light' className='btn-sm mx-2'>
                       <FaEdit />
                     </Button>
                   </LinkContainer>
-                  <Button
-                    variant='danger'
-                    className='btn-sm'
-                    // onClick={() => deleteHandler(product._id)}
-                  >
-                    <FaTrash style={{ color: 'black' }} />
-                  </Button>
                   </td>
                 </tr>
-              ))}
+              )))}
           </tbody>
         </Table>
       )}
