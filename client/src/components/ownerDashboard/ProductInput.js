@@ -49,7 +49,7 @@ function ProductInput() {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
           address
-        )}&key=AIzaSyAIGULR3p6qn-h-AStpV91ZSN-w-WlV98w`
+        )}&key=`
       );
 
       if (!response.ok) {
